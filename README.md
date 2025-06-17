@@ -53,7 +53,19 @@ Before proceeding with this repository:
 > ```bash
 > brew unlink qt
 > ```
-> 3) The steps above install most dependencies, but depending on your macOS setup, some Python packages might still be missing.  
+> 3) Use Xcode 16.2 for Building ROS 2 Humble on macOS
+>    To ensure a successful build, you **must use Xcode 16.2** specifically. Follow these steps to install and select Xcode 16.2:
+>      1. Download Xcode 16.2 from the [Apple Developer website](https://xcodereleases.com).
+>      2. Install Xcode 16.2, then select it as the active developer directory by running:
+>         
+>         ```bash
+>           sudo xcode-select -s /Applications/Xcode_2.app/Contents/Developer
+>         ```
+>         ```bash
+>         xcodebuild -version
+>         ```
+>         
+> 5) The steps above install most dependencies, but depending on your macOS setup, some Python packages might still be missing.  
 > If you see errors like:
 > 
 > ```plaintext
