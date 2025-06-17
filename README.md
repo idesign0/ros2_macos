@@ -59,7 +59,7 @@ Before proceeding with this repository:
 >      2. Install Xcode 16.2, then select it as the active developer directory by running:
 >         
 >         ```bash
->           sudo xcode-select -s /Applications/Xcode_2.app/Contents/Developer
+>         sudo xcode-select -s /Applications/Xcode_2.app/Contents/Developer
 >         ```
 >         ```bash
 >         xcodebuild -version
