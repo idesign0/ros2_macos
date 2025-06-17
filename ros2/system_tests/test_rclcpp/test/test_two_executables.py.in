@@ -1,0 +1,78 @@
+# generated from test_rclcpp/test/test_two_executables.py.in
+
+import os
+
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+from launch.substitutions import LaunchConfiguration
+
+import launch_testing
+import launch_testing.actions
+import launch_testing.asserts
+
+import unittest
+
+
+def generate_test_description():
+    launch_description = LaunchDescription()
+
+    cmd = ['@TEST_EXECUTABLE1@']
+    if '@TEST_EXECUTABLE1_ARGS@':
+      cmd += '@TEST_EXECUTABLE1_ARGS@'.split(' ')
+    env = None
+    if '@TEST_RMW_IMPLEMENTATION1@':
+        env = dict(os.environ)
+        env['RMW_IMPLEMENTATION'] = '@TEST_RMW_IMPLEMENTATION1@'
+    executable_1 = ExecuteProcess(
+        cmd=cmd,
+        name='@TEST_EXECUTABLE1_NAME@',
+        env=env,
+        sigterm_timeout=LaunchConfiguration('sigterm_timeout', default=30),
+        output='screen'
+    )
+    launch_description.add_action(executable_1)
+
+    cmd = ['@TEST_EXECUTABLE2@']
+    if '@TEST_EXECUTABLE2_ARGS@':
+      cmd += '@TEST_EXECUTABLE2_ARGS@'.split(' ')
+    env = None
+    if '@TEST_RMW_IMPLEMENTATION2@':
+        env = dict(os.environ)
+        env['RMW_IMPLEMENTATION'] = '@TEST_RMW_IMPLEMENTATION2@'
+    executable_2 = ExecuteProcess(
+        cmd=cmd,
+        name='@TEST_EXECUTABLE2_NAME@',
+        env=env,
+        sigterm_timeout=LaunchConfiguration('sigterm_timeout', default=30),
+        output='screen'
+    )
+
+    launch_description.add_action(executable_2)
+
+    launch_description.add_action(
+        launch_testing.actions.ReadyToTest()
+    )
+    return launch_description, locals()
+
+
+class TestTwoExecutables(unittest.TestCase):
+
+    def @TEST_NAME@(self, executable_2, proc_info):
+        """Test that the second executable terminates after a finite amount of time."""
+        proc_info.assertWaitForShutdown(process=executable_2, timeout=60)
+
+
+@launch_testing.post_shutdown_test()
+class TestTwoExecutablesAfterShutdown(unittest.TestCase):
+
+    def @TEST_NAME@(self, proc_info):
+        """Test that both executables finished cleanly."""
+        launch_testing.asserts.assertExitCodes(
+            proc_info,
+            [launch_testing.asserts.EXIT_OK],
+            '@TEST_EXECUTABLE2_NAME@'
+        )
+        launch_testing.asserts.assertExitCodes(
+            proc_info,
+            process='@TEST_EXECUTABLE1_NAME@'
+        )

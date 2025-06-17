@@ -1,0 +1,40 @@
+name: Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  docs:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    container: ghcr.io/picknikrobotics/rsl:upstream-rolling
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Source ROS
+        run: |
+          . /opt/ros/rolling/setup.sh
+          echo "$(env)" >> $GITHUB_ENV
+      - name: Configure
+        run: cmake -B build
+      - name: Build Doxygen Site
+        run: cmake --build build --target docs
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/docs/html
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

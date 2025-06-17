@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>test_security</name>
+  <version>0.12.4</version>
+  <description>
+    Test nodes, publishers and subscribers with DDS-Security.
+  </description>
+  <maintainer email="aditya.pande@openrobotics.org">Aditya Pande</maintainer>
+  <maintainer email="shane@openrobotics.org">Shane Loretz</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="michael@openrobotics.org">Michael Carroll</author>
+  <author email="jacob@openrobotics.org">Jacob Perron</author>
+  <author email="william@openrobotics.org">William Woodall</author>
+  <author>Mikael Arguedas</author>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <test_depend>ament_cmake</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>launch</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
+  <test_depend>osrf_testing_tools_cpp</test_depend>
+  <test_depend>rcl</test_depend>
+  <test_depend>rclcpp</test_depend>
+  <!--test_depend>rclpy</test_depend--> <!-- test security tests only C++ nodes ATM -->
+  <test_depend>rmw_implementation</test_depend>
+  <test_depend>rmw_implementation_cmake</test_depend>
+  <test_depend>ros2cli</test_depend>
+  <test_depend>sros2</test_depend>
+  <test_depend>test_msgs</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

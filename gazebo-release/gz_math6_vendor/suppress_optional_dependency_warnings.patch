@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -42,3 +42,3 @@ find_package(SWIG QUIET)
+ if (NOT SWIG_FOUND)
+-  IGN_BUILD_WARNING("Swig is missing: Language interfaces are disabled.")
++  # IGN_BUILD_WARNING("Swig is missing: Language interfaces are disabled.")
+   message (STATUS "Searching for swig - not found.")
+@@ -54,3 +54,3 @@ if (SWIG_FOUND)
+   if (NOT RUBY_FOUND)
+-    IGN_BUILD_WARNING("Ruby is missing: Install ruby-dev to enable ruby interface to ignition math.")
++    # IGN_BUILD_WARNING("Ruby is missing: Install ruby-dev to enable ruby interface to ignition math.")
+     message (STATUS "Searching for Ruby - not found.")

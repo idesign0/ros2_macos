@@ -1,0 +1,6 @@
+<launch>
+  <test test-name="test_inertia_rpy" pkg="kdl_parser" type="test_inertia_rpy"
+        args="$(find kdl_parser)/test/testInertiaRPYmodel1.urdf 
+              $(find kdl_parser)/test/testInertiaRPYmodel2.urdf"
+ />
+</launch>

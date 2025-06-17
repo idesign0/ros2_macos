@@ -1,0 +1,39 @@
+site_name: iceoryx.io
+site_url: https://iceoryx.io
+repo_url: https://github.com/eclipse/iceoryx
+edit_uri: ""
+docs_dir: doc/website/
+remote_branch: main
+markdown_extensions:
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - attr_list
+  - toc:
+      permalink: 🔗
+  - meta
+  - markdown_include.include
+  - admonition
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+plugins:
+  - awesome-pages
+  - search
+  - autolinks
+theme:
+  name: 'material'
+  custom_dir: doc/website/overrides
+  font: false
+  logo: images/iceoryx-logo-white.png
+  favicon: images/favicon.ico
+  features:
+    - navigation.indexes
+extra:
+  version:
+    provider: mike
+extra_css:
+  - stylesheets/extra.css
+use_directory_urls: true

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>libstatistics_collector</name>
+  <version>1.3.4</version>
+  <description>Lightweight aggregation utilities to collect statistics and measure message metrics.</description>
+  <maintainer email="ros-tooling@googlegroups.com">ROS Tooling Working Group</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <build_depend>rosidl_default_generators</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <depend>builtin_interfaces</depend>
+  <depend>rcl</depend>
+  <depend>rcpputils</depend>
+  <depend>statistics_msgs</depend>
+
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>performance_test_fixture</test_depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

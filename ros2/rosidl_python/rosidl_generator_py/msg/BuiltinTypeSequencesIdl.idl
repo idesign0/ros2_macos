@@ -1,0 +1,8 @@
+module rosidl_generator_py {
+    module msg {
+        struct BuiltinTypeSequencesIdl {
+            // Unbounded sequences
+            sequence<char> char_sequence_unbounded;
+        };
+    };
+};

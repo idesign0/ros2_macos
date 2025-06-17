@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rti_connext_dds_cmake_module</name>
+  <version>0.11.4</version>
+  <description>Helper module to provide access to RTI products like Connext DDS Professional</description>
+  <maintainer email="asorbini@rti.com">Andrea Sorbini</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_export_depend>ament_cmake</buildtool_export_depend>
+
+  <depend>rti-connext-dds-6.0.1</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

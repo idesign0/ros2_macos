@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>demo_nodes_cpp_native</name>
+  <version>0.20.5</version>
+  <description>
+    C++ nodes which access the native handles of the rmw implementation.
+  </description>
+
+  <maintainer email="audrow@openrobotics.org">Audrow Nash</maintainer>
+  <maintainer email="michael.jeronimo@openrobotics.org">Michael Jeronimo</maintainer>
+
+  <license>Apache License 2.0</license>
+
+  <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
+  <author email="mabel@openrobotics.org">Mabel Zhang</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>rmw_fastrtps_cpp</depend>
+  <depend>std_msgs</depend>
+
+  <test_depend>ament_cmake_pytest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>launch</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
+  <test_depend>launch_testing_ros</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

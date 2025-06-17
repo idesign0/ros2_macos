@@ -1,0 +1,38 @@
+@startuml
+
+class UntypedClient {
+  UntypedClient(serviceDescription: ServiceDescription&, clientOptions: ClientOptions&)
+  getUid(): UniquePortId
+  getServiceDescription(): ServiceDescription&
+  connect(): void
+  disconnect(): void
+  getConnectionState(): ConnectionState
+  loan(payloadSize: uint32_t, payloadAlignment: uint32_t): expected<void*, AllocationError>
+  send(requestPayload: void*): expected<ClientSendError>
+  releaseRequest(requestPayload: void*): void
+  hasResponses(): bool
+  take(): expected<void*, AllocationError>
+  releaseResponse(responsePayload: void*): void
+  releaseQueuedResponses(): void
+  hasMissedResponses(): bool
+}
+
+class UntypedServer {
+  UntypedServer(serviceDescription: ServiceDescription&, serverOptions: ServerOptions&)
+  getUid(): UniquePortId
+  getServiceDescription(): ServiceDescription&
+  offer(): void
+  stopOffer():void
+  isOffered(): bool
+  hasClients(): bool
+  hasRequests(): bool
+  take(): expected<void*, ServerRequestResult>
+  releaseRequest(requestPayload: void*): void
+  releaseQueuedRequests(): void
+  hasMissedRequests(): bool
+  loan(requestHeader: RequestHeader*, payloadSize: uint32_t, payloadAlignment: uint32_t): expected<void*, AllocationError>
+  send(responsePayload: void*): expected<ServerSendError>
+  releaseResponse(responsePayload: void*): void
+}
+
+@enduml

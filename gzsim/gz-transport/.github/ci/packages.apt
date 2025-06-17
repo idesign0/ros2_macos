@@ -1,0 +1,12 @@
+libignition-cmake2-dev
+libignition-math6-dev
+libignition-msgs8-dev
+libignition-tools-dev
+libignition-utils1-cli-dev
+libprotobuf-dev
+libprotoc-dev
+libsqlite3-dev
+libzmq3-dev
+pkg-config
+protobuf-compiler
+uuid-dev

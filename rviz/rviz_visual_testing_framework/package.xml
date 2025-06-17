@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format2.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>rviz_visual_testing_framework</name>
+  <version>12.2.0</version>
+  <description>
+    3D testing framework for RViz.
+  </description>
+
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/rviz2</url>
+  <url type="repository">https://github.com/ros-visualization/rviz</url>
+  <url type="bugtracker">https://github.com/ros-visualization/rviz/issues</url>
+
+  <author>Alessandro Bottero</author>
+  <author email="jacob@openrobotics.org">Jacob Perron</author>
+  <author email="michael.jeronimo@openrobotics.org">Michael Jeronimo</author>
+  <author email="william@openrobotics.org">William Woodall</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>qtbase5-dev</build_depend>
+
+  <depend>rcutils</depend>
+  <depend>rviz_common</depend>
+  <depend>ament_cmake_gtest</depend>
+
+  <!-- TODO(jacobperron): Replace with ament_lint_common when ament_copyright is working -->
+  <test_depend>ament_cmake_cppcheck</test_depend>
+  <test_depend>ament_cmake_cpplint</test_depend>
+  <test_depend>ament_cmake_gmock</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_uncrustify</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

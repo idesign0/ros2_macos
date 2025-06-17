@@ -1,0 +1,23 @@
+diff --git a/orocos_kdl/src/CMakeLists.txt b/orocos_kdl/src/CMakeLists.txt
+index 954b8fc..306187a 100644
+--- a/orocos_kdl/src/CMakeLists.txt
++++ b/orocos_kdl/src/CMakeLists.txt
+@@ -53,7 +53,7 @@ ENDIF()
+ ADD_LIBRARY(orocos-kdl ${LIB_TYPE} ${KDL_SRCS})
+ 
+ TARGET_INCLUDE_DIRECTORIES(orocos-kdl PUBLIC
+-  "$<INSTALL_INTERFACE:include>")
++  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
+ 
+ SET_TARGET_PROPERTIES( orocos-kdl PROPERTIES
+   SOVERSION "${KDL_VERSION_MAJOR}.${KDL_VERSION_MINOR}"
+@@ -79,7 +79,7 @@ INSTALL(TARGETS orocos-kdl
+   ARCHIVE DESTINATION lib${LIB_SUFFIX}
+   LIBRARY DESTINATION lib${LIB_SUFFIX}
+   RUNTIME DESTINATION bin
+-  PUBLIC_HEADER DESTINATION include/kdl
++  PUBLIC_HEADER DESTINATION include/${PROJECT_NAME}/kdl
+ )
+ 
+-INSTALL(FILES ${UTIL_HPPS} DESTINATION include/kdl/utilities)
++INSTALL(FILES ${UTIL_HPPS} DESTINATION include/${PROJECT_NAME}/kdl/utilities)

@@ -1,0 +1,41 @@
+<package format="2">
+  <name>kdl_parser</name>
+  <version>2.6.4</version>
+  <description>
+   The Kinematics and Dynamics Library (KDL) defines a tree structure
+   to represent the kinematic and dynamic parameters of a robot
+   mechanism. <tt>kdl_parser</tt> provides tools to construct a KDL
+   tree from an XML robot representation in URDF.
+  </description>
+
+  <author email="wim@willowgarage.com">Wim Meeussen</author>
+  <author email="isucan@gmail.com">Ioan Sucan</author>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+
+  <license>BSD</license>
+
+  <!--url type="website">http://ros.org/wiki/kdl_parser</url-->
+  <url type="repository">https://github.com/ros2/kdl_parser</url>
+  <url type="bugtracker">https://github.com/ros2/kdl_parser/issues</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <depend>orocos_kdl_vendor</depend>
+  <depend>rcutils</depend>
+
+  <build_depend>urdf</build_depend>
+  <build_depend>urdfdom_headers</build_depend>
+
+  <exec_depend>urdf</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <build_export_depend>urdfdom_headers</build_export_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

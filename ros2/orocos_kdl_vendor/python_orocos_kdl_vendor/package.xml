@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format2.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>python_orocos_kdl_vendor</name>
+  <version>0.2.5</version>
+  <description>
+    Wrapper around PyKDL, providing nothing but a dependency on PyKDL on some systems.
+    On others, it fetches and builds python_orocos_kdl locally.
+  </description>
+  <maintainer email="jacob@openrobotics.org">Jacob Perron</maintainer>
+  <license>Apache License 2.0</license>  <!-- the contents of this package are Apache 2.0 -->
+  <license>LGPL-2.1-or-later</license>  <!-- orocos_kinematics_dynamics is LGPL 2.1 -->
+
+  <url type="repository">https://github.com/orocos/orocos_kinematics_dynamics</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <buildtool_depend>python_cmake_module</buildtool_depend>
+
+  <depend>orocos_kdl_vendor</depend>
+  <!-- python_orocos_kdl depends on pybind11 -->
+  <depend>pybind11_vendor</depend>
+  <depend>python3-pykdl</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

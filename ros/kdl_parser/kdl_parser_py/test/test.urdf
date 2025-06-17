@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<!-- original: https://github.com/ros/urdf_tutorial/
+     TODO(jacquelinekay): currently released version of urdf_parser_py doesn't
+     allow joints without limits specified. once fixed, revert limitless joints
+     TODO(jacquelinekay): currently released version of urdf_parser_py doesn't
+     allow materials without color specified/aggregate materials. once fixed,
+     revert materials
+-->
+<robot name="physics">
+  <link name="base_link">
+    <collision>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_to_right_leg" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_base"/>
+    <origin xyz="0.22 0 .25"/>
+  </joint>
+
+  <!-- link 1 -->
+  <link name="right_base">
+    <collision>
+      <geometry>
+        <box size=".1 0.4 .1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- link 2 -->
+  <link name="right_front_wheel">
+    <collision>
+      <geometry>
+        <cylinder length=".1" radius="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- joint 1 -->
+  <joint name="right_front_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="right_base"/>
+    <child link="right_front_wheel"/>
+    <origin rpy="0 1.57075 0" xyz="0 0.133333333333 -0.085"/>
+    <limit effort="100.0" lower="0" upper="0" velocity="0.5"/>
+  </joint>
+
+  <!-- link 3 -->
+  <link name="right_back_wheel">
+    <collision>
+      <geometry>
+        <cylinder length=".1" radius="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- joint 2 -->
+  <joint name="right_back_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="right_base"/>
+    <child link="right_back_wheel"/>
+    <origin rpy="0 1.57075 0" xyz="0 -0.133333333333 -0.085"/>
+    <limit effort="100.0" lower="0" upper="0" velocity="0.5"/>
+  </joint>
+
+  <joint name="base_to_left_leg" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_base"/>
+    <origin xyz="-0.22 0 .25"/>
+  </joint>
+
+  <!-- link 4 -->
+  <link name="left_base">
+    <collision>
+      <geometry>
+        <box size=".1 0.4 .1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- link 5 -->
+  <link name="left_front_wheel">
+    <collision>
+      <geometry>
+        <cylinder length=".1" radius="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- joint 3 -->
+  <joint name="left_front_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="left_base"/>
+    <child link="left_front_wheel"/>
+    <origin rpy="0 1.57075 0" xyz="0 0.133333333333 -0.085"/>
+    <limit effort="100.0" lower="0" upper="0" velocity="0.5"/>
+  </joint>
+
+  <!-- link 6 -->
+  <link name="left_back_wheel">
+    <collision>
+      <geometry>
+        <cylinder length=".1" radius="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- joint 4 -->
+  <joint name="left_back_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="left_base"/>
+    <child link="left_back_wheel"/>
+    <origin rpy="0 1.57075 0" xyz="0 -0.133333333333 -0.085"/>
+    <limit effort="100.0" lower="0" upper="0" velocity="0.5"/>
+  </joint>
+
+  <!-- joint 5 -->
+  <joint name="gripper_extension" type="prismatic">
+    <!-- TODO(jacquelinekay): axis default not used in urdf_parser_py, needed for prismatic links -->
+    <axis xyz="1 0 0" />
+    <parent link="base_link"/>
+    <child link="gripper_pole"/>
+    <limit effort="1000.0" lower="-0.38" upper="0" velocity="0.5"/>
+    <origin rpy="0 0 1.57075" xyz="0 0.19 .2"/>
+  </joint>
+
+  <!-- link 7 -->
+  <link name="gripper_pole">
+    <collision>
+      <geometry>
+        <cylinder length="0.2" radius=".01"/>
+      </geometry>
+      <origin rpy="0 1.57075 0 " xyz="0.1 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- joint 6 -->
+  <joint name="left_gripper_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+    <origin xyz="0.2 0.01 0"/>
+    <parent link="gripper_pole"/>
+    <child link="left_gripper"/>
+  </joint>
+
+  <!-- link 8 -->
+  <link name="left_gripper">
+    <collision>
+      <geometry>
+        <mesh filename="package://pr2_description/meshes/gripper_v0/l_finger.dae"/>
+      </geometry>
+      <origin rpy="0.0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <!-- joint 7 -->
+  <joint name="right_gripper_joint" type="revolute">
+    <axis xyz="0 0 -1"/>
+    <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0.2 -0.01 0"/>
+    <parent link="gripper_pole"/>
+    <child link="right_gripper"/>
+  </joint>
+
+  <!-- link 9 -->
+  <link name="right_gripper">
+    <collision>
+      <geometry>
+        <mesh filename="package://pr2_description/meshes/gripper_v0/l_finger.dae"/>
+      </geometry>
+      <origin rpy="-3.1415 0 0" xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      <origin xyz="1 2 3" />
+    </inertial>
+  </link>
+
+  <!-- link 10 -->
+  <link name="head">
+    <collision>
+      <geometry>
+        <sphere radius="0.2"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      <origin rpy="3 2 1" />
+    </inertial>
+  </link>
+
+  <!-- joint 8 -->
+  <joint name="head_swivel" type="continuous">
+    <parent link="base_link"/>
+    <child link="head"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0.3"/>
+  </joint>
+
+</robot>

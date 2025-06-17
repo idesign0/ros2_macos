@@ -1,0 +1,16 @@
+# NOTE: this file is managed by ros-tooling/repo-configs, don't edit it manually
+
+# Reviewers (and by extension approvers) will be the default owners for everything in the repo.
+# Unless a later match takes precedence, @reviewers will be requested for review when someone opens a pull request.
+*                 @ros-tooling/reviewers
+
+# Explicitly assign Dependabot PRs to the bot
+
+# The majority of NPM changes are from dependabot - other changes will need to explicitly request reviews
+# Dependabot are automatically approved and shouldn't assign real users
+package.json @ros-tooling-bot
+package-lock.json @ros-tooling-bot
+
+# This is overly broad, but is the other place dependabot changes go
+# Users making changes to the workflows will need to explicitly request reviewers
+/.github/workflows/ @ros-tooling-bot

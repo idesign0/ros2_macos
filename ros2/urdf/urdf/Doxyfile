@@ -1,0 +1,21 @@
+# All settings not listed here will use the Doxygen default values.
+
+PROJECT_NAME           = "urdf"
+PROJECT_NUMBER         = ros2
+PROJECT_BRIEF          = "C++ parser for the Unified Robot Description Format (URDF)"
+
+INPUT                  = ./include
+RECURSIVE              = YES
+OUTPUT_DIRECTORY       = docs_output
+
+EXTRACT_ALL            = YES
+SORT_MEMBER_DOCS       = NO
+
+GENERATE_LATEX         = NO
+GENERATE_XML           = YES
+EXCLUDE_SYMBOLS        = detail details
+
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+PREDEFINED             += URDF_EXPORT

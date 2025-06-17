@@ -1,0 +1,40 @@
+# NOTE: this file is managed by ros-tooling/repo-configs, don't edit it manually
+name: Auto merge
+
+on:
+  pull_request:
+    branches: master
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
+  status: {}
+jobs:
+  # Automatically merge approved and green dependabot PRs.
+  auto-merge-dependabot:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - uses: pascalgn/automerge-action@v0.15.2
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "dependencies"
+          MERGE_METHOD: "squash" # Sqush and merge
+          MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
+          MERGE_RETRIES: "0"
+          UPDATE_METHOD: "rebase" # Rebase PR on base branch
+  # Automatically merge approved and green file-sync PRs from ros-tooling-bot
+  auto-merge-file-sync:
+    runs-on: ubuntu-latest
+    if: github.actor == 'ros-tooling-bot'
+    steps:
+      - uses: pascalgn/automerge-action@v0.15.2
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "file-sync"
+          MERGE_METHOD: "squash" # Sqush and merge
+          MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
+          MERGE_RETRIES: "0"
+          UPDATE_METHOD: "rebase" # Rebase PR on base branch

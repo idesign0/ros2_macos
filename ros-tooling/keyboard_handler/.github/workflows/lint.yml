@@ -1,0 +1,22 @@
+# Run linters automatically on pull requests.
+name: Lint
+on:
+  pull_request:
+
+jobs:
+  ament_linters:
+    name: ament_copyright
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        linter: [copyright, xmllint, cppcheck, cpplint, uncrustify, pep257, flake8]
+    container:
+      image: rostooling/setup-ros-docker:ubuntu-focal-ros-rolling-ros-base-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ros-tooling/action-ros-lint@v0.1
+      with:
+        linter: ${{ matrix.linter }}
+        distribution: rolling
+        package-name: keyboard_handler

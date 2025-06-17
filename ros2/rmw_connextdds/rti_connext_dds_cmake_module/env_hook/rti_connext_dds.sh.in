@@ -1,0 +1,165 @@
+_connextdds_cleanup()
+{
+  unset _CONNEXTDDS_DIR_BUILD \
+        _CONNEXTDDS_ARCH \
+        _CONNEXTDDS_DIR_ENV \
+        _CONNEXTDDS_DIR_ENV_SRC \
+        _CONNEXTDDS_DIR_EXPORT \
+        _CONNEXTDDS_DIR_EXPORT_ERROR \
+        _CONNEXTDDS_BIN \
+        _CONNEXTDDS_LIB \
+        _PATH_VAR \
+        _connext_prepend_unique_value \
+        _connextdds_cleanup
+}
+
+# function to prepend non-duplicate values to environment variables
+# using colons as separators and avoiding trailing separators
+# copied from https://github.com/ament/ament_package/blob/6c8acd25498d2674e7ad9d316b35d112ae1ab8c1/ament_package/template/package_level/local_setup.sh.in#L45-L94
+# since this script can't assume that the package level script was sourced before
+_connextdds_prepend_unique_value() {
+  # arguments
+  _listname="$1"
+  _value="$2"
+
+  # check if the list contains the value
+  eval _values=\"\$$_listname\"
+  _duplicate=
+  _connext_prepend_unique_value_IFS=$IFS
+  IFS=":"
+  if [ "$AMENT_SHELL" = "zsh" ]; then
+    # convert array-like string into array
+    # to wordaround SH_WORD_SPLIT not being set
+    eval _values="(\"${=_values}\")"
+  fi
+  for _item in $_values; do
+    # ignore empty strings
+    if [ -z "$_item" ]; then
+    continue
+    fi
+    if [ "$_item" = "$_value" ]; then
+    _duplicate=1
+    fi
+  done
+  unset _item
+
+  # prepend only non-duplicates
+  if [ -z "$_duplicate" ]; then
+    # avoid trailing separator
+    if [ -z "$_values" ]; then
+      eval export $_listname=\"$_value\"
+    else
+      # field separator must not be a colon
+      unset IFS
+      eval export $_listname=\"$_value:\$$_listname\"
+    fi
+  fi
+  IFS=$_connext_prepend_unique_value_IFS
+  unset _connext_prepend_unique_value_IFS
+  unset _duplicate
+  unset _values
+
+  unset _value
+  unset _listname
+}
+
+_CONNEXTDDS_DIR_BUILD="@CONNEXTDDS_DIR@"
+_CONNEXTDDS_ARCH="@CONNEXTDDS_ARCH@"
+
+# detect if running on Darwin platform
+if [ "$(uname -s)" = "Darwin" ]; then
+  _PATH_VAR=DYLD_LIBRARY_PATH
+else
+  _PATH_VAR=LD_LIBRARY_PATH
+fi
+
+# Give priority to CONNEXTDDS_DIR to override connext_cmake_module
+# which may have loaded an older Connext installation.
+_CONNEXTDDS_DIR_ENV=""
+if [ -n "${CONNEXTDDS_DIR}" ]; then
+  _CONNEXTDDS_DIR_ENV="${CONNEXTDDS_DIR}"
+  _CONNEXTDDS_DIR_ENV_SRC=CONNEXTDDS_DIR
+elif [ -n "${NDDSHOME}" ]; then
+  _CONNEXTDDS_DIR_ENV="${NDDSHOME}"
+  _CONNEXTDDS_DIR_ENV_SRC=NDDSHOME
+fi
+
+# If Connext installation used at build-time is still available, use that one,
+# otherwise inspect environment to see if another one is available.
+if [ -d "${_CONNEXTDDS_DIR_BUILD}" -a -z "${CONNEXTDDS_IGNORE_BUILD}" ]; then
+  # Warn about unused environment variable.
+  if [ -n "${_CONNEXTDDS_DIR_ENV}" -a \
+    "${_CONNEXTDDS_DIR_ENV}" != "${_CONNEXTDDS_DIR_BUILD}" ]; then
+    printf "[@PROJECT_NAME@][warning] Using RTI Connext DDS installation \
+configured during build-time (%s). The installation specified via %s (%s) \
+will be ignored. Use variable CONNEXTDDS_IGNORE_BUILD to override this behavior.\n" \
+      "${_CONNEXTDDS_DIR_BUILD}" \
+      "${_CONNEXTDDS_DIR_ENV_SRC}" \
+      "${_CONNEXTDDS_DIR_ENV}"  1>&2
+  fi
+  _CONNEXTDDS_DIR_EXPORT="${_CONNEXTDDS_DIR_BUILD}"
+else
+  _CONNEXTDDS_DIR_EXPORT="${_CONNEXTDDS_DIR_ENV}"
+fi
+
+_CONNEXTDDS_LIB="${_CONNEXTDDS_DIR_EXPORT}/lib/${_CONNEXTDDS_ARCH}"
+
+_CONNEXTDDS_DIR_EXPORT_ERROR=
+if [ -z "${_CONNEXTDDS_DIR_EXPORT}" ]; then
+  _CONNEXTDDS_DIR_EXPORT_ERROR="No RTI Connext DDS installation specified."
+elif [ ! -d "${_CONNEXTDDS_DIR_EXPORT}" ]; then
+  _CONNEXTDDS_DIR_EXPORT_ERROR=$(
+    printf "RTI Connext DDS installation not found (%s)" \
+      "${_CONNEXTDDS_DIR_EXPORT}")
+elif [ ! -d "${_CONNEXTDDS_LIB}" ]; then
+  _CONNEXTDDS_DIR_EXPORT_ERROR=$(
+    printf "RTI Connext DDS library directory not found (%s)" \
+      "${_CONNEXTDDS_LIB}")
+fi
+
+if [ -n "${_CONNEXTDDS_DIR_EXPORT_ERROR}" ]; then
+  printf "[@PROJECT_NAME@][warning] %s. RTI Connext DDS will not be available at runtime,\
+unless you already configured %s manually.\n" \
+    "${_CONNEXTDDS_DIR_EXPORT_ERROR}" \
+    "${_PATH_VAR}" 1>&2
+  _connextdds_cleanup
+  return
+fi
+
+_CONNEXTDDS_BIN="${_CONNEXTDDS_DIR_EXPORT}/bin"
+
+_connextdds_prepend_unique_value PATH "${_CONNEXTDDS_BIN}"
+_connextdds_prepend_unique_value PATH "${_CONNEXTDDS_LIB}"
+_connextdds_prepend_unique_value ${_PATH_VAR} "${_CONNEXTDDS_BIN}"
+_connextdds_prepend_unique_value ${_PATH_VAR} "${_CONNEXTDDS_LIB}"
+
+export CONNEXTDDS_DIR="${_CONNEXTDDS_DIR_EXPORT}" \
+       NDDSHOME="${_CONNEXTDDS_DIR_EXPORT}" \
+       CONNEXTDDS_ARCH="${_CONNEXTDDS_ARCH}" \
+       ${_PATH_VAR} \
+       PATH
+
+if [ -n "${NDDSHOME}" -a "${NDDSHOME}" != "${CONNEXTDDS_DIR}" ]; then
+  printf "[@PROJECT_NAME@][warning] Both NDDSHOME (%s) and CONNEXTDDS_DIR (%s) detected. \
+Make sure the correct RTI Connext DDS installation has precedence in \
+the environment.\n" \
+      "${NDDSHOME}" \
+      "${CONNEXTDDS_DIR}" 1>&2
+  printf "[@PROJECT_NAME@][warning] %s='%s'\n" \
+      "${_PATH_VAR}" \
+      "$(eval "echo \${${_PATH_VAR}}")" 1>&2
+fi
+
+if [ -n "${VERBOSE}" ]; then
+  printf "[@PROJECT_NAME@][info] CONNEXTDDS_DIR='%s'\n" \
+    "${CONNEXTDDS_DIR}"
+  printf "[@PROJECT_NAME@][info] CONNEXTDDS_ARCH='%s'\n" \
+    "${CONNEXTDDS_ARCH}"
+  printf "[@PROJECT_NAME@][info] %s='%s'\n" \
+    "${_PATH_VAR}" \
+    "$(eval "echo \${${_PATH_VAR}}")"
+  printf "[@PROJECT_NAME@][info] PATH='%s'\n" \
+    "${PATH}"
+fi
+
+_connextdds_cleanup

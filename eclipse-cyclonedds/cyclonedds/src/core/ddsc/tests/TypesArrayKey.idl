@@ -1,0 +1,91 @@
+/*
+ * Copyright(c) 2006 to 2021 ZettaScale Technology and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0, or the Eclipse Distribution License
+ * v. 1.0 which is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
+ */
+module TypesArrayKey {
+  struct long_arraytypekey {
+    @key
+    long key[20];
+  };
+
+  typedef long long longlong;
+  struct longlong_arraytypekey {
+    @key
+    longlong key[20];
+  };
+
+  typedef unsigned short unsignedshort;
+  struct unsignedshort_arraytypekey {
+    @key
+    unsignedshort key[20];
+  };
+
+  typedef unsigned long unsignedlong;
+  struct unsignedlong_arraytypekey {
+    @key
+    unsignedlong key[20];
+  };
+
+  typedef unsigned long long unsignedlonglong;
+  struct unsignedlonglong_arraytypekey {
+    @key
+    unsignedlonglong key[20];
+  };
+
+  struct float_arraytypekey {
+    @key
+    float key[20];
+  };
+
+  struct double_arraytypekey {
+    @key
+    double key[20];
+  };
+
+  struct char_arraytypekey {
+    @key
+    char key[128];
+  };
+
+  struct boolean_arraytypekey {
+    @key
+    boolean key[128];
+  };
+
+  struct octet_arraytypekey {
+    @key
+    octet key[128];
+  };
+
+  struct alltypeskey {
+    @key
+    long                l;
+    @key
+    long long           ll;
+    @key
+    unsigned short      us;
+    @key
+    unsigned long       ul;
+    @key
+    unsigned long long  ull;
+    @key
+    float               f;
+    @key
+    double              d;
+    @key
+    char                c;
+    @key
+    boolean             b;
+    @key
+    octet               o;
+    @key
+    string              s;
+  };
+};

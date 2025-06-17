@@ -1,0 +1,43 @@
+if (@PKG_NAME@_CONFIG_INCLUDED)
+  return()
+endif()
+set(@PKG_NAME@_CONFIG_INCLUDED TRUE)
+
+set(@PKG_NAME@_INCLUDE_DIRS "${@PROJECT_NAME@_DIR}/@RELATIVE_PATH_CMAKE_DIR_TO_PREFIX@/@CMAKE_INSTALL_INCLUDEDIR@" "@TinyXML_INCLUDE_DIRS@")
+
+foreach(lib @PKG_LIBRARIES@)
+  set(onelib "${lib}-NOTFOUND")
+  set(onelibd "${lib}-NOTFOUND")
+  find_library(onelib ${lib}
+    PATHS "${@PROJECT_NAME@_DIR}/@RELATIVE_PATH_CMAKE_DIR_TO_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
+    NO_DEFAULT_PATH)
+  find_library(onelibd ${lib}d
+    PATHS "${@PROJECT_NAME@_DIR}/@RELATIVE_PATH_CMAKE_DIR_TO_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
+    NO_DEFAULT_PATH)
+  if(onelib-NOTFOUND AND onelibd-NOTFOUND)
+    message(FATAL_ERROR "Library '${lib}' in package @PKG_NAME@ is not installed properly")
+  endif()
+  if(onelib AND onelibd)
+    list(APPEND @PKG_NAME@_LIBRARIES $<$<NOT:$<CONFIG:Debug>>:${onelib}>)
+    list(APPEND @PKG_NAME@_LIBRARIES $<$<CONFIG:Debug>:${onelibd}>)
+  else()
+    if(onelib)
+      list(APPEND @PKG_NAME@_LIBRARIES ${onelib})
+    else()
+      list(APPEND @PKG_NAME@_LIBRARIES ${onelibd})
+    endif()
+  endif()
+  list(APPEND @PKG_NAME@_TARGETS @PROJECT_NAME@::${lib})
+endforeach()
+
+foreach(dep @PKG_DEPENDS@)
+  if(NOT ${dep}_FOUND)
+    find_package(${dep})
+  endif()
+  list(APPEND @PKG_NAME@_INCLUDE_DIRS ${${dep}_INCLUDE_DIRS})
+  list(APPEND @PKG_NAME@_LIBRARIES ${${dep}_LIBRARIES})
+endforeach()
+
+foreach(exp @PKG_EXPORTS@)
+  include(${@PROJECT_NAME@_DIR}/${exp}Export.cmake)
+endforeach()

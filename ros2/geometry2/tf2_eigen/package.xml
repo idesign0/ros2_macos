@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>tf2_eigen</name>
+  <version>0.25.13</version>
+  <description>tf2_eigen</description>
+  <maintainer email="clalancette@openrobotics.org">Chris Lalancette</maintainer>
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+  <license>BSD</license>
+  <author email="tfoote@osrfoundation.org">Tully Foote</author>
+  <author>Koji Terada</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>eigen</build_depend>
+
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <build_export_depend>eigen</build_export_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

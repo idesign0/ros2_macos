@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format2.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>console_bridge_vendor</name>
+  <version>1.4.1</version>
+  <description>
+    Wrapper around console_bridge, providing nothing but a dependency on console_bridge, on some systems.
+    On others, it provides an ExternalProject build of console_bridge.
+  </description>
+
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+
+  <license>Apache License 2.0</license>  <!-- the contents of this package are Apache 2.0 -->
+  <license>BSD</license>  <!-- console_bridge is BSD -->
+
+  <url type="website">https://github.com/ros/console_bridge</url>
+
+  <author>Steven! Ragnarök</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>libconsole-bridge-dev</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>performance_test_fixture</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

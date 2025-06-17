@@ -1,0 +1,150 @@
+_connextddsmicro_cleanup()
+{
+  unset _CONNEXTDDSMICRO_DIR_BUILD \
+        _CONNEXTDDSMICRO_ARCH \
+        _CONNEXTDDSMICRO_DIR_ENV \
+        _CONNEXTDDSMICRO_DIR_ENV_SRC \
+        _CONNEXTDDSMICRO_DIR_BUILD \
+        _CONNEXTDDSMICRO_DIR_EXPORT \
+        _CONNEXTDDSMICRO_BIN \
+        _CONNEXTDDSMICRO_LIB \
+        _PATH_VAR \
+        _connext_prepend_unique_value \
+        _connextddsmicro_cleanup
+}
+
+# function to prepend non-duplicate values to environment variables
+# using colons as separators and avoiding trailing separators
+# copied from https://github.com/ament/ament_package/blob/6c8acd25498d2674e7ad9d316b35d112ae1ab8c1/ament_package/template/package_level/local_setup.sh.in#L45-L94
+# since this script can't assume that the package level script was sourced before
+_connextdds_prepend_unique_value() {
+  # arguments
+  _listname="$1"
+  _value="$2"
+
+  # check if the list contains the value
+  eval _values=\"\$$_listname\"
+  _duplicate=
+  _connext_prepend_unique_value_IFS=$IFS
+  IFS=":"
+  if [ "$AMENT_SHELL" = "zsh" ]; then
+    # convert array-like string into array
+    # to wordaround SH_WORD_SPLIT not being set
+    eval _values="(\"${=_values}\")"
+  fi
+  for _item in $_values; do
+    # ignore empty strings
+    if [ -z "$_item" ]; then
+    continue
+    fi
+    if [ "$_item" = "$_value" ]; then
+    _duplicate=1
+    fi
+  done
+  unset _item
+
+  # prepend only non-duplicates
+  if [ -z "$_duplicate" ]; then
+    # avoid trailing separator
+    if [ -z "$_values" ]; then
+      eval export $_listname=\"$_value\"
+    else
+      # field separator must not be a colon
+      unset IFS
+      eval export $_listname=\"$_value:\$$_listname\"
+    fi
+  fi
+  IFS=$_connext_prepend_unique_value_IFS
+  unset _connext_prepend_unique_value_IFS
+  unset _duplicate
+  unset _values
+
+  unset _value
+  unset _listname
+}
+
+_CONNEXTDDSMICRO_DIR_BUILD="@RTIMEHOME@"
+_CONNEXTDDSMICRO_ARCH="@RTIME_TARGET_NAME@"
+
+# detect if running on Darwin platform
+if [ "$(uname -s)" = "Darwin" ]; then
+  _PATH_VAR=DYLD_LIBRARY_PATH
+else
+  _PATH_VAR=LD_LIBRARY_PATH
+fi
+
+# Inspect environment for a Connext Micro 3.x installation.
+_CONNEXTDDSMICRO_DIR_ENV=""
+if [ -n "${RTIMEHOME}" ]; then
+  _CONNEXTDDSMICRO_DIR_ENV="${RTIMEHOME}"
+  _CONNEXTDDSMICRO_DIR_ENV_SRC=RTIMEHOME
+fi
+
+# If Connext Micro installation used at build-time is still available, use that
+# one, otherwise inspect environment to see if another one is available.
+if [ -d "${_CONNEXTDDSMICRO_DIR_BUILD}" -a -z "${CONNEXTDDSMICRO_IGNORE_BUILD}" ]; then
+  # Warn about unused environment variable.
+
+  if [ -n "${_CONNEXTDDSMICRO_DIR_ENV}" -a \
+    "${_CONNEXTDDSMICRO_DIR_ENV}" != "${_CONNEXTDDSMICRO_DIR_BUILD}" ]; then
+    printf "[@PROJECT_NAME@][warning] Using RTI Connext DDS Micro installation \
+configured during build-time (%s). The installation specified via %s (%s) \
+will be ignored. Use variable CONNEXTDDSMICRO_IGNORE_BUILD to override this behavior.\n" \
+            "${_CONNEXTDDSMICRO_DIR_BUILD}" \
+            "${_CONNEXTDDSMICRO_DIR_ENV_SRC}" \
+            "${_CONNEXTDDSMICRO_DIR_ENV_SRC}"  1>&2
+  fi
+  _CONNEXTDDSMICRO_DIR_EXPORT="${_CONNEXTDDSMICRO_DIR_BUILD}"
+else
+  _CONNEXTDDSMICRO_DIR_EXPORT="${_CONNEXTDDSMICRO_DIR_ENV}"
+fi
+
+_CONNEXTDDSMICRO_LIB="${_CONNEXTDDSMICRO_DIR_EXPORT}/lib/${_CONNEXTDDSMICRO_ARCH}"
+
+_CONNEXTDDSMICRO_DIR_EXPORT_ERROR=
+if [ -z "${_CONNEXTDDSMICRO_DIR_EXPORT}" ]; then
+  _CONNEXTDDSMICRO_DIR_EXPORT_ERROR="No RTI Connext DDS Micro installation specified"
+elif [ ! -d "${_CONNEXTDDSMICRO_DIR_EXPORT}" ]; then
+  _CONNEXTDDSMICRO_DIR_EXPORT_ERROR=$(
+    printf "RTI Connext DDS Micro installation not found (%s)" \
+      "${_CONNEXTDDSMICRO_DIR_EXPORT}")
+elif [ ! -d "${_CONNEXTDDSMICRO_LIB}" ]; then
+  _CONNEXTDDSMICRO_DIR_EXPORT_ERROR=$(
+    printf "RTI Connext DDS Micro library directory not found (%s)" \
+      "${_CONNEXTDDSMICRO_LIB}")
+fi
+
+if [ -n "${_CONNEXTDDSMICRO_DIR_EXPORT_ERROR}" ]; then
+  printf "[@PROJECT_NAME@][warning] %s. RTI Connext DDS Micro will not be available at runtime,\
+unless you already configured %s manually.\n" \
+    "${_CONNEXTDDSMICRO_DIR_EXPORT_ERROR}" \
+    "${_PATH_VAR}" 1>&2
+  _connextddsmicro_cleanup
+  return
+fi
+
+_CONNEXTDDSMICRO_BIN="${_CONNEXTDDSMICRO_DIR_EXPORT}/bin"
+
+_connextdds_prepend_unique_value PATH "${_CONNEXTDDSMICRO_BIN}"
+_connextdds_prepend_unique_value PATH "${_CONNEXTDDSMICRO_LIB}"
+_connextdds_prepend_unique_value ${_PATH_VAR} "${_CONNEXTDDSMICRO_BIN}"
+_connextdds_prepend_unique_value ${_PATH_VAR} "${_CONNEXTDDSMICRO_LIB}"
+
+export RTIMEHOME="${_CONNEXTDDSMICRO_DIR_EXPORT}" \
+       RTIME_TARGET_NAME="${_CONNEXTDDSMICRO_ARCH}" \
+       ${_PATH_VAR} \
+       PATH
+
+if [ -n "${VERBOSE}" ]; then
+  printf "[@PROJECT_NAME@][info] RTIMEHOME='%s'\n" \
+    "${RTIMEHOME}"
+  printf "[@PROJECT_NAME@][info] RTIME_TARGET_NAME='%s'\n" \
+    "${RTIME_TARGET_NAME}"
+  printf "[@PROJECT_NAME@][info] %s='%s'\n" \
+    "${_PATH_VAR}" \
+    "$(eval "echo \${${_PATH_VAR}}")"
+  printf "[@PROJECT_NAME@][info] PATH='%s'\n" \
+    "${PATH}"
+fi
+
+_connextddsmicro_cleanup

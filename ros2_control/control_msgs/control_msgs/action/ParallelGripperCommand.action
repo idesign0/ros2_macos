@@ -1,0 +1,18 @@
+# Parallel grippers refer to an end effector where two opposing fingers grasp an object from opposite sides.
+sensor_msgs/JointState command
+# name: the name(s) of the joint this command is requesting
+# position: desired position of each gripper joint (radians or meters)
+# velocity: (optional, not used if empty) max velocity of the joint allowed while moving (radians or meters / second)
+# effort: (optional, not used if empty) max effort of the joint allowed while moving (Newtons or Newton-meters)
+---
+sensor_msgs/JointState state # The current gripper state.
+# position of each joint (radians or meters)
+# optional: velocity of each joint (radians or meters / second)
+# optional: effort of each joint (Newtons or Newton-meters)
+bool stalled      # True if the gripper is exerting max effort and not moving
+bool reached_goal # True if the gripper position has reached the commanded setpoint
+---
+sensor_msgs/JointState state # The current gripper state.
+# position of each joint (radians or meters)
+# optional: velocity of each joint (radians or meters / second)
+# optional: effort of each joint (Newtons or Newton-meters)

@@ -1,0 +1,41 @@
+<package format="2">
+  <name>camera_info_manager</name>
+  <version>3.1.11</version>
+  <description>
+
+     This package provides a C++ interface for camera calibration
+     information.  It provides CameraInfo, and handles SetCameraInfo
+     service requests, saving and restoring the camera calibration
+     data.
+
+  </description>
+
+  <author>Jack O'Quin</author>
+  <author email="michael@openrobotics.org">Michael Carroll</author>
+
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+  <maintainer email="geoff@openrobotics.org">Geoffrey Biggs</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/camera_info_manager</url>
+  <url type="bugtracker">https://github.com/ros-perception/image_common/issues</url>
+  <url type="repository">https://github.com/ros-perception/image_common</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <depend>ament_index_cpp</depend>
+  <depend>camera_calibration_parsers</depend>
+  <depend>rclcpp</depend>
+  <depend>rcpputils</depend>
+  <depend>sensor_msgs</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

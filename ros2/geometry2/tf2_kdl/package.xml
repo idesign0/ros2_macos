@@ -1,0 +1,32 @@
+<package format="2">
+  <name>tf2_kdl</name>
+  <version>0.25.13</version>
+  <description>
+    KDL binding for tf2
+  </description>
+  <maintainer email="clalancette@openrobotics.org">Chris Lalancette</maintainer>
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/tf2</url>
+  <author email="tfoote@osrfoundation.org">Tully Foote</author>
+  <author>Wim Meeussen</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>builtin_interfaces</depend>
+  <depend>geometry_msgs</depend>
+  <depend>orocos_kdl_vendor</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+
+  <exec_depend>python_orocos_kdl_vendor</exec_depend>
+  <exec_depend>tf2_ros_py</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>rclcpp</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

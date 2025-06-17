@@ -1,0 +1,25 @@
+module WriteTypes {
+  struct a {
+    @key
+    octet k[3];
+    unsigned long long ll;
+  };
+
+  struct b {
+    @key
+    unsigned short k[3];
+    unsigned long long ll;
+  };
+
+  struct c {
+    @key
+    unsigned long k[3];
+    unsigned long long ll;
+  };
+
+  struct d {
+    @key
+    unsigned long long k[3];
+    unsigned long long ll;
+  };
+};

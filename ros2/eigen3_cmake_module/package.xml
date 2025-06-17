@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eigen3_cmake_module</name>
+  <version>0.1.1</version>
+  <description>Exports a custom CMake module to find Eigen3.</description>
+
+  <author email="sloretz@openrobotics.org">Shane Loretz</author>
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
+
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <test_depend>ament_cmake_copyright</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

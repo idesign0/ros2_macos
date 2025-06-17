@@ -1,0 +1,24 @@
+{{name}} ({{type}}){%- filter indent(width=2) %}{% if description|length %}
+{{description}}
+{% endif %}
+{%- if read_only %}
+Read only: {{read_only}}
+{% endif %}
+{%- if default_value|length %}
+Default:  {{default_value}}
+{% endif %}
+{%- if constraints|length %}
+Constraints:
+
+{%- filter indent(width=2) %}
+
+{{constraints}}
+{% endfilter -%}
+
+{% endif %}
+{% endfilter -%}
+
+{%- if additional_constraints|length %}
+Additional Constraints:
+{{additional_constraints}}
+{% endif %}

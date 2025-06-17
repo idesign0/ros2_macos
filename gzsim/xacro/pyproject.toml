@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xacro"
+dynamic = ["version"]
+description = "xacro is a macro language for XML"
+readme = "README.md"
+license = {file = "LICENSE"}
+dependencies = ["pyyaml"]
+requires-python = ">= 3.8"
+
+[project.scripts]
+xacro = "xacro:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["xacro"]
+exclude = []
+namespaces = false
+
+[tool.setuptools_scm]
+
+[project.urls]
+Documentation = "https://github.com/ros/xacro/wiki"
+Repository = "https://github.com/ros/xacro"

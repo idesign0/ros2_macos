@@ -1,0 +1,9 @@
+float64 position
+builtin_interfaces/Duration min_duration
+float64 max_velocity
+---
+---
+std_msgs/Header header
+float64 position
+float64 velocity
+float64 error

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>rosidl_runtime_py</name>
+  <version>0.9.3</version>
+  <description>Runtime utilities for working with generated ROS interfaces in Python.</description>
+
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
+
+  <license>Apache License 2.0</license>
+
+  <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
+  <author email="jacob@openrobotics.org">Jacob Perron</author>
+
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>rosidl_parser</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>ament_xmllint</test_depend>
+  <test_depend>python3-pytest</test_depend>
+  <test_depend>std_msgs</test_depend>
+  <test_depend>std_srvs</test_depend>
+  <test_depend>test_msgs</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

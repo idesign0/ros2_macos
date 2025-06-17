@@ -1,0 +1,55 @@
+version: 1.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+skip_tags: true
+os: Visual Studio 2017
+init:
+  - cmd: rd /s /q %CHOCOLATEYINSTALL%
+  - ps: iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+install:
+  - cinst cmake -y
+  - set "PATH=%PATH%;C:\Program Files\CMake\bin"
+  - cmake --version
+  - .\.appveyor\remove_python27_from_path.bat
+  - set "PATH=%PATH%;C:\Python37"
+  - python --version
+  - python -m pip install -U setuptools pip
+  - python -m pip install EmPy
+  - python -m pip install pyparsing
+  - python -m pip install colcon-core colcon-defaults colcon-library-path colcon-metadata colcon-output colcon-package-information colcon-package-selection colcon-parallel-executor colcon-powershell colcon-python-setup-py colcon-recursive-crawl colcon-test-result colcon-cmake colcon-ros
+  - mkdir build
+  - cd build
+  - mkdir src
+  - cd src
+  - python -c "import shutil; shutil.copytree('../..', './class_loader', ignore=shutil.ignore_patterns('build'))"
+  - mkdir ament
+  - cd ament
+  - git clone https://github.com/ament/ament_cmake.git
+  - git clone https://github.com/ament/ament_lint.git
+  - git clone https://github.com/ament/ament_package.git
+  - git clone https://github.com/ament/googletest.git
+  - git clone https://github.com/ament/uncrustify_vendor.git
+  - cd ..
+  - mkdir osrf
+  - cd osrf
+  - git clone https://github.com/osrf/osrf_testing_tools_cpp.git
+  - cd ..
+  - mkdir ros2
+  - cd ros2
+  - git clone https://github.com/ros2/ament_cmake_ros.git
+  - git clone https://github.com/ros2/console_bridge_vendor.git
+  - git clone https://github.com/ros2/launch.git
+  - git clone https://github.com/ros2/python_cmake_module.git
+  - git clone https://github.com/ros2/rcutils.git
+  - git clone https://github.com/ros2/rcpputils.git
+  - cd ..\..\..
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
+  - set "PATH=%PATH%;C:\Python37;C:\Python37\Scripts"
+build_script:
+  - cd build
+  - colcon build --packages-up-to class_loader --packages-skip class_loader
+  - colcon build --packages-select class_loader --event-handlers console_direct+
+  - colcon test --packages-select class_loader --event-handlers console_direct+ --ctest-args -E cppcheck
+  - colcon test-result --test-result-base build
+deploy: off
+test: off

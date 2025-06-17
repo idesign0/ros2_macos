@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>class_loader</name>
+  <version>2.2.0</version>
+  <description>
+    The class_loader package is a ROS-independent package for loading plugins during runtime and the foundation of the higher level ROS "pluginlib" library.
+    class_loader utilizes the host operating system's runtime loader to open runtime libraries (e.g. .so/.dll files), introspect the library for exported plugin classes, and allows users to instantiate objects of these exported classes without the explicit declaration (i.e. header file) for those classes.
+  </description>
+
+  <maintainer email="geoff@openrobotics.org">Geoffrey Biggs</maintainer>
+  <maintainer email="michael@openrobotics.org">Michael Carroll</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/class_loader</url>
+
+  <author>Dirk Thomas</author>
+  <author email="michel@ekumenlabs.com">Michel Hidalgo</author>
+  <author>Mirza Shah</author>
+  <author email="stevenragnarok@osrfoundation.org">Steven! Ragnarök</author>
+
+  <build_depend>console_bridge_vendor</build_depend>
+  <build_depend>libconsole-bridge-dev</build_depend>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <exec_depend>console_bridge_vendor</exec_depend>
+  <exec_depend>libconsole-bridge-dev</exec_depend>
+
+  <depend>rcpputils</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

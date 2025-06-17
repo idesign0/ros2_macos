@@ -1,0 +1,40 @@
+Checks: >
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  concurrency-*,
+  cppcoreguidelines-*,
+  misc-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -bugprone-unchecked-optional-access,
+  -concurrency-mt-unsafe,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -misc-include-cleaner,
+  -misc-non-private-member-variables-in-classes,
+  -modernize-avoid-bind,
+  -modernize-use-trailing-return-type,
+  -readability-avoid-unconditional-preprocessor-if,
+  -readability-braces-around-statements,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -readability-uppercase-literal-suffix,
+CheckOptions:
+  - { key: readability-identifier-naming.ClassCase,           value: CamelCase  }
+  - { key: readability-identifier-naming.EnumCase,            value: CamelCase  }
+  - { key: readability-identifier-naming.TypeAliasCase,       value: CamelCase  }
+  - { key: readability-identifier-naming.NamespaceCase,       value: lower_case }
+  - { key: readability-identifier-naming.FunctionCase,        value: lower_case }
+  - { key: readability-identifier-naming.VariableCase,        value: lower_case }
+  - { key: readability-identifier-naming.ParameterCase,       value: lower_case }
+  - { key: readability-identifier-naming.MemberCase,          value: lower_case }
+  - { key: readability-identifier-naming.PrivateMemberCase,   value: lower_case }
+  - { key: readability-identifier-naming.PrivateMemberSuffix, value: _ }
+  - { key: readability-function-cognitive-complexity.Threshold,    value: 15   }
+  - { key: readability-function-cognitive-complexity.IgnoreMacros, value: True }
+HeaderFilterRegex: '.*'
+WarningsAsErrors: '*'

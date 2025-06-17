@@ -1,0 +1,32 @@
+# All settings not listed here will use the Doxygen default values.
+
+PROJECT_NAME           = "rmw_dds_common"
+PROJECT_NUMBER         = master
+PROJECT_BRIEF          = "Define a common interface between DDS implementations of ROS middleware."
+
+INPUT                  = ./include ./README.md ./QUALITY_DECLARATION.md ./docs/FEATURES.md
+USE_MDFILE_AS_MAINPAGE = ./README.md
+RECURSIVE              = YES
+OUTPUT_DIRECTORY       = doc_output
+
+SORT_MEMBER_DOCS       = NO
+
+GENERATE_LATEX         = NO
+
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+PREDEFINED             += RMW_DDS_COMMON_PUBLIC=
+
+INTERNAL_DOCS          = NO
+HIDE_UNDOC_MEMBERS     = YES
+
+# Tag files that do not exist will produce a warning and cross-project linking will not work.
+TAGFILES += "../../../../doxygen_tag_files/cppreference-doxygen-web.tag.xml=http://en.cppreference.com/w/"
+# Consider changing "latest" to the version you want to reference (e.g. beta1 or 1.0.0)
+TAGFILES += "../../../../doxygen_tag_files/rcutils.tag=http://docs.ros2.org/latest/api/rcutils/"
+TAGFILES += "../../../../doxygen_tag_files/rcpputils.tag=http://docs.ros2.org/latest/api/rcpputils/"
+TAGFILES += "../../../../doxygen_tag_files/rmw.tag=http://docs.ros2.org/latest/api/rmw/"
+TAGFILES += "../../../../doxygen_tag_files/rosidl_runtime_cpp.tag=http://docs.ros2.org/latest/api/rosidl_runtime_cpp/"
+# Uncomment to generate tag files for cross-project linking.
+GENERATE_TAGFILE = "../../../../doxygen_tag_files/rmw_dds_common.tag"

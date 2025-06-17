@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>generate_parameter_library_py</name>
+  <version>0.4.0</version>
+  <description>Python to generate ROS parameter library.</description>
+  <maintainer email="paul.gesel@picknik.ai">Paul Gesel</maintainer>
+  <license>BSD-3-Clause</license>
+  <author email="paul.gesel@picknik.ai">Paul Gesel</author>
+
+  <depend>python3</depend>
+  <depend>python3-jinja2</depend>
+  <depend>python3-typeguard</depend>
+  <depend>python3-yaml</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

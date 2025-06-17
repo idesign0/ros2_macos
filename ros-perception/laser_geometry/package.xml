@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format2.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>laser_geometry</name>
+  <version>2.4.0</version>
+  <description>
+    This package contains a class for converting from a 2D laser scan as defined by
+    sensor_msgs/LaserScan into a point cloud as defined by sensor_msgs/PointCloud
+    or sensor_msgs/PointCloud2. In particular, it contains functionality to account
+    for the skew resulting from moving robots or tilting laser scanners.
+  </description>
+
+  <maintainer email="mabel@openrobotics.org">Mabel Zhang</maintainer>
+
+  <license>BSD</license>
+
+  <author email="dave.hershberger@sri.com">Dave Hershberger</author>
+  <author>Tully Foote</author>
+  <author>Radu Bogdan Rusu</author>
+  <author email="william@osrfoundation.org">William Woodall</author>
+
+  <url>http://ros.org/wiki/laser_geometry</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>eigen3_cmake_module</buildtool_depend>
+
+  <buildtool_export_depend>eigen3_cmake_module</buildtool_export_depend>
+
+  <build_depend>eigen</build_depend>
+  <build_depend>rclcpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>tf2</build_depend>
+
+  <build_export_depend>eigen</build_export_depend>
+
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>sensor_msgs_py</exec_depend>
+  <exec_depend>tf2</exec_depend>
+
+  <test_depend>ament_cmake_cppcheck</test_depend>
+  <test_depend>ament_cmake_cpplint</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_pytest</test_depend>
+  <test_depend>ament_cmake_uncrustify</test_depend>
+  <test_depend>python_cmake_module</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

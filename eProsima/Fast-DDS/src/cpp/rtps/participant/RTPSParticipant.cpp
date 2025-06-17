@@ -1,0 +1,218 @@
+// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * @file RTPSParticipant.cpp
+ *
+ */
+
+#include <fastdds/rtps/Endpoint.h>
+#include <fastdds/rtps/participant/RTPSParticipant.h>
+#include <rtps/participant/RTPSParticipantImpl.h>
+
+namespace eprosima {
+namespace fastrtps {
+namespace rtps {
+
+RTPSParticipant::RTPSParticipant(
+        RTPSParticipantImpl* pimpl)
+    : mp_impl(pimpl)
+{
+}
+
+RTPSParticipant::~RTPSParticipant()
+{
+    mp_impl = nullptr;
+}
+
+const GUID_t& RTPSParticipant::getGuid() const
+{
+    return mp_impl->getGuid();
+}
+
+void RTPSParticipant::announceRTPSParticipantState()
+{
+    return mp_impl->announceRTPSParticipantState();
+}
+
+void RTPSParticipant::stopRTPSParticipantAnnouncement()
+{
+    return mp_impl->stopRTPSParticipantAnnouncement();
+}
+
+void RTPSParticipant::resetRTPSParticipantAnnouncement()
+{
+    return mp_impl->resetRTPSParticipantAnnouncement();
+}
+
+bool RTPSParticipant::newRemoteWriterDiscovered(
+        const GUID_t& pguid,
+        int16_t userDefinedId)
+{
+    return mp_impl->newRemoteEndpointDiscovered(pguid, userDefinedId, WRITER);
+}
+
+bool RTPSParticipant::newRemoteReaderDiscovered(
+        const GUID_t& pguid,
+        int16_t userDefinedId)
+{
+    return mp_impl->newRemoteEndpointDiscovered(pguid, userDefinedId, READER);
+}
+
+uint32_t RTPSParticipant::getRTPSParticipantID() const
+{
+    return mp_impl->getRTPSParticipantID();
+}
+
+bool RTPSParticipant::registerWriter(
+        RTPSWriter* Writer,
+        const TopicAttributes& topicAtt,
+        const WriterQos& wqos)
+{
+    return mp_impl->registerWriter(Writer, topicAtt, wqos);
+}
+
+bool RTPSParticipant::registerReader(
+        RTPSReader* Reader,
+        const TopicAttributes& topicAtt,
+        const ReaderQos& rqos,
+        const fastdds::rtps::ContentFilterProperty* content_filter)
+{
+    return mp_impl->registerReader(Reader, topicAtt, rqos, content_filter);
+}
+
+void RTPSParticipant::update_attributes(
+        const RTPSParticipantAttributes& patt)
+{
+    mp_impl->update_attributes(patt);
+}
+
+bool RTPSParticipant::updateWriter(
+        RTPSWriter* Writer,
+        const TopicAttributes& topicAtt,
+        const WriterQos& wqos)
+{
+    return mp_impl->updateLocalWriter(Writer, topicAtt, wqos);
+}
+
+bool RTPSParticipant::updateReader(
+        RTPSReader* Reader,
+        const TopicAttributes& topicAtt,
+        const ReaderQos& rqos,
+        const fastdds::rtps::ContentFilterProperty* content_filter)
+{
+    return mp_impl->updateLocalReader(Reader, topicAtt, rqos, content_filter);
+}
+
+std::vector<std::string> RTPSParticipant::getParticipantNames() const
+{
+    return mp_impl->getParticipantNames();
+}
+
+const RTPSParticipantAttributes& RTPSParticipant::getRTPSParticipantAttributes() const
+{
+    return mp_impl->getRTPSParticipantAttributes();
+}
+
+uint32_t RTPSParticipant::getMaxMessageSize() const
+{
+    return mp_impl->getMaxMessageSize();
+}
+
+uint32_t RTPSParticipant::getMaxDataSize() const
+{
+    return mp_impl->getMaxDataSize();
+}
+
+ResourceEvent& RTPSParticipant::get_resource_event() const
+{
+    return mp_impl->getEventResource();
+}
+
+WLP* RTPSParticipant::wlp() const
+{
+    return mp_impl->wlp();
+}
+
+fastdds::dds::builtin::TypeLookupManager* RTPSParticipant::typelookup_manager() const
+{
+    return mp_impl->typelookup_manager();
+}
+
+bool RTPSParticipant::get_new_entity_id(
+        EntityId_t& entityId)
+{
+    return mp_impl->get_new_entity_id(entityId);
+}
+
+void RTPSParticipant::set_check_type_function(
+        std::function<bool(const std::string&)>&& check_type)
+{
+    mp_impl->set_check_type_function(std::move(check_type));
+}
+
+void RTPSParticipant::set_listener(
+        RTPSParticipantListener* listener)
+{
+    mp_impl->set_listener(listener);
+}
+
+uint32_t RTPSParticipant::get_domain_id() const
+{
+    return mp_impl->get_domain_id();
+}
+
+void RTPSParticipant::enable()
+{
+    mp_impl->enable();
+}
+
+#if HAVE_SECURITY
+
+bool RTPSParticipant::is_security_enabled_for_writer(
+        const WriterAttributes& writer_attributes)
+{
+    return mp_impl->is_security_enabled_for_writer(writer_attributes);
+}
+
+bool RTPSParticipant::is_security_enabled_for_reader(
+        const ReaderAttributes& reader_attributes)
+{
+    return mp_impl->is_security_enabled_for_reader(reader_attributes);
+}
+
+#endif // if HAVE_SECURITY
+
+#ifdef FASTDDS_STATISTICS
+
+bool RTPSParticipant::add_statistics_listener(
+        std::shared_ptr<fastdds::statistics::IListener> listener,
+        uint32_t kind)
+{
+    return mp_impl->add_statistics_listener(listener, kind);
+}
+
+bool RTPSParticipant::remove_statistics_listener(
+        std::shared_ptr<fastdds::statistics::IListener> listener,
+        uint32_t kind)
+{
+    return mp_impl->remove_statistics_listener(listener, kind);
+}
+
+#endif // FASTDDS_STATISTICS
+
+} /* namespace rtps */
+} /* namespace fastrtps */
+} /* namespace eprosima */
+

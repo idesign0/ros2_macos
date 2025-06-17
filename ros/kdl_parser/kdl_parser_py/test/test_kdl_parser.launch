@@ -1,0 +1,3 @@
+<launch>
+  <test test-name="test_kdl_parser" pkg="kdl_parser_py" type="test_kdl_parser.py" args="$(find kdl_parser_py)/test/test.urdf"/>
+</launch>

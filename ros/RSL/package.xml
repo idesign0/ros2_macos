@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rsl</name>
+  <version>1.1.0</version>
+  <description>ROS Support Library</description>
+  <author email="maybe@tylerjw.dev">Tyler Weaver</author>
+  <author email="chrisjthrasher@gmail.com">Chris Thrasher</author>
+  <maintainer email="maybe@tylerjw.dev">Tyler Weaver</maintainer>
+  <maintainer email="chrisjthrasher@gmail.com">Chris Thrasher</maintainer>
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>doxygen</buildtool_depend>
+
+  <depend>eigen</depend>
+  <depend>fmt</depend>
+  <depend>rclcpp</depend>
+  <depend>tcb_span</depend>
+  <depend>tl_expected</depend>
+
+  <test_depend>ament_cmake_ros</test_depend>
+  <test_depend>clang-tidy</test_depend>
+  <test_depend>git</test_depend>
+  <test_depend>range-v3</test_depend>
+</package>

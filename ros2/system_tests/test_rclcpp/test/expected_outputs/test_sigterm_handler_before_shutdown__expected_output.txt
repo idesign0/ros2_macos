@@ -1,0 +1,9 @@
+[INFO] [test_sigterm_handler]: Registered custom signal handler.
+[INFO] [test_sigterm_handler]: Called rclcpp::init.
+[INFO] [test_sigterm_handler]: Waiting to give an opportunity for interrupt...
+[INFO] [rclcpp]: signal_handler(signum=15)
+[INFO] [test_sigterm_handler]: Custom sigterm handler called.
+[INFO] [test_sigterm_handler]: Calling rclcpp::shutdown...
+[INFO] [test_sigterm_handler]: Called rclcpp::shutdown.
+[INFO] [test_sigterm_handler]: Waiting to give an opportunity for interrupt...
+[INFO] [test_sigterm_handler]: Exiting.

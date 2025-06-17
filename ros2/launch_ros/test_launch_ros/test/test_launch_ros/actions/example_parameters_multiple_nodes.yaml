@@ -1,0 +1,9 @@
+/ns_1:
+  /node_1:
+    ros__parameters:
+      param_1: 11
+      param_2: 22
+  node_2:
+    ros__parameters:
+      param_3: 33
+      param_4: 44

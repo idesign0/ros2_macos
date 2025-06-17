@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>tl_expected</name>
+  <version>1.0.2</version>
+  <description>C++11/14/17 std::expected with functional-style extensions</description>
+  <maintainer email="maybe@tylerjw.dev">Tyler Weaver</maintainer>
+
+  <author>Sy Brand</author>
+  <license>Creative Commons Zero v1.0 Universal</license>
+  <url>https://github.com/TartanLlama/expected</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

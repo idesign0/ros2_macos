@@ -1,0 +1,18 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/Users/dhruvpatel29/Documents/GitHub/ros2/install/polygon_plugins/include/**",
+        "/Users/dhruvpatel29/Documents/GitHub/ros2/install/polygon_base/include/**",
+        "/Users/dhruvpatel29/Documents/GitHub/ros2/install/my_robot_interfaces/include/**",
+        "/Users/dhruvpatel29/miniconda3/envs/ros2/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

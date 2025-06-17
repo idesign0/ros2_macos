@@ -1,0 +1,26 @@
+name: Humble Source Build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - humble
+  schedule:
+    # Run every day to detect flakiness and broken dependencies
+    - cron: '03 3 * * *'
+
+jobs:
+  source:
+    uses: ros-controls/ros2_control_ci/.github/workflows/reusable-ros-tooling-source-build.yml@master
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - ROS_DISTRO: humble
+          CONTAINER: ""
+          OS_NAME: ubuntu-22.04
+    with:
+      ros_distro: ${{ matrix.ROS_DISTRO }}
+      ref: humble
+      ros2_repo_branch: ${{ matrix.ROS_DISTRO }}
+      os_name: ${{ matrix.OS_NAME }}
+      container: ${{ matrix.CONTAINER }}

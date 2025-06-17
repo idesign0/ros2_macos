@@ -1,0 +1,10 @@
+Setting parameters...
+Listing parameters...
+
+Parameter names:
+ bar
+ foo
+ foo.first
+ foo.second
+Parameter prefixes:
+ foo

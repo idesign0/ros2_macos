@@ -1,0 +1,64 @@
+# generated from test_rclcpp/test/test_n_nodes.py.in
+
+import os
+
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+
+import launch_testing
+import launch_testing.actions
+import launch_testing.asserts
+import launch_testing_ros
+
+import unittest
+
+
+def generate_test_description():
+    launch_description = LaunchDescription()
+
+    env = None
+    if '@TEST_RMW_IMPLEMENTATION@':
+        env = dict(os.environ)
+        env['RMW_IMPLEMENTATION'] = '@TEST_RMW_IMPLEMENTATION@'
+
+    for i in range(@TEST_NUM_NODES@):
+        launch_description.add_action(
+            ExecuteProcess(
+                cmd=['@TEST_EXECUTABLE1@'],
+                name='node_with_name_' + str(i),
+                env=env,
+            )
+        )
+
+    checking_process = ExecuteProcess(
+        cmd=['@TEST_EXECUTABLE2@'] + '@TEST_NUM_NODES@'.split(' '),
+        name='node_check_names',
+        env=env
+    )
+    launch_description.add_action(checking_process)
+    launch_description.add_action(
+        launch_testing.actions.ReadyToTest()
+    )
+    return launch_description, locals()
+
+
+class TestNNodes(unittest.TestCase):
+
+    def test_@TEST_NUM_NODES@_nodes(self, proc_info, checking_process):
+        proc_info.assertWaitForShutdown(checking_process, timeout=10)
+
+
+@launch_testing.post_shutdown_test()
+class TestNNodesAfterShutdown(unittest.TestCase):
+
+    def test_@TEST_NUM_NODES@_nodes(self, proc_info):
+        launch_testing.asserts.assertExitCodes(
+            proc_info,
+            [launch_testing.asserts.EXIT_OK],
+            'node_check_names'
+        )
+        for i in range(@TEST_NUM_NODES@):
+            launch_testing.asserts.assertExitCodes(
+                proc_info,
+                process='node_with_name_' + str(i),
+            )

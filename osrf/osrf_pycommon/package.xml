@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>osrf_pycommon</name>
+  <version>2.1.6</version>
+  <description>Commonly needed Python modules, used by Python software developed at OSRF.</description>
+
+  <maintainer email="william@openrobotics.org">William Woodall</maintainer>
+
+  <license>Apache License 2.0</license>
+
+  <author email="william@osrfoundation.org">William Woodall</author>
+
+  <exec_depend>python3-importlib-metadata</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

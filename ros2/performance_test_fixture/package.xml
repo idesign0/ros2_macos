@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>performance_test_fixture</name>
+  <version>0.0.9</version>
+  <description>
+    Test fixture and CMake macro for using osrf_testing_tools_cpp with Google Benchmark
+  </description>
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="scott@openrobotics.org">Scott K Logan</author>
+
+  <buildtool_depend>ament_cmake_core</buildtool_depend>
+  <buildtool_depend>ament_cmake_export_dependencies</buildtool_depend>
+  <buildtool_depend>ament_cmake_export_targets</buildtool_depend>
+  <buildtool_depend>ament_cmake_test</buildtool_depend>
+
+  <buildtool_export_depend>ament_cmake_google_benchmark</buildtool_export_depend>
+
+  <depend>google_benchmark_vendor</depend>
+  <depend>osrf_testing_tools_cpp</depend>
+
+  <test_depend>ament_cmake_google_benchmark</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

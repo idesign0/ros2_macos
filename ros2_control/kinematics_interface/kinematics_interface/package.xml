@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>kinematics_interface</name>
+  <version>0.4.0</version>
+  <description>Kinematics interface for ROS 2 control</description>
+  <maintainer email="denis@stogl.de">Denis Štogl</maintainer>
+  <maintainer email="bence.magyar.robotics@gmail.com">Bence Magyar</maintainer>
+  <maintainer email="zelenak@picknik.ai">Andy Zelenak</maintainer>
+  <maintainer email="paul.gesel@picknik.ai">Paul Gesel</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>eigen</depend>
+  <depend>rclcpp_lifecycle</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

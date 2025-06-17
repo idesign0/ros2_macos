@@ -1,0 +1,42 @@
+<package format="2">
+  <name>resource_retriever</name>
+  <version>3.1.3</version>
+  <description>
+   This package retrieves data from url-format files such as http://,
+   ftp://, package:// file://, etc., and loads the data into memory.
+   The package:// url for ros packages is translated into a local
+   file:// url.  The resourse retriever was initially designed to load
+   mesh files into memory, but it can be used for any type of
+   data. The resource retriever is based on the the libcurl library.
+  </description>
+
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+
+  <license>BSD</license>
+
+  <author email="clalancette@osrfoundation.org">Chris Lalancette</author>
+  <author email="isucan@gmail.com">Ioan Sucan</author>
+  <author email="jfaust@willowgarage.com">Josh Faust</author>
+  <author email="sloretz@osrfoundation.org">Shane Loretz</author>
+
+  <url type="website">http://ros.org/wiki/resource_retriever</url>
+  <url type="repository">https://github.com/ros/robot_model</url>
+  <url type="bugtracker">https://github.com/ros/robot_model/issues</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <depend>ament_index_cpp</depend>
+  <depend>ament_index_python</depend>
+  <depend>libcurl_vendor</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_pytest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>python3-pytest</test_depend>
+  <test_depend>python_cmake_module</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

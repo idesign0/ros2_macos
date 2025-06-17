@@ -1,0 +1,59 @@
+# generated from test_rclcpp/test/test_executable_output.py.in
+# generated code does not contain a copyright notice
+
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+
+import launch_testing
+import launch_testing.actions
+import launch_testing.asserts
+import launch_testing_ros
+
+import os
+import unittest
+
+
+def generate_test_description():
+    env = os.environ.copy()
+    env['RCUTILS_CONSOLE_OUTPUT_FORMAT'] = '[{severity}] [{name}]: {message}'
+    launch_description = LaunchDescription()
+    proc_under_test = ExecuteProcess(
+        cmd=['@TEST_EXECUTABLE@'],
+        name='@TEST_EXECUTABLE_NAME@',
+        sigterm_timeout='15',
+        output='screen',
+        env=env,
+    )
+    launch_description.add_action(proc_under_test)
+    launch_description.add_action(
+        launch_testing.actions.ReadyToTest()
+    )
+    return launch_description, locals()
+
+
+class TestExecutableOutput(unittest.TestCase):
+
+    def @TEST_NAME@(self, proc_output, proc_under_test):
+        output_filter = launch_testing_ros.tools.basic_output_filter(
+            filtered_rmw_implementation='@rmw_implementation@'
+        )
+        proc_output.assertWaitFor(
+            expected_output=launch_testing.tools.expected_output_from_file(
+                path='@TEST_EXECUTABLE_TRIGGER_SHUTDOWN_OUTPUT@'
+            ), process=proc_under_test, output_filter=output_filter, timeout=10
+        )
+
+
+@launch_testing.post_shutdown_test()
+class TestExecutableOutputAfterShutdown(unittest.TestCase):
+
+    def @TEST_NAME@(self, proc_output, proc_under_test):
+        output_filter = launch_testing_ros.tools.basic_output_filter(
+            filtered_rmw_implementation='@rmw_implementation@'
+        )
+        launch_testing.asserts.assertInStderr(
+            proc_output,
+            expected_output=launch_testing.tools.expected_output_from_file(
+                path='@TEST_EXECUTABLE_EXPECTED_OUTPUT@'
+            ), process=proc_under_test, output_filter=output_filter
+        )

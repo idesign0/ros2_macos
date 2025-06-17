@@ -1,0 +1,88 @@
+# Notices for Eclipse iceoryx
+
+This content is produced and maintained by the Eclipse iceoryx project.
+
+* Project home: <https://projects.eclipse.org/projects/technology.iceoryx>
+
+## Trademarks
+
+ Eclipse iceoryx is a trademark of the Eclipse Foundation.
+
+## Copyright
+
+All content is the property of the respective authors or their employers. For
+more information regarding authorship of content, please consult the listed
+source code repository logs.
+
+## Declared Project Licenses
+
+This program and the accompanying materials are made available under the terms
+of the Apache License, Version 2.0 which is available at
+<https://www.apache.org/licenses/LICENSE-2.0>.
+
+SPDX-License-Identifier: Apache-2.0
+
+## Source Code
+
+The project maintains the following source code repositories:
+
+* <https://github.com/eclipse-iceoryx/iceoryx>
+
+## Third-party Dependencies
+
+This project leverages the following third party content.
+The corresponding license files can be found at <https://github.com/eclipse-iceoryx/iceoryx/tree/v2.0.0/doc/3rd_party_licenses> or in the folder `share/doc/iceoryx/3rd_party_licenses` of your local iceoryx installation.
+
+### System Libraries
+
+libacl library
+
+* Usage: as-is, dynamic-linking
+* Notes: system-header `<sys/acl.h>` is used.
+
+libncurses library
+
+* Usage: as-is, dynamic-linking
+* Notes: system-header `<ncurses.h>` is used.
+
+### Optional Build Dependencies
+
+cpptoml library (v0.1.1)
+
+* License: MIT
+* Project: <https://github.com/skystrife/cpptoml>
+* Source: <https://github.com/skystrife/cpptoml/tree/v0.1.1>
+* Usage: as-is, static-linking
+* enabled by default build
+
+Eclipse Cyclone DDS (Branch master)
+
+* License: Eclipse Public License v. 2.0 or the Eclipse Distribution License v. 1.0
+* Project: <https://projects.eclipse.org/projects/iot.cyclonedds>
+* Source: <https://github.com/eclipse-cyclonedds/cyclonedds>
+* Usage: as-is, static-linking
+
+C++ binding for Eclipse Cyclone DDS (Branch master)
+
+* License: Eclipse Public License v. 2.0 or the Eclipse Distribution License v. 1.0
+* Project: <https://projects.eclipse.org/projects/iot.cyclonedds>
+* Source: <https://github.com/eclipse-cyclonedds/cyclonedds-cxx>
+* Usage: as-is, static-linking
+
+### Tools used by iceoryx
+
+Google Test (release-1.10.0)
+
+* License: BSD 3-Clause "New" or "Revised" License
+* Project: <https://github.com/google/googletest>
+* Source: <https://github.com/google/googletest/tree/release-1.10.0>
+* Usage: as-is, static-linking
+
+## Cryptography
+
+Content may contain encryption software. The country in which you are currently
+may have restrictions on the import, possession, and use, and/or re-export to
+another country, of encryption software. BEFORE using any encryption software,
+please check the country's laws, regulations and policies concerning the import,
+possession, or use, and re-export of encryption software, to see if this is
+permitted.

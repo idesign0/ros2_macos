@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format2.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>pybind11_vendor</name>
+  <version>2.4.2</version>
+  <description>
+    Wrapper around pybind11.
+  </description>
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
+  <license>Apache License 2.0</license>  <!-- the contents of this package are Apache 2.0 -->
+  <license>BSD</license>  <!-- pybind11 is BSD -->
+
+  <url type="website">https://github.com/pybind/pybind11</url>
+  <author email="michael@openrobotics.org">Michael Carroll</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>git</buildtool_depend>
+
+  <depend>pybind11-dev</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+

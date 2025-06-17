@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format2.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>tinyxml2_vendor</name>
+  <version>0.7.6</version>
+  <description>
+    Wrapper around tinyxml2, providing nothing but a dependency on tinyxml2, on some systems.
+    On others, it provides a fixed CMake module or even an ExternalProject build of tinyxml2.
+  </description>
+
+  <maintainer email="audrow@openrobotics.org">Audrow Nash</maintainer>
+
+  <license>Apache License 2.0</license>
+
+  <author email="michel@ekumenlabs.com">Michel Hidalgo</author>
+  <author email="william@osrfoundation.org">William Woodall</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>tinyxml2</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

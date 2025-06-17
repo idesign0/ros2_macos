@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>rosbag2_test_common</name>
+  <version>0.15.14</version>
+  <description>Commonly used test helper classes and fixtures for rosbag2</description>
+  <maintainer email="michael.orlov@apex.ai">Michael Orlov</maintainer>
+  <maintainer email="geoff@openrobotics.org">Geoffrey Biggs</maintainer>
+  <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
+  <maintainer email="me@emersonknapp.com">Emerson Knapp</maintainer>
+  <maintainer email="ros-tooling@googlegroups.com">ROS Tooling Working Group</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>rclcpp</build_depend>
+  <build_depend>rcutils</build_depend>
+
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>rcutils</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

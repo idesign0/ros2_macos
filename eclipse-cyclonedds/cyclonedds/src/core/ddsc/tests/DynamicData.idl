@@ -1,0 +1,13 @@
+module DynamicData {
+  struct Msg {
+    string message;
+    int32 scalar;
+    sequence<int32> values;
+  };
+
+  struct KMsg {
+    @key string message;
+    int32 scalar;
+    sequence<int32> values;
+  };
+};

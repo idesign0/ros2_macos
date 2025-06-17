@@ -1,0 +1,49 @@
+<package format="2">
+  <name>urdf</name>
+  <version>2.6.1</version>
+  <description>
+    This package contains a C++ parser for the Unified Robot Description
+    Format (URDF), which is an XML format for representing a robot model.
+    The code API of the parser has been through our review process and will remain
+    backwards compatible in future releases.
+  </description>
+
+  <author email="isucan@gmail.com">Ioan Sucan</author>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+
+  <license>BSD</license>
+
+  <url type="repository">https://github.com/ros2/urdf</url>
+  <url type="bugtracker">https://github.com/ros2/urdf/issues</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <build_depend>pluginlib</build_depend>
+  <build_depend>tinyxml2_vendor</build_depend>
+  <build_depend>urdfdom</build_depend>
+  <build_depend>urdf_parser_plugin</build_depend>
+  <!-- use ROS 2 package urdfdom_headers until upstream provides 1.0.0.-->
+  <build_depend>urdfdom_headers</build_depend>
+
+  <exec_depend>pluginlib</exec_depend>
+  <exec_depend>tinyxml2_vendor</exec_depend>
+  <exec_depend>urdfdom</exec_depend>
+  <!-- use ROS 2 package urdfdom_headers until upstream provides 1.0.0.-->
+  <exec_depend>urdfdom_headers</exec_depend>
+
+  <build_export_depend>pluginlib</build_export_depend>
+  <build_export_depend>urdf_parser_plugin</build_export_depend>
+  <build_export_depend>urdfdom</build_export_depend>
+  <!-- use ROS 2 package urdfdom_headers until upstream provides 1.0.0.-->
+  <build_export_depend>urdfdom_headers</build_export_depend>
+
+  <test_depend>ament_cmake_google_benchmark</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

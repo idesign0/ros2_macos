@@ -1,0 +1,6 @@
+include CHANGELOG.rst
+include LICENSE
+include package.xml
+include README.md
+
+recursive-include osrf_pycommon *.py

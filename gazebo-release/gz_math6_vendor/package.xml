@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>ignition_math6_vendor</name>
+  <version>0.0.2</version>
+  <description>This package provides the Ignition Math 6.x library.</description>
+  <maintainer email="jrivero@osrfoundation.org">Jose Luis Rivero</maintainer>
+  <license>Apache License 2.0</license>  <!-- Both this package and ign-math6 are ASL 2.0 -->
+
+  <url type="website">https://github.com/ignitionrobotics/ign-math</url>
+  <author email="logans@cottsay.net">Scott K Logan</author>
+
+  <buildtool_depend>ament_cmake_test</buildtool_depend>
+  <buildtool_depend>cmake</buildtool_depend>
+  <buildtool_depend>git</buildtool_depend>
+
+  <depend>ignition_cmake2_vendor</depend>
+  <depend>ignition-math6</depend>
+
+  <build_depend>eigen</build_depend>
+
+  <test_depend>ament_cmake_copyright</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
+
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>

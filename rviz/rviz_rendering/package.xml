@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format2.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>rviz_rendering</name>
+  <version>12.2.0</version>
+  <description>
+    Library which provides the 3D rendering functionality in rviz.
+  </description>
+
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://github.com/ros2/rviz/blob/ros2/README.md</url>
+  <url type="repository">https://github.com/ros2/rviz</url>
+  <url type="bugtracker">https://github.com/ros2/rviz/issues</url>
+
+  <author>Dave Hershberger</author>
+  <author>David Gossow</author>
+  <author email="jacob@openrobotics.org">Jacob Perron</author>
+  <author>Josh Faust</author>
+  <author email="michael.jeronimo@openrobotics.org">Michael Jeronimo</author>
+  <author email="william@openrobotics.org">William Woodall</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>eigen3_cmake_module</buildtool_depend>
+
+  <buildtool_export_depend>eigen3_cmake_module</buildtool_export_depend>
+
+  <build_depend>ament_index_cpp</build_depend>
+  <build_depend>eigen</build_depend>
+  <build_depend>qtbase5-dev</build_depend>
+  <build_depend>resource_retriever</build_depend>
+  <build_depend>rviz_assimp_vendor</build_depend>
+  <build_depend>rviz_ogre_vendor</build_depend>
+
+  <build_export_depend>eigen</build_export_depend>
+  <build_export_depend>qtbase5-dev</build_export_depend>
+  <build_export_depend>rviz_ogre_vendor</build_export_depend>
+
+  <exec_depend>ament_index_cpp</exec_depend>
+  <exec_depend>libqt5-core</exec_depend>
+  <exec_depend>libqt5-gui</exec_depend>
+  <exec_depend>libqt5-opengl</exec_depend>
+  <exec_depend>libqt5-widgets</exec_depend>
+  <exec_depend>resource_retriever</exec_depend>
+  <exec_depend>rviz_assimp_vendor</exec_depend>
+  <exec_depend>rviz_ogre_vendor</exec_depend>
+
+  <!-- TODO(jacobperron): Replace with ament_lint_common when ament_copyright is working -->
+  <test_depend>ament_cmake_cppcheck</test_depend>
+  <test_depend>ament_cmake_cpplint</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_gmock</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_uncrustify</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>rviz_assimp_vendor</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

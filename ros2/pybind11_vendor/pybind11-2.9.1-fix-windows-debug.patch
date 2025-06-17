@@ -1,0 +1,73 @@
+From 245664b2d3863cc4e6ae635bb79c0ceb819394ab Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
+Date: Wed, 13 Apr 2022 12:52:17 -0700
+Subject: [PATCH] Create changes to be patched.
+
+---
+ CMakeLists.txt                   | 8 ++++++++
+ include/pybind11/detail/common.h | 2 +-
+ tools/pybind11NewTools.cmake     | 2 +-
+ tools/pybind11Tools.cmake        | 2 +-
+ 4 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3787982c..f0a6e998 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -21,6 +21,14 @@ if(DEFINED PYBIND11_MASTER_PROJECT)
+   return()
+ endif()
+ 
++# In CMake version 3.22 or above, cmake_dependent_option now supports Full Condition Syntax
++# (see https://cmake.org/cmake/help/latest/module/CMakeDependentOption.html).
++# Unfortunately, the detection of what needs to be escaped seems to be buggy, so we
++# disable this warning for now.
++if(${CMAKE_VERSION} VERSION_GREATER 3.22)
++  cmake_policy(SET CMP0127 OLD)
++endif()
++
+ # Extract project version from source
+ file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/include/pybind11/detail/common.h"
+      pybind11_version_defines REGEX "#define PYBIND11_VERSION_(MAJOR|MINOR|PATCH) ")
+diff --git a/include/pybind11/detail/common.h b/include/pybind11/detail/common.h
+index 5c59b414..01f4a416 100644
+--- a/include/pybind11/detail/common.h
++++ b/include/pybind11/detail/common.h
+@@ -159,7 +159,7 @@
+ #  pragma warning(push)
+ // C4505: 'PySlice_GetIndicesEx': unreferenced local function has been removed (PyPy only)
+ #  pragma warning(disable: 4505)
+-#  if defined(_DEBUG) && !defined(Py_DEBUG)
++#  if defined(_DEBUG) && !defined(PYBIND11_DEBUG)
+ // Workaround for a VS 2022 issue.
+ // NOTE: This workaround knowingly violates the Python.h include order requirement:
+ // https://docs.python.org/3/c-api/intro.html#include-files
+diff --git a/tools/pybind11NewTools.cmake b/tools/pybind11NewTools.cmake
+index 0b4e21cc..74a110df 100644
+--- a/tools/pybind11NewTools.cmake
++++ b/tools/pybind11NewTools.cmake
+@@ -134,7 +134,7 @@ if(PYTHON_IS_DEBUG)
+   set_property(
+     TARGET pybind11::pybind11
+     APPEND
+-    PROPERTY INTERFACE_COMPILE_DEFINITIONS Py_DEBUG)
++    PROPERTY INTERFACE_COMPILE_DEFINITIONS PYBIND11_DEBUG)
+ endif()
+ 
+ # Check on every access - since Python2 and Python3 could have been used - do nothing in that case.
+diff --git a/tools/pybind11Tools.cmake b/tools/pybind11Tools.cmake
+index c255e5cf..0fa80be8 100644
+--- a/tools/pybind11Tools.cmake
++++ b/tools/pybind11Tools.cmake
+@@ -112,7 +112,7 @@ if(PYTHON_IS_DEBUG)
+   set_property(
+     TARGET pybind11::pybind11
+     APPEND
+-    PROPERTY INTERFACE_COMPILE_DEFINITIONS Py_DEBUG)
++    PROPERTY INTERFACE_COMPILE_DEFINITIONS PYBIND11_DEBUG)
+ endif()
+ 
+ set_property(
+-- 
+2.35.2
+

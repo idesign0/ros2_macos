@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ros2cli_common_extensions</name>
+  <version>0.1.1</version>
+  <description>Meta package for ros2cli common extensions</description>
+  <maintainer email="clalancette@openrobotics.org">Chris Lalancette</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="ivanpauno@ekumenlabs.com">Ivan Santiago Paunovic</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>launch_xml</exec_depend>
+  <exec_depend>launch_yaml</exec_depend>
+  <exec_depend>ros2action</exec_depend>
+  <exec_depend>ros2cli</exec_depend>
+  <exec_depend>ros2component</exec_depend>
+  <exec_depend>ros2doctor</exec_depend>
+  <exec_depend>ros2interface</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>ros2lifecycle</exec_depend>
+  <exec_depend>ros2multicast</exec_depend>
+  <exec_depend>ros2node</exec_depend>
+  <exec_depend>ros2param</exec_depend>
+  <exec_depend>ros2pkg</exec_depend>
+  <exec_depend>ros2run</exec_depend>
+  <exec_depend>ros2service</exec_depend>
+  <exec_depend>ros2topic</exec_depend>
+  <exec_depend>sros2</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

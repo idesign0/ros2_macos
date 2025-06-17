@@ -1,0 +1,129 @@
+/*
+ * Copyright(c) 2006 to 2022 ZettaScale Technology and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0, or the Eclipse Distribution License
+ * v. 1.0 which is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
+ */
+
+module XSpace {
+    @bit_bound(10)
+    bitmask my_bitmask {
+        flag0,
+        flag1
+    };
+
+    @mutable
+    struct XType1 {
+      @id(1) long long_1;
+      @id(2) long long_2;
+      @id(3) my_bitmask bm_3;
+    };
+    @mutable
+    struct XType1a {
+      @id(1) long long_1;
+      @id(2) long long_2;
+      @id(3) unsigned short bm_3;
+    };
+
+    @appendable
+    struct XType2 {
+      @id(1) long long_1;
+      @id(2) long long_2;
+    };
+    @appendable
+    struct XType2a {
+      @id(1) long long_1;
+      @id(2) long long_2;
+      @id(3) long long_3;
+    };
+
+    @appendable
+    struct XType3_1 {
+        @id(1) long long_4;
+        @id(2) long long_5;
+    };
+    @appendable
+    struct XType3_1a {
+        @id(1) long long_4;
+    };
+    @mutable
+    struct XType3 {
+      @id(2) long long_2;
+      @id(3) XType3_1 struct_3;
+    };
+    @mutable
+    struct XType3a {
+      @id(1) long long_1;
+      @id(2) long long_2;
+      @id(3) XType3_1a struct_3;
+    };
+    @mutable
+    struct XType4 {
+      sequence<uint32> seq_1;
+      sequence<uint32, 10> seq_2;
+    };
+    @mutable
+    struct XType4a {
+      sequence<uint32, 999> seq_1;
+      sequence<uint32, 5> seq_2;
+    };
+    @mutable
+    struct XType5 {
+      @key string str_1;
+      @key string<10> str_2;
+    };
+    @mutable
+    struct XType5a {
+      @key string<999> str_1;
+      @key string<5> str_2;
+    };
+
+    /* Test types for type object validation and type dependencies */
+    typedef sequence<long> seql;
+    enum e { E1, E2 };
+    bitmask bm { BM1, BM2 };
+    @final struct to_toplevel {
+      seql f1;
+      e f2;
+      bm f3;
+    };
+
+    @nested struct to_base {
+      long b1;
+    };
+    @nested union u switch (long) { case 1: long u1; };
+    struct to_inherit : to_base {
+      u f1;
+    };
+
+    union to_uniondisc switch (long) {
+      case 1: long u1;
+    };
+
+    @nested @appendable
+    struct dep_test_nested {
+      long n1;
+      long n2;
+    };
+
+    struct dep_test {
+      dep_test_nested f1;
+    };
+
+    union to_unionmembers switch (long) {
+      case 1: long u1;
+      default: short u2;
+    };
+
+    typedef octet td_byte[1000000000];
+    typedef td_byte tdd_byte;
+    struct to_arraybound {
+      tdd_byte f1[1];
+    };
+
+};

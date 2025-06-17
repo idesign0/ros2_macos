@@ -1,0 +1,35 @@
+<package format="2">
+  <name>tf2_ros</name>
+  <version>0.25.13</version>
+  <description>
+    This package contains the C++ ROS bindings for the tf2 library
+  </description>
+  <maintainer email="clalancette@openrobotics.org">Chris Lalancette</maintainer>
+  <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
+  <license>BSD</license>
+  <url type="website">http://www.ros.org/wiki/tf2_ros</url>
+  <author>Eitan Marder-Eppstein</author>
+  <author>Wim Meeussen</author>
+  <author email="tfoote@osrfoundation.org">Tully Foote</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>builtin_interfaces</depend>
+  <depend>geometry_msgs</depend>
+  <depend>message_filters</depend>
+  <depend>rcl_interfaces</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>rclcpp_components</depend>
+  <depend>tf2</depend>
+  <depend>tf2_msgs</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>rosgraph_msgs</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

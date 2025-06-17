@@ -1,0 +1,66 @@
+set "_CONNEXTDDS_DIR_BUILD=@CONNEXTDDS_DIR_NATIVE@"
+set "_CONNEXTDDS_ARCH=@CONNEXTDDS_ARCH@"
+
+:: Give priority to CONNEXTDDS_DIR to override connext_cmake_module
+:: which may have loaded an older Connext installation.
+set "_CONNEXTDDS_DIR_ENV="
+if "%CONNEXTDDS_DIR%" NEQ "" (
+  set "_CONNEXTDDS_DIR_ENV=%CONNEXTDDS_DIR%"
+  set "_CONNEXTDDS_DIR_ENV_SRC=CONNEXTDDS_DIR"
+) else (
+  set "_CONNEXTDDS_DIR_ENV=%NDDSHOME%"
+  set "_CONNEXTDDS_DIR_ENV_SRC=NDDSHOME"
+)
+
+:: If Connext installation used at build-time is still available, use that one,
+:: otherwise inspect environment to see if another one is available.
+set "_CONNEXTDDS_DIR_EXPORT="
+if exist "%_CONNEXTDDS_DIR_BUILD%" (
+  if "%CONNEXTDDS_IGNORE_BUILD%" == "" (
+    :: Warn about unused environment variable.
+    if "%_CONNEXTDDS_DIR_ENV%" NEQ "" (
+      if "%_CONNEXTDDS_DIR_ENV%" NEQ "%_CONNEXTDDS_DIR_BUILD%" (
+        echo "[@PROJECT_NAME@][warning] Using RTI Connext DDS installation configured during build-time (%_CONNEXTDDS_DIR_BUILD%). The installation specified via %_CONNEXTDDS_DIR_ENV_SRC% (%_CONNEXTDDS_DIR_ENV%) will be ignored. Use variable CONNEXTDDS_IGNORE_BUILD to override this behavior." 1>&2
+      )
+    )
+    set "_CONNEXTDDS_DIR_EXPORT=%_CONNEXTDDS_DIR_BUILD%"
+  )
+)
+
+if "%_CONNEXTDDS_DIR_EXPORT%" == "" (
+  set "_CONNEXTDDS_DIR_EXPORT=%_CONNEXTDDS_DIR_ENV%"
+)
+
+set "_CONNEXTDDS_SETUP=%_CONNEXTDDS_DIR_EXPORT%\resource\scripts\rtisetenv_%_CONNEXTDDS_ARCH%.bat"
+
+set "_CONNEXTDDS_DIR_EXPORT_ERROR="
+if "%_CONNEXTDDS_DIR_EXPORT%" == "" (
+  set "_CONNEXTDDS_DIR_EXPORT_ERROR=No RTI Connext DDS installation specified"
+)
+if not exist "%_CONNEXTDDS_DIR_EXPORT%" (
+  set "_CONNEXTDDS_DIR_EXPORT_ERROR=RTI Connext DDS installation not found (%_CONNEXTDDS_DIR_EXPORT%)"
+)
+if not exist "%_CONNEXTDDS_SETUP%" (
+  set "_CONNEXTDDS_DIR_EXPORT_ERROR=RTI Connext DDS environment script not found (%_CONNEXTDDS_SETUP%)"
+)
+if "%_CONNEXTDDS_DIR_EXPORT_ERROR%" NEQ "" (
+  echo "[@PROJECT_NAME@][warning] %_CONNEXTDDS_DIR_EXPORT_ERROR%. RTI Connext DDS will not be available at runtime, unless you already configured PATH manually." 1>&2
+  goto cleanup_env
+)
+
+:: Call RTI Connext DDS's setup script. Redirect output since the script has echo on.
+call "%_CONNEXTDDS_SETUP%" 1> nul
+
+set "NDDSHOME=%_CONNEXTDDS_DIR_EXPORT%"
+set "CONNEXTDDS_DIR=%_CONNEXTDDS_DIR_EXPORT%"
+set "CONNEXTDDS_ARCH=%_CONNEXTDDS_ARCH%"
+
+:cleanup_env
+  set "_CONNEXTDDS_DIR_BUILD="
+  set "_CONNEXTDDS_ARCH="
+  set "_CONNEXTDDS_DIR_ENV="
+  set "_CONNEXTDDS_DIR_ENV_SRC="
+  set "_CONNEXTDDS_DIR_EXPORT="
+  set "_CONNEXTDDS_DIR_EXPORT_ERROR="
+  set "_CONNEXTDDS_SETUP="
+goto :eof

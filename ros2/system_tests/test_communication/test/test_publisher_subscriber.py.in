@@ -1,0 +1,85 @@
+# generated from test_communication/test/test_publisher_subscriber.py.in
+
+import os
+import sys
+import time
+
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+
+import launch_testing
+import launch_testing.actions
+
+import unittest
+
+
+MESSAGE_TYPES = '@TEST_MESSAGE_TYPES@'.split(';')
+
+
+@launch_testing.parametrize('message_type', MESSAGE_TYPES)
+def generate_test_description(message_type):
+    namespace = '/test_time_%s' % time.strftime('%H_%M_%S', time.gmtime())
+
+    launch_description = LaunchDescription()
+
+    publisher_cmd = ['@TEST_PUBLISHER_EXECUTABLE@', message_type, namespace]
+    publisher_env = dict(os.environ)
+    if '@TEST_PUBLISHER_RCL@' == 'rclpy':
+        publisher_cmd.insert(0, sys.executable)
+        publisher_env['PYTHONUNBUFFERED'] = '1'
+    publisher_env['RCL_ASSERT_RMW_ID_MATCHES'] = '@PUBLISHER_RMW@'
+    publisher_env['RMW_IMPLEMENTATION'] = '@PUBLISHER_RMW@'
+    publisher_process = ExecuteProcess(
+        cmd=publisher_cmd,
+        name='test_publisher',
+        env=publisher_env,
+    )
+
+    subscriber_cmd = ['@TEST_SUBSCRIBER_EXECUTABLE@', message_type, namespace]
+    subscriber_env = dict(os.environ)
+    if '@TEST_SUBSCRIBER_RCL@' == 'rclpy':
+        subscriber_cmd.insert(0, sys.executable)
+        subscriber_env['PYTHONUNBUFFERED'] = '1'
+    subscriber_env['RCL_ASSERT_RMW_ID_MATCHES'] = '@SUBSCRIBER_RMW@'
+    subscriber_env['RMW_IMPLEMENTATION'] = '@SUBSCRIBER_RMW@'
+    subscriber_process = ExecuteProcess(
+        cmd=subscriber_cmd,
+        name='test_subscriber',
+        env=subscriber_env,
+    )
+
+    return LaunchDescription([
+        # Always stop daemon to isolate tests.
+        ExecuteProcess(
+            cmd=['ros2', 'daemon', 'stop'],
+            name='daemon-stop',
+            on_exit=[
+                publisher_process,
+                subscriber_process,
+                launch_testing.actions.ReadyToTest()
+            ]
+        )
+    ]), locals()
+
+
+class TestPublisherSubscriber(unittest.TestCase):
+
+    def test_subscriber_terminates_in_a_finite_amount_of_time(self, proc_info, subscriber_process):
+        """Test that the subscriber terminates after a finite amount of time."""
+        proc_info.assertWaitForShutdown(process=subscriber_process, timeout=10)
+
+
+@launch_testing.post_shutdown_test()
+class TestPublisherSubscriberAfterShutdown(unittest.TestCase):
+
+    def test_processes_finished_gracefully(self, proc_info):
+        """Test that both executables finished gracefully."""
+        launch_testing.asserts.assertExitCodes(
+            proc_info,
+            [launch_testing.asserts.EXIT_OK],
+            'test_subscriber'
+        )
+        launch_testing.asserts.assertExitCodes(
+            proc_info,
+            process='test_publisher'
+        )

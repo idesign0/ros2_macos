@@ -1,0 +1,55 @@
+#!/bin/bash
+
+`dirname $0`/throughput-test-extract "$@" > data.txt
+gnuplot <<\EOF
+set term svg size 1024,768
+set output "throughput-async-listener-rate.svg"
+set st d lp
+set st li 1 lw 2
+set st li 2 lw 2
+set st li 3 lw 2
+
+set multiplot
+set logscale xyy2
+set title "Throughput"
+set ylabel "[Gbps]"
+set ytics (0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,.1,.2,.3,.4,.5,.6,.7,.8,.9,1,2,3,4,5,6,7,8,9,10)
+set grid xtics ytics mytics
+set xlabel "payload size [bytes]"
+# sample rate in data.txt is in kS/s
+set key at graph 1, 0.9
+#p [] [0.1:maxrate/1e3] "data.txt" u 1:($3/1e3) ti "payload", "" u 1:($5/1e3) ti "GbE bandwidth"
+p "data.txt" u 1:($3/1e3) ti "payload", "" u 1:($5/1e3) ti "GbE bandwidth"
+set ytics auto
+set key default
+
+unset xlabel
+unset title
+set grid nomytics
+set ylabel "[M sample/s]"
+set origin .3, .1
+set size .6, .6
+clear
+p "data.txt" u 1:($2/1e3) ti "rate"
+unset multiplot
+
+unset origin
+unset size
+
+unset logscale
+set logscale x
+set output "throughput-async-listener-memory.svg"
+set title "Throughput: memory"
+set ylabel "RSS [MB]"
+set xlabel "payload size [bytes]"
+p "data.txt" u 1:6 ti "publisher", "" u 1:7 ti "subscriber"
+
+unset logscale
+set logscale x
+set output "throughput-async-listener-cpu.svg"
+set title "Throughput: CPU"
+set ylabel "CPU [%]"
+set xlabel "payload size [bytes]"
+p "data.txt" u 1:8 ti "publisher (pub thread)", "" u 1:9 ti "publisher (recvUC thread)", "" u 1:10 ti "subscriber (dq.user thread)", "" u 1:11 ti "subscriber (recvUC thread)"
+
+EOF

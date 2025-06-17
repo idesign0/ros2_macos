@@ -1,0 +1,3 @@
+Registered custom signal handler.
+Called rclcpp::init.
+Waiting to give an opportunity for interrupt...

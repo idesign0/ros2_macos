@@ -1,0 +1,19 @@
+name: Lint libstatistics_collector
+on:
+  pull_request:
+
+jobs:
+  ament_lint:
+    runs-on: ubuntu-latest
+    container:
+      image: rostooling/setup-ros-docker:ubuntu-focal-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        linter: [copyright, cppcheck, cpplint, flake8, pep257, uncrustify, xmllint]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ros-tooling/action-ros-lint@v0.1
+        with:
+          linter: ${{ matrix.linter }}
+          package-name: libstatistics_collector

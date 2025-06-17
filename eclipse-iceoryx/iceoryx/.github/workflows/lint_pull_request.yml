@@ -1,0 +1,31 @@
+name: Code Linting on Pull-Requests
+
+on:
+  pull_request:
+    branches: [ master, release* ]
+
+jobs:
+  clang-tidy-review:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: compiler versions
+        run: |
+          echo $(gcc --version)
+          echo $(clang --version)
+
+      - name: Install iceoryx dependencies and clang-tidy
+        run: sudo apt-get update && sudo apt-get install -y libacl1-dev libncurses5-dev clang-tidy-12 clang-12
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get git diff
+        id: changed_files
+        uses: Ana06/get-changed-files@v1.2
+      - name: Clang-Tidy of added or modified files
+        run: |
+          for diff_file in ${{ steps.changed_files.outputs.added_modified }}; do
+            ./tools/scripts/clang_tidy_check.sh ci_pull_request ${diff_file}
+          done

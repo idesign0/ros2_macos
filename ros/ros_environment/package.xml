@@ -1,0 +1,18 @@
+<package format="2">
+  <name>ros_environment</name>
+  <version>3.2.2</version>
+  <description>The package provides the environment variables `ROS_VERSION` and `ROS_DISTRO`.</description>
+  <maintainer email="steven@openrobotics.org">Steven! Ragnarök</maintainer>
+  <license>Apache License 2.0</license>
+
+  <url type="repository">https://github.com/ros/ros_environment</url>
+  <url type="bugtracker">https://github.com/ros/ros_environment/issues</url>
+
+  <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
+
+  <buildtool_depend>ament_cmake_core</buildtool_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

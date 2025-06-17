@@ -1,0 +1,33 @@
+<package>
+  <name>kdl_parser_py</name>
+  <version>2.6.4</version>
+  <description>
+   The Kinematics and Dynamics Library (KDL) defines a tree structure
+   to represent the kinematic and dynamic parameters of a robot
+   mechanism. <tt>kdl_parser_py</tt> provides Python tools to construct a KDL
+   tree from an XML robot representation in URDF.
+  </description>
+
+  <author email="jonathan.bohren@gmail.com">Jonathan Bohren</author>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+
+  <license>BSD</license>
+
+  <!--url type="website">http://ros.org/wiki/kdl_parser_py</url-->
+  <url type="repository">https://github.com/ros2/kdl_parser</url>
+  <url type="bugtracker">https://github.com/ros2/kdl_parser/issues</url>
+
+  <buildtool_depend version_gte="0.5.68">catkin</buildtool_depend>
+  <buildtool_depend>python-catkin-pkg</buildtool_depend>
+
+  <build_depend>python_orocos_kdl_vendor</build_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>rostest</build_depend>
+
+  <run_depend>python_orocos_kdl_vendor</run_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>urdfdom_py</run_depend>
+
+</package>

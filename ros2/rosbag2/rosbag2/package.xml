@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rosbag2</name>
+  <version>0.15.14</version>
+  <description>Meta package for rosbag2 related packages</description>
+  <maintainer email="michael.orlov@apex.ai">Michael Orlov</maintainer>
+  <maintainer email="geoff@openrobotics.org">Geoffrey Biggs</maintainer>
+  <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
+  <maintainer email="me@emersonknapp.com">Emerson Knapp</maintainer>
+  <maintainer email="ros-tooling@googlegroups.com">ROS Tooling Working Group</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>ros2bag</exec_depend>
+  <exec_depend>rosbag2_compression</exec_depend>
+  <exec_depend>rosbag2_cpp</exec_depend>
+  <exec_depend>rosbag2_py</exec_depend>
+  <exec_depend>rosbag2_storage</exec_depend>
+  <exec_depend>rosbag2_transport</exec_depend>
+  <exec_depend>shared_queues_vendor</exec_depend>
+
+  <!-- Default plugins -->
+  <exec_depend>rosbag2_compression_zstd</exec_depend>
+  <exec_depend>rosbag2_storage_default_plugins</exec_depend>
+  <exec_depend>sqlite3_vendor</exec_depend>
+
+  <test_depend>rosbag2_test_common</test_depend>
+  <test_depend>rosbag2_tests</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

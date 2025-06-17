@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>rcpputils</name>
+  <version>2.4.5</version>
+  <description>Package containing utility code for C++.</description>
+
+  <maintainer email="clalancette@openrobotics.org">Chris Lalancette</maintainer>
+
+  <license>Apache License 2.0</license>
+  <license>BSD-3-Clause</license>
+
+  <author email="eknapp@amazon.com">Emerson Knapp</author>
+  <author email="michael.jeronimo@openrobotics.org">Michael Jeronimo</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_gen_version_h</buildtool_depend>
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+  <depend>rcutils</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_copyright</test_depend>
+  <test_depend>ament_cmake_cppcheck</test_depend>
+  <test_depend>ament_cmake_cpplint</test_depend>
+  <test_depend>ament_cmake_flake8</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_pep257</test_depend>
+  <test_depend>ament_cmake_uncrustify</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

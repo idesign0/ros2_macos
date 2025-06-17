@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>ros2_control</name>
+  <version>2.50.0</version>
+  <description>Metapackage for ROS2 control related packages</description>
+  <maintainer email="bence.magyar.robotics@gmail.com">Bence Magyar</maintainer>
+  <maintainer email="denis@stoglrobotics.de">Denis Štogl</maintainer>
+
+  <url type="website">https://control.ros.org</url>
+
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>controller_interface</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>controller_manager_msgs</exec_depend>
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>joint_limits</exec_depend>
+  <exec_depend>ros2_control_test_assets</exec_depend>
+  <exec_depend>ros2controlcli</exec_depend>
+  <exec_depend>transmission_interface</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <rosdoc2>rosdoc2.yaml</rosdoc2>
+  </export>
+</package>

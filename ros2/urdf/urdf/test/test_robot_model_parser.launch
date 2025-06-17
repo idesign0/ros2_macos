@@ -1,0 +1,19 @@
+<launch>
+  <param name="robot_description" textfile="$(find urdf)/test/test_robot.urdf" />
+
+  <!-- args: path, urdf file, robot name, root name, #joints, #links-->
+  <test test-name="robot_model_parser_test" pkg="urdf" type="test_urdf_parser" args="$(find urdf) test_robot.urdf r2d2 dummy_link 16 17" />
+
+  <test test-name="robot_model_parser_test_no_visual" pkg="urdf" type="test_urdf_parser" args="$(find urdf) no_visual.urdf no_visual link1 0 1" />
+  <test test-name="robot_model_parser_test_one_link" pkg="urdf" type="test_urdf_parser" args="$(find urdf) one_link.urdf one_link link1 0 1" />
+  <test test-name="robot_model_parser_test_two_links" pkg="urdf" type="test_urdf_parser" args="$(find urdf) two_links_one_joint.urdf two_links_one_joint link1 1 2" />
+
+  <!-- Cases expected not to parse correctly only get filename information (path, urdf file) -->
+  <test test-name="robot_model_parser_test_fail_bracket" pkg="urdf" type="test_urdf_parser" args="$(find urdf) fail_pr2_desc_bracket.urdf" />
+  <test test-name="robot_model_parser_test_fail_joint_mismatch" pkg="urdf" type="test_urdf_parser" args="$(find urdf) fail_three_links_one_joint.urdf" />
+  <test test-name="robot_model_parser_test_fail_double_joint" pkg="urdf" type="test_urdf_parser" args="$(find urdf) fail_pr2_desc_double_joint.urdf" />
+  <test test-name="robot_model_parser_test_fail_loop" pkg="urdf" type="test_urdf_parser" args="$(find urdf) fail_pr2_desc_loop.urdf" />
+  <test test-name="robot_model_parser_test_fail_no_filename" pkg="urdf" type="test_urdf_parser" args="$(find urdf) fail_pr2_desc_no_filename_in_mesh.urdf" />
+  <test test-name="robot_model_parser_test_fail_no_joint" pkg="urdf" type="test_urdf_parser" args="$(find urdf) fail_pr2_desc_no_joint2.urdf" />
+  <test test-name="robot_model_parser_test_fail_two_trees" pkg="urdf" type="test_urdf_parser" args="$(find urdf) fail_pr2_desc_two_trees.urdf" />
+</launch>

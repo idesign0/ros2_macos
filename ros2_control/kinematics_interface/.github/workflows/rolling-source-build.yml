@@ -1,0 +1,33 @@
+name: Rolling - Source Build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+    # Run every day to detect flakiness and broken dependencies
+    - cron: '03 3 * * MON-FRI'
+
+concurrency:
+  # cancel previous runs of the same workflow, except for pushes on humble branch
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, '/refs/heads') }}
+
+jobs:
+  source:
+    uses: ros-controls/ros2_control_ci/.github/workflows/reusable-ros-tooling-source-build.yml@master
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - ROS_DISTRO: rolling
+          CONTAINER: ubuntu:24.04
+          OS_NAME: ubuntu-latest
+        - ROS_DISTRO: kilted
+          CONTAINER: ubuntu:24.04
+          OS_NAME: ubuntu-latest
+    with:
+      ros_distro: ${{ matrix.ROS_DISTRO }}
+      ref: master
+      os_name: ${{ matrix.OS_NAME }}
+      container: ${{ matrix.CONTAINER }}

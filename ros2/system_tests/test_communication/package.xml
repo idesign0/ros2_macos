@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>test_communication</name>
+  <version>0.12.4</version>
+  <description>
+    Test publish / subscribe and request / response communication with all primitive as well as builtin types.
+    Also exchange dynamic and static arrays and nested message structures.
+    Each test is run with every available rmw implementation for the sending as well as the receiving side.
+  </description>
+  <maintainer email="aditya.pande@openrobotics.org">Aditya Pande</maintainer>
+  <maintainer email="shane@openrobotics.org">Shane Loretz</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="dthomas@openrobotics.org">Dirk Thomas</author>
+  <author email="jacob@openrobotics.org">Jacob Perron</author>
+  <author email="william@openrobotics.org">William Woodall</author>
+
+  <build_depend>rosidl_default_generators</build_depend>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+  <buildtool_depend>python_cmake_module</buildtool_depend>
+
+  <exec_depend>rosidl_default_runtime</exec_depend>
+
+  <test_depend>ament_cmake</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>launch</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
+  <test_depend>osrf_testing_tools_cpp</test_depend>
+  <test_depend>rcl</test_depend>
+  <test_depend>rclcpp</test_depend>
+  <test_depend>rclcpp_action</test_depend>
+  <test_depend>rclpy</test_depend>
+  <test_depend>rcpputils</test_depend>
+  <test_depend>rmw_implementation</test_depend>
+  <test_depend>rmw_implementation_cmake</test_depend>
+  <test_depend>ros2cli</test_depend>
+  <test_depend>test_msgs</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>ignition_cmake2_vendor</name>
+  <version>0.0.2</version>
+  <description>This package provides the Ignition CMake 2.x library.</description>
+  <maintainer email="jrivero@osrfoundation.org">Jose Luis Rivero</maintainer>
+  <license>Apache License 2.0</license>  <!-- Both this package and ign-cmake2 are ASL 2.0 -->
+
+  <url type="website">https://github.com/ignitionrobotics/ign-cmake</url>
+  <author email="logans@cottsay.net">Scott K Logan</author>
+
+  <buildtool_depend>ament_cmake_test</buildtool_depend>
+  <buildtool_depend>cmake</buildtool_depend>
+  <buildtool_depend>doxygen</buildtool_depend>
+  <buildtool_depend>git</buildtool_depend>
+
+  <depend>ignition-cmake2</depend>
+
+  <test_depend>ament_cmake_copyright</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
+
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>

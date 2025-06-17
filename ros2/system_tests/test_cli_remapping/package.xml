@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>test_cli_remapping</name>
+  <version>0.12.4</version>
+  <description>
+    Test command line remapping of topic names, service names, node namespace, and node name.
+  </description>
+  <maintainer email="aditya.pande@openrobotics.org">Aditya Pande</maintainer>
+  <maintainer email="shane@openrobotics.org">Shane Loretz</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="sloretz@openrobotics.org">Shane Loretz</author>
+  <author email="jacob@openrobotics.org">Jacob Perron</author>
+  <author email="william@openrobotics.org">William Woodall</author>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+  <buildtool_depend>python_cmake_module</buildtool_depend>
+
+  <build_depend>ament_cmake</build_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>launch</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
+  <test_depend>rclcpp</test_depend>
+  <test_depend>rclpy</test_depend>
+  <test_depend>test_msgs</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

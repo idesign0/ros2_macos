@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rmw_connextdds</name>
+  <version>0.11.4</version>
+  <description>A ROS2 RMW implementation built with RTI Connext DDS Professional.</description>
+  <maintainer email="asorbini@rti.com">Andrea Sorbini</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+  <buildtool_export_depend>ament_cmake</buildtool_export_depend>
+
+  <depend>rmw_connextdds_common</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <member_of_group>rmw_implementation_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

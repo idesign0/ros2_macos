@@ -1,0 +1,368 @@
+// Copyright 2008, Willow Garage, Inc. All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+//    * Redistributions of source code must retain the above copyright
+//      notice, this list of conditions and the following disclaimer.
+//
+//    * Redistributions in binary form must reproduce the above copyright
+//      notice, this list of conditions and the following disclaimer in the
+//      documentation and/or other materials provided with the distribution.
+//
+//    * Neither the name of the Willow Garage nor the names of its
+//      contributors may be used to endorse or promote products derived from
+//      this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+#include <gtest/gtest.h>
+
+#include <algorithm>
+#include <array>
+#include <chrono>
+#include <numeric>
+#include <string>
+#include <vector>
+
+#include "builtin_interfaces/msg/time.hpp"
+#include "geometry_msgs/msg/transform_stamped.hpp"
+
+#include "tf2/buffer_core.hpp"
+#include "tf2/convert.hpp"
+#include "tf2/LinearMath/Vector3.hpp"
+#include "tf2/exceptions.hpp"
+#include "tf2/time.hpp"
+
+TEST(tf2, setTransformFail)
+{
+  tf2::BufferCore tfc;
+  geometry_msgs::msg::TransformStamped st;
+  EXPECT_FALSE(tfc.setTransform(st, "authority1"));
+}
+
+TEST(tf2, setTransformValid)
+{
+  tf2::BufferCore tfc;
+  geometry_msgs::msg::TransformStamped st;
+  st.header.frame_id = "foo";
+  st.header.stamp = builtin_interfaces::msg::Time();
+  st.header.stamp.sec = 1;
+  st.header.stamp.nanosec = 0;
+  st.child_frame_id = "child";
+  st.transform.rotation.w = 1;
+  EXPECT_TRUE(tfc.setTransform(st, "authority1"));
+}
+
+TEST(tf2, setTransformValidWithCallback)
+{
+  tf2::BufferCore buffer;
+
+  // Input
+  const std::string target_frame = "foo";
+  const std::string source_frame = "bar";
+  const tf2::TimePoint time_point = tf2::timeFromSec(1.0);
+
+  tf2::TransformableRequestHandle received_request_handle;
+  std::string received_target_frame = "";
+  std::string received_source_frame = "";
+  tf2::TimePoint received_time_point;
+  bool transform_available = false;
+
+  auto cb =
+    [&received_request_handle, &received_target_frame, &received_source_frame, &received_time_point,
+      &transform_available](
+    tf2::TransformableRequestHandle request_handle,
+    const std::string & target_frame,
+    const std::string & source_frame,
+    tf2::TimePoint time,
+    tf2::TransformableResult result)
+    {
+      received_request_handle = request_handle;
+      received_target_frame = target_frame;
+      received_source_frame = source_frame;
+      received_time_point = time;
+      transform_available = tf2::TransformAvailable == result;
+    };
+
+  tf2::TransformableRequestHandle request_handle = buffer.addTransformableRequest(
+    cb, target_frame, source_frame, time_point);
+  ASSERT_NE(request_handle, 0u);
+
+  geometry_msgs::msg::TransformStamped transform_msg;
+  transform_msg.header.frame_id = target_frame;
+  transform_msg.header.stamp = builtin_interfaces::msg::Time();
+  transform_msg.header.stamp.sec = 1;
+  transform_msg.header.stamp.nanosec = 0;
+  transform_msg.child_frame_id = source_frame;
+  transform_msg.transform.rotation.w = 1;
+  EXPECT_TRUE(buffer.setTransform(transform_msg, "authority1"));
+
+  // Setting the transform should trigger the callback
+  EXPECT_EQ(received_target_frame, target_frame);
+  EXPECT_EQ(received_source_frame, source_frame);
+  EXPECT_EQ(received_time_point, time_point);
+  EXPECT_TRUE(transform_available);
+}
+
+TEST(tf2, CancelTransformableRequest)
+{
+  tf2::BufferCore buffer;
+
+  // Input
+  const std::string target_frame = "target";
+  const std::string alpha_frame = "alpha";
+  const std::string beta_frame = "beta";
+  const std::string gamma_frame = "gamma";
+  const tf2::TimePoint time_point = tf2::timeFromSec(1.0);
+
+  tf2::TransformableRequestHandle received_request_handle;
+  std::string received_source_frame;
+  auto cb = [&received_request_handle, &received_source_frame](
+    tf2::TransformableRequestHandle request_handle, const std::string &,
+    const std::string & source_frame, tf2::TimePoint, tf2::TransformableResult) {
+      received_request_handle = request_handle;
+      received_source_frame = source_frame;
+    };
+
+  /* Queue three requests */
+  tf2::TransformableRequestHandle alpha_handle =
+    buffer.addTransformableRequest(cb, target_frame, alpha_frame, time_point);
+  tf2::TransformableRequestHandle beta_handle =
+    buffer.addTransformableRequest(cb, target_frame, beta_frame, time_point);
+  tf2::TransformableRequestHandle gamma_handle =
+    buffer.addTransformableRequest(cb, target_frame, gamma_frame, time_point);
+
+  /* Cancel the first */
+  buffer.cancelTransformableRequest(alpha_handle);
+
+  /* Make sure the remaining two requests are still working.
+       See https://github.com/ros2/geometry2/issues/766 for details. */
+  geometry_msgs::msg::TransformStamped transform_msg;
+  transform_msg.header.frame_id = target_frame;
+  transform_msg.header.stamp = builtin_interfaces::msg::Time();
+  transform_msg.header.stamp.sec = 1;
+  transform_msg.header.stamp.nanosec = 0;
+  transform_msg.transform.rotation.w = 1;
+
+  transform_msg.child_frame_id = alpha_frame;
+  received_source_frame.clear();
+  received_request_handle = 0;
+  EXPECT_TRUE(buffer.setTransform(transform_msg, "authority1"));
+  EXPECT_EQ(received_request_handle, 0);
+  EXPECT_TRUE(received_source_frame.empty()); /* alpha_handle was cancelled */
+
+  transform_msg.child_frame_id = beta_frame;
+  received_source_frame.clear();
+  received_request_handle = 0;
+  EXPECT_TRUE(buffer.setTransform(transform_msg, "authority1"));
+  EXPECT_EQ(received_request_handle, beta_handle);
+  EXPECT_EQ(received_source_frame, beta_frame);
+
+  transform_msg.child_frame_id = gamma_frame;
+  received_source_frame.clear();
+  received_request_handle = 0;
+  EXPECT_TRUE(buffer.setTransform(transform_msg, "authority1"));
+  EXPECT_EQ(received_request_handle, gamma_handle);
+  EXPECT_EQ(received_source_frame, gamma_frame);
+}
+
+TEST(tf2, setTransformInvalidQuaternion)
+{
+  tf2::BufferCore tfc;
+  geometry_msgs::msg::TransformStamped st;
+  st.header.frame_id = "foo";
+  st.header.stamp = builtin_interfaces::msg::Time();
+  st.header.stamp.sec = 1;
+  st.header.stamp.nanosec = 0;
+  st.child_frame_id = "child";
+  st.transform.rotation.w = 0;
+  EXPECT_FALSE(tfc.setTransform(st, "authority1"));
+}
+
+TEST(tf2_lookupTransform, LookupException_Nothing_Exists)
+{
+  tf2::BufferCore tfc;
+  EXPECT_THROW(
+    tfc.lookupTransform(
+      "a", "b", tf2::TimePoint(
+        std::chrono::seconds(
+          1))), tf2::LookupException);
+}
+
+TEST(tf2_canTransform, Nothing_Exists)
+{
+  tf2::BufferCore tfc;
+  EXPECT_FALSE(tfc.canTransform("a", "b", tf2::TimePoint(std::chrono::seconds(1))));
+}
+
+TEST(tf2_lookupTransform, LookupException_One_Exists)
+{
+  tf2::BufferCore tfc;
+  geometry_msgs::msg::TransformStamped st;
+  st.header.frame_id = "foo";
+  st.header.stamp = builtin_interfaces::msg::Time();
+  st.header.stamp.sec = 1;
+  st.header.stamp.nanosec = 0;
+  st.child_frame_id = "child";
+  st.transform.rotation.w = 1;
+  EXPECT_TRUE(tfc.setTransform(st, "authority1"));
+  EXPECT_THROW(
+    tfc.lookupTransform(
+      "foo", "bar", tf2::TimePoint(
+        std::chrono::seconds(
+          1))), tf2::LookupException);
+}
+
+TEST(tf2_canTransform, One_Exists)
+{
+  tf2::BufferCore tfc;
+  geometry_msgs::msg::TransformStamped st;
+  st.header.frame_id = "foo";
+  st.header.stamp = builtin_interfaces::msg::Time();
+  st.header.stamp.sec = 1;
+  st.header.stamp.nanosec = 0;
+  st.child_frame_id = "child";
+  st.transform.rotation.w = 1;
+  EXPECT_TRUE(tfc.setTransform(st, "authority1"));
+  EXPECT_FALSE(tfc.canTransform("foo", "bar", tf2::TimePoint(std::chrono::seconds(1))));
+}
+
+TEST(tf2_clear, LookUp_Static_Transfrom_Succeed)
+{
+  tf2::BufferCore tfc;
+  geometry_msgs::msg::TransformStamped st;
+  st.header.frame_id = "foo";
+  st.header.stamp = builtin_interfaces::msg::Time();
+  st.header.stamp.sec = 1;
+  st.header.stamp.nanosec = 0;
+  st.child_frame_id = "bar";
+  st.transform.rotation.w = 1;
+  tfc.clear();
+  EXPECT_TRUE(tfc.setTransform(st, "authority1", true));
+  EXPECT_NO_THROW(
+    auto trans = tfc.lookupTransform("foo", "bar", tf2::TimePoint(std::chrono::seconds(2)));
+  );
+}
+
+TEST(tf2_clear, LookUp_Static_Transfrom_Fail)
+{
+  tf2::BufferCore tfc;
+  geometry_msgs::msg::TransformStamped st;
+  st.header.frame_id = "foo";
+  st.header.stamp = builtin_interfaces::msg::Time();
+  st.header.stamp.sec = 1;
+  st.header.stamp.nanosec = 0;
+  st.child_frame_id = "bar";
+  st.transform.rotation.w = 1;
+  EXPECT_TRUE(tfc.setTransform(st, "authority1"));
+  tfc.clear();
+  EXPECT_TRUE(tfc.setTransform(st, "authority1", true));
+  EXPECT_NO_THROW(
+    auto trans = tfc.lookupTransform("foo", "bar", tf2::TimePoint(std::chrono::seconds(2)));
+  );
+}
+
+TEST(tf2_time, Display_Time_Point)
+{
+  tf2::TimePoint t = tf2::get_now();
+  // Check ability to stringify
+  std::string s = tf2::displayTimePoint(t);
+}
+
+TEST(tf2_time, To_From_Sec)
+{
+  // Exact representation of a time.
+  tf2::TimePoint t1 = tf2::get_now();
+
+  // Approximate representation of the time in seconds as a double (floating point
+  // error introduced).
+  double t1_sec = tf2::timeToSec(t1);
+
+  // Time point from the t1_sec approximation.
+  tf2::TimePoint t2 = tf2::timeFromSec(t1_sec);
+
+  // Check that the difference due to t1_sec being approximate is small.
+  tf2::Duration diff = t2 > t1 ? t2 - t1 : t1 - t2;
+  EXPECT_TRUE(diff < tf2::Duration(std::chrono::nanoseconds(200)));
+
+  // No new floating point errors are expected after converting to and from time points.
+  double t2_sec = tf2::timeToSec(t2);
+  EXPECT_EQ(t1_sec, t2_sec);
+  EXPECT_EQ(tf2::timeFromSec(t1_sec), tf2::timeFromSec(t2_sec));
+}
+
+TEST(tf2_time, To_From_Duration)
+{
+  tf2::TimePoint t1 = tf2::get_now();
+
+  std::vector<double> values = {
+    -0.01, -0.2, -0.5, -0.7, -0.99, -5.7, -1000000, -123456789.123456789,
+    0.01, 0.2, 0.5, 0.7, 0.99, 5.7, 10000000, 123456789.123456789,
+    0.0,
+  };
+
+  for (double expected_diff_sec : values) {
+    tf2::TimePoint t2 = tf2::timeFromSec(tf2::timeToSec(t1) + expected_diff_sec);
+
+    // Check durationToSec.
+    tf2::Duration duration1 = t2 - t1;
+
+    // Approximate representation of the duration in seconds as a double (floating point
+    // error introduced).
+    double duration1_sec = tf2::durationToSec(duration1);
+
+    // Check that the difference due to duration_sec being approximate is small.
+    double error_sec = duration1_sec - expected_diff_sec;
+    EXPECT_TRUE(std::abs(error_sec) < 200 * 1e-9);
+
+    // Check durationFromSec.
+    tf2::Duration duration2 = tf2::durationFromSec(tf2::durationToSec(duration1));
+    tf2::Duration error_duration = duration1 - duration2;
+    // Get the absolute difference between Durations.
+    error_duration = error_duration > tf2::Duration(0) ? error_duration : -error_duration;
+    // Increased tolerance for larger differences.
+    int32_t tol_ns = std::abs(expected_diff_sec) > 100000 ? 10 : 1;
+
+    EXPECT_TRUE(error_duration < tf2::Duration(std::chrono::nanoseconds(tol_ns)));
+  }
+}
+
+TEST(tf2_convert, Covariance_RowMajor_To_Nested)
+{
+  // test verifies the correct conversion of the flat covariance array to a
+  // nested covariance array.
+  // create a dummy input with some values
+  std::array<double, 36> input;
+  std::iota(input.begin(), input.end(), 0);
+
+  // setup the expected output
+  std::array<std::array<double, 6>, 6> expected;
+  double start = 0;
+  for (std::array<double, 6> & ee : expected) {
+    std::iota(ee.begin(), ee.end(), start);
+    start += static_cast<double>(ee.size());
+  }
+
+  // call the tested method
+  const std::array<std::array<double, 6>, 6> result = tf2::covarianceRowMajorToNested(input);
+
+  // check the result
+  ASSERT_EQ(expected, result);
+}
+
+int main(int argc, char ** argv)
+{
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>gps_umd</name>
+  <version>2.0.5</version>
+  <description>gps_umd metapackage</description>
+
+  <author>P. J. Reed</author>
+  <maintainer email="swri-robotics@swri.org">Southwest Research Institute</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/gps_umd</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>gpsd_client</exec_depend>
+  <exec_depend>gps_msgs</exec_depend>
+  <exec_depend>gps_tools</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

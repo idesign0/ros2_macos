@@ -1,0 +1,23 @@
+name: Jazzy - Source Build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - jazzy
+  schedule:
+    # Run every day to detect flakiness and broken dependencies
+    - cron: '03 3 * * MON-FRI'
+
+concurrency:
+  # cancel previous runs of the same workflow, except for pushes on humble branch
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, '/refs/heads') }}
+
+jobs:
+  source:
+    uses: ros-controls/ros2_control_ci/.github/workflows/reusable-ros-tooling-source-build.yml@master
+    with:
+      ros_distro: jazzy
+      ref: jazzy
+      os_name: ubuntu-latest
+      container: ubuntu:24.04

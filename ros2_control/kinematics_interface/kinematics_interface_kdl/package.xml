@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>kinematics_interface_kdl</name>
+  <version>0.4.0</version>
+  <description>KDL implementation of ros2_control kinematics interface</description>
+  <maintainer email="bence.magyar.robotics@gmail.com">Bence Magyar</maintainer>
+  <maintainer email="denis@stogl.de">Denis Štogl</maintainer>
+  <maintainer email="paul.gesel@picknik.ai">Paul Gesel</maintainer>
+  <license>Apache License 2.0</license>
+  <author email="paul.gesel@picknik.ai">Paul Gesel</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>eigen3_cmake_module</buildtool_depend>
+
+  <depend>eigen</depend>
+  <depend>kdl_parser</depend>
+  <depend>kinematics_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>tf2_eigen_kdl</depend>
+
+  <test_depend>ament_cmake_gmock</test_depend>
+  <test_depend>ros2_control_test_assets</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

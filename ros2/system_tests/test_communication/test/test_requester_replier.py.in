@@ -1,0 +1,83 @@
+# generated from test_communication/test/test_requester_replier.py.in
+
+import os
+import sys
+import time
+
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+
+import launch_testing
+import launch_testing.actions
+
+import unittest
+
+
+SERVICE_TYPES = '@TEST_SERVICE_TYPES@'.split(';')
+
+
+@launch_testing.parametrize('service_type', SERVICE_TYPES)
+def generate_test_description(service_type):
+    namespace = '/test_time_%s' % time.strftime('%H_%M_%S', time.gmtime())
+
+    replier_cmd = ['@TEST_REPLIER_EXECUTABLE@', service_type, namespace]
+    replier_env = dict(os.environ)
+    if '@TEST_REPLIER_RCL@' == 'rclpy':
+        replier_cmd.insert(0, sys.executable)
+        replier_env['PYTHONUNBUFFERED'] = '1'
+    replier_env['RCL_ASSERT_RMW_ID_MATCHES'] = '@REPLIER_RMW@'
+    replier_env['RMW_IMPLEMENTATION'] = '@REPLIER_RMW@'
+    replier_process = ExecuteProcess(
+        cmd=replier_cmd,
+        name='test_replier',
+        env=replier_env,
+    )
+
+    requester_cmd = ['@TEST_REQUESTER_EXECUTABLE@', service_type, namespace]
+    requester_env = dict(os.environ)
+    if '@TEST_REQUESTER_RCL@' == 'rclpy':
+        requester_cmd.insert(0, sys.executable)
+        requester_env['PYTHONUNBUFFERED'] = '1'
+    requester_env['RCL_ASSERT_RMW_ID_MATCHES'] = '@REQUESTER_RMW@'
+    requester_env['RMW_IMPLEMENTATION'] = '@REQUESTER_RMW@'
+    requester_process = ExecuteProcess(
+        cmd=requester_cmd,
+        name='test_requester',
+        env=requester_env,
+    )
+
+    return LaunchDescription([
+        # Always stop daemon to isolate tests.
+        ExecuteProcess(
+            cmd=['ros2', 'daemon', 'stop'],
+            name='daemon-stop',
+            on_exit=[
+                replier_process,
+                requester_process,
+                launch_testing.actions.ReadyToTest()
+            ]
+        )
+    ]), locals()
+
+
+class TestRequesterReplier(unittest.TestCase):
+
+    def test_requester_finishes_in_a_finite_amount_of_time(self, proc_info, requester_process):
+        """Test that the second executable terminates after a finite amount of time."""
+        proc_info.assertWaitForShutdown(process=requester_process, timeout=10)
+
+
+@launch_testing.post_shutdown_test()
+class TestRequesterReplierAfterShutdown(unittest.TestCase):
+
+    def test_processes_finished_gracefully(self, proc_info):
+        """Test that both executables finished gracefully."""
+        launch_testing.asserts.assertExitCodes(
+            proc_info,
+            [launch_testing.asserts.EXIT_OK],
+            'test_requester'
+        )
+        launch_testing.asserts.assertExitCodes(
+            proc_info,
+            process='test_replier'
+        )
