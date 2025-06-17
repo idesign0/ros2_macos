@@ -45,7 +45,7 @@ Before proceeding with this repository:
 👉 **Follow the official ROS 2 Humble macOS setup guide up to the "Build ROS 2 from Source" step:**
 
 📄 [ROS 2 Humble — macOS Development Setup (docs.ros.org)](https://docs.ros.org/en/humble/Installation/Alternatives/macOS-Development-Setup.html)
-> 🔧 Stop at the **"Build ROS 2 from source"** step — return here afterward to continue with this setup.
+> 🔧 Stop at the **"Get the ROS 2 code"** step — return here afterward to continue with this setup.
 
 > ⚠️ **Important Notes:**
 > 1) Install ***empy==3.3.4*** to avoid compatibility issues during the ROS 2 build.
