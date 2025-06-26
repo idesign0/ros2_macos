@@ -42,3 +42,6 @@ colcon build --packages-select moveit_ros_perception moveit_planners_ompl --syml
 ```bash
 colcon build --base-paths src/moveit/ --symlink-install \
   --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=Off \
+  --executor parallel \
+  --parallel-workers $(sysctl -n hw.ncpu)
+```
