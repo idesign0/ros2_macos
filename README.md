@@ -190,5 +190,3 @@ This section will be constantly updated based on user feedback. Below are some o
    - `open /opt/homebrew/Cellar/gz-msgs10/10.3.2_4/lib/cmake/gz-msgs10/gz-msgs10-targets.cmake`
 
    Specifically, replace occurrences of `TINYXML2::TINYXML2` with `tinyxml2::tinyxml2` (and similar uppercase target names) to lowercase versions.
-  --executor parallel \
-  --parallel-workers $(sysctl -n hw.ncpu)
