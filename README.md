@@ -225,12 +225,18 @@ export CC=/opt/homebrew/opt/llvm/bin/clang
 export CXX=/opt/homebrew/opt/llvm/bin/clang++
 ```
 ```bash
-colcon build --packages-select moveit_ros_perception moveit_planners_ompl --cmake-clean-cache
+colcon build --packages-select moveit_ros_perception moveit_planners_ompl --symlink-install \
+  --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=Off \
+  --executor parallel \
+  --parallel-workers $(sysctl -n hw.ncpu)
 ```
-> **Important**: After building these two packages, restart your terminal to reset to the default Apple Clang compiler before building the remaining packages.
+> **Important**: After building these two packages, **restart your terminal** to reset to the default Apple Clang compiler before building the remaining packages.
 
 #### 3. Build the rest of the MoveIt packages:
 ```bash
-colcon build --base-paths src/moveit/ --cmake-clean-cache
+colcon build --base-paths src/moveit/ --symlink-install \
+  --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=Off \
+  --executor parallel \
+  --parallel-workers $(sysctl -n hw.ncpu)
 ```
 
