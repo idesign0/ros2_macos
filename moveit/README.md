@@ -12,7 +12,10 @@ pip install ruckig==0.8.4
 #### 1. Build required perception packages first:
 Build the required perception packages from ros-perception first:
 ```bash
-colcon build --base-paths src/ros-perception/ --cmake-clean-cache
+colcon build --base-paths src/ros-perception/ --symlink-install \
+  --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=Off \
+  --executor parallel \
+  --parallel-workers $(sysctl -n hw.ncpu)
 ```
 #### 2. Build OpenMP-dependent MoveIt packages with LLVM
 Apple’s default Clang does not support OpenMP. For the following packages, install LLVM and set environment variables before building:
