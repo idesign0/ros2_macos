@@ -1,0 +1,5 @@
+the_answer_to_life: 42
+
+
+the_question_to_life: What do you get if you multiply six by nine?
+param_file_to_inject: config/param_file_to_inject.yaml

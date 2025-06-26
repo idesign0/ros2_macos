@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>moveit_plugins</name>
+  <version>2.5.9</version>
+  <description>Metapackage for MoveIt plugins.</description>
+
+  <maintainer email="henningkayser@picknik.ai">Henning Kayser</maintainer>
+  <maintainer email="tyler@picknik.ai">Tyler Weaver</maintainer>
+  <maintainer email="me@v4hn.de">Michael Görner</maintainer>
+  <maintainer email="moveit_releasers@googlegroups.com">MoveIt Release Team</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://moveit.ros.org</url>
+
+  <author email="mferguson@fetchrobotics.com">Michael Ferguson</author>
+  <author email="isucan@google.com">Ioan Sucan</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>moveit_simple_controller_manager</exec_depend>
+  <!--
+  <exec_depend>moveit_ros_control_interface</exec_depend>
+  -->
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

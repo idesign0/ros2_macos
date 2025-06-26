@@ -1,0 +1,9 @@
+# Motion planning request to the global planner
+string planning_group
+moveit_msgs/MotionSequenceRequest motion_sequence
+---
+# Motion planning response from the global planner
+moveit_msgs/MotionPlanResponse response
+---
+# Feedback about the currently running global planning operation
+string feedback

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>moveit_ros_visualization</name>
+  <version>2.5.9</version>
+  <description>Components of MoveIt that offer visualization</description>
+  <maintainer email="henningkayser@picknik.ai">Henning Kayser</maintainer>
+  <maintainer email="tyler@picknik.ai">Tyler Weaver</maintainer>
+  <maintainer email="jon.binney@gmail.com">Jon Binney</maintainer>
+  <maintainer email="moveit_releasers@googlegroups.com">MoveIt Release Team</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://moveit.ros.org</url>
+  <url type="bugtracker">https://github.com/ros-planning/moveit2/issues</url>
+  <url type="repository">https://github.com/ros-planning/moveit2</url>
+
+  <author email="isucan@google.com">Ioan Sucan</author>
+  <author email="dave@picknik.ai">Dave Coleman</author>
+  <author email="robot.moveit@gmail.com">Sachin Chitta</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>pkg-config</buildtool_depend>
+  <depend>moveit_common</depend>
+
+  <build_depend>class_loader</build_depend>
+  <build_depend>eigen</build_depend>
+  <build_depend>libqt5-opengl-dev</build_depend>
+  <build_depend>qtbase5-dev</build_depend>
+
+  <depend>geometric_shapes</depend>
+  <depend>interactive_markers</depend>
+  <depend>moveit_ros_robot_interaction</depend>
+  <!-- TODO(JafarAbdi): uncomment after porting moveit_ros_perception -->
+  <!--depend>moveit_ros_perception</depend-->
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_warehouse</depend>
+  <depend>object_recognition_msgs</depend>
+  <depend version_gte="1.11.2">pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
+  <depend>rviz2</depend>
+  <depend>tf2_eigen</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <rviz plugin="${prefix}/robot_state_rviz_plugin_description.xml"/>
+    <rviz plugin="${prefix}/planning_scene_rviz_plugin_description.xml"/>
+    <rviz plugin="${prefix}/motion_planning_rviz_plugin_description.xml"/>
+    <rviz plugin="${prefix}/trajectory_rviz_plugin_description.xml"/>
+  </export>
+
+</package>

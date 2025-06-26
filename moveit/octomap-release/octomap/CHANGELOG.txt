@@ -1,0 +1,317 @@
+v1.9.8: 2022-05-12
+==================
+- Also set lowercase octomap_* variables in CMake config (#369)
+- Fix float tests and overflow problem in binvox2bt
+- Fix to freespace update when bbx is set. (#360)
+- Update Doxygen & URLs  (#354,#352)
+- make setBBXMin/Max parameters const (#348)
+- ROS: Remove unused ament_cmake dependency.
+- octovis: Implement volume selection features (#339)
+- octovis: Link dependencies in octovis-static library (#340)
+
+v1.9.7: 2021-05-03
+==================
+- Use explicit casting to prevent implicit sign conversion
+- REP-136 compliance and compatibility with ROS1 & ROS2 using single branch
+
+v1.9.6: 2021-01-23
+==================
+- Fixed ifstream >> byte with c++17
+- strict warnings_as_errors compiler options and corresponding fixes
+- octovis: Fixed qmake command to build libQGLViewer with Qt5.
+- octovis: adapted to be compatible with libQGLViewer >= 2.7.0
+- octovis: use -fPIC with all compilers
+
+v1.9.5: 2020-03-25
+==================
+- octovis: Update ROS dependencies to Qt5
+
+v1.9.4: 2020-03-15
+==================
+- octovis: Enable Qt5 by default
+- Support added for configurable libdir for packaging
+- Increased minimum CMake version to 3.0.2
+
+v1.9.3: 2019-12-26
+==================
+- Fixed Wpedantic warnings
+- Removed problematic INSTALL_NAME_DIR (maxOS workaround)
+
+v1.9.2: 2019-11-28
+==================
+- Fixed ROS buildfarm failures for octovis
+
+v1.9.1: 2019-11-23
+==================
+- Improved compatibility with modern compilers and ROS2
+
+v1.9.0: 2017-04-28
+==================
+- Fixed getUnknownLeafCenters to return true leaf centers (thx to A. Ecins)
+- dynamicEDT3D templated over OctoMap type (thx to J.V. Gomez)
+- Added optimized rendering option and command line option for tree cutoff 
+  in octovis (thx to F. Endres)
+- Added optional Qt5 support in octovis (thx to K. Stepanas)
+- Improved the generation of config.cmake and version.cmake files, make them
+  relocatable via CONFIGURE_PACKAGE_CONFIG_FILE (thx to J.V. Gomez)
+- Enable rpath on OS X when the CMake version supports it (thx to J. Snape)
+- Added version information to *-config.cmake files and exported targets to
+  CMakeLists.txt (thx to J. Snape)
+- Improved CMake build by specifically targeting local includes (thx to 
+  C.-E. Hrabia)
+
+v1.8.1: 2017-01-13
+==================
+- Disambiguated isnan (C++11)
+- Fixed #123: Set root=NULL in clear()
+- Fixed #131: Portable binary read/write of Pointcloud and ScanGraph (uint32_t)
+
+v1.8.0: 2016-04-20
+==================
+- Fixed #98: The tree structure in memory is now maintained in OcTreeBaseImpl to 
+  enable safely deriving custom node classes. The following functions were 
+  moved from OcTreeDataNode into OcTreeBaseImpl:
+    createChild(...) -> OcTreeBaseImpl::createNodeChild(...)
+    getChild(...)    -> OcTreeBaseImpl::getNodeChild(...)
+    expandNode()     -> OcTreeBaseImpl::expandNode(...)
+    pruneNode()      -> OcTreeBaseImpl::pruneNode(...)
+    hasChildren()    -> OcTreeBaseImpl::nodeHasChildren(...)
+    childExists(...) -> OcTreeBaseImpl::nodeChildExist(...)
+    collapsible()    -> OcTreeBaseImpl::isNodeCollapsible(...)
+  If you use custom derived node classes, you need to adjust your code to the 
+  new API (have a look at ColorOcTree.h as an example). In particular, you 
+  should no longer use the above node member functions in your nodes.
+- Extended unit tests for the new memory management
+- Added valgrind memcheck suppression file with known ("wanted") leaks due to 
+  StaticMemberInitializer.
+- Replaced `unsigned short int` for key values with octomap::key_type 
+  (=uint16_t) and unsigned char with uint8_t in API.
+- Cleaned up OcTreeKey and KeyRay API (used internally)
+- Reduced unneeded memory for StaticMemberInitializer 
+- Cleaned up const refs to primitive types in ColorOcTree interface
+- Removed deprecated insertScan functions (replaced by insertPointCloud)
+- Removed no longer used ROS logging macros and unmaintained  OcTreeLUT, 
+  OcTreeBaseSE classes
+- octovis: Internal version of libQGLViewer updated to 2.6.3
+
+v1.7.2: 2016-03-26
+==================
+- BBX iterators fixed for empty trees (point3d version)
+- Removed qglviewer.h from some public octovis headers
+- Fixed QGLViewer library names for Ubuntu wily and xenial
+- Fixed install path in CMakeConfigs
+
+v1.7.1: 2016-01-31
+==================
+- Fixed #82: Enable uninstall target for complete project
+- Fixed #47: Exported CMake library paths for Windows no longer
+  have the Release/Debug prefix and correctly contain the .lib file
+- Fixed #51: IO factory class registry with MSVC. Calling a dummy 
+  function from an OcTree class c'tor enables reading general .ot files
+  when compiling with MSVC
+- Fixed #100: Explicit casts to avoid warnings with MSVC
+
+v1.7.0: 2015-11-27
+==================
+- BBX iterators fixed for empty trees (thx to F. Boniardi)
+- graph2tree tool option for nodes in global frame
+- New octree2pointcloud PCL conversion tool (thx to F. Ferri)
+- Improved change detection / diff calculation (thx to C. Brew)
+- getUnknownLeafCenters now allows queries at a specified depth (thx to 
+  A. Ecins)
+- Fixed hashing overflow with clang (thx to L. Riano)
+
+
+v1.6.9: 2016-01-13
+==================
+- Maintenance release for ROS: 
+  Added function to determine state of change detection
+  
+v1.6.7: 2014-08-31
+==================
+- FSF address in octovis license header for OctoMap package in Fedora
+- Separate build options for octovis and dynamicEDT3D. Thanks to C. Reist!
+
+v1.6.6: 2014-05-26
+==================
+- Support for SOVERSION in the libraries for better packaging
+- Warning for unknown space in castRay() removed (needs to be inferred by
+  calling code depending on return value and endpoint voxel)
+- Marching cubes for ray surface intersection extended
+- Fixed QGLViewer include paths
+- ScanGraph read error no longer exits the process
+
+v1.6.5: 2014-03-14
+==================
+- Fix octovis includes for QGLViewer > 2.5
+
+v1.6.4: 2014-01-20
+==================
+- Fix for raycasting termination condition in computeRayKeys() (affects
+  insertScan / insertRay). Thanks to C. Sprunk!
+
+v1.6.3: 2014-01-13
+==================
+- New function setNodeValue(...) to directly set a node's value (#31)
+- New approximate point cloud insertion as fast variant (#39, see flag for
+  insertPointCloud(...) / new function computeDiscreteUpdate(...)
+
+v1.6.2: 2013-11-26
+==================
+- Improved OSX 10.9 compatibility (thx to B. Jensen)
+- Improved  VC++ compatibility (thx to tmdiv)
+- New fct. getRayIntersection to get real intersection of raycasting on
+  voxel (thanks to F-M. de Rainville)
+- Fix #54: Quote paths in CMake configs to avoid problems with spaces
+- Fix #53: Auto-pruning after updateNode
+- Fix #44: CMAKE_SHARED_LIBRARY_SUFFIX in CMakeConfig (Win / Mac compatibility)
+- octovis now includes QGLViewer 2.4 (Qt5 support)
+- octovis now looks for the octomap version of the same number
+
+v1.6.1: 2013-06-19
+==================
+- New function swapContent to exchange the contents of two octrees (issue #32)
+- New normal estimation based on marching cubes (thanks to F-M. de Rainville)
+- Fixed octovis edit box affecting small selection ranges
+- Fixed compilation with gcc 4.8 and OSX (issues #23 #28)
+
+v1.6.0: 2013-04-05
+==================
+- Speedup: Pruning is now done only on affected nodes on each call to
+  updateNode(). You no longer have to call prune(), except when you manually
+  change nodes or use lazy_update.
+- insertScan() renamed to insertPointCloud(), removed parameter "pruning"
+- insertScanNaive() renamed to insertScanRays(), removed parameter "pruning"
+- insertScan() / insertPointCloud() / insertScanRays() can now be parallelized
+  with OpenMP, currently disabled by default. Enable with CMake flag OCTOMAP_OMP
+- Empty octrees no longer contain a root node (#11)
+- Library names in CMake configs are now absolute paths, you should no longer
+  use OCTOMAP_LIBRARY_DIRS with FIND_PACKAGE (#14)
+- graph2tree: pointcloud is transformed in batch before insertion, small changes
+  in command line options
+- octovis: more map editing options, fixed setting nodes to free/occupied (thx
+  to C. Dornhege)
+- Sample data is now in octomap/share
+
+v1.5.7: 2014-01-20
+==================
+- Fix for raycasting termination condition in computeRayKeys() (affects
+  insertScan / insertRay). Thanks to C. Sprunk!
+
+v1.5.6: 2013-06-10
+==================
+- Fixed compilation with OSX 10.8 (issue #23)
+
+v1.5.5: 2013-05-05
+==================
+- Fixed compilation of external code against OctoMap with gcc4.8 (issue #28)
+
+v1.5.4: 2013-02-27
+==================
+- Removed binvox binaries from sources for improved packaging compatibility
+  (ticket #18). Download from www.cs.princeton.edu/~min/binvox/ instead.
+
+v1.5.3: 2012-12-18
+==================
+- CMakeConfig now installs into share/octomap instead of lib/cmake/octomap for
+	better compatibility with ROS
+- ROS package.xml removed, will be added in the release process
+- added sensor model parameters to graph2tree
+- new octree evaluation tool: eval_octree_accuracy and compare_octrees
+
+v1.5.2: 2012-11-02
+==================
+- Fixed compilation with gcc 4.7 (Ubuntu Quantal)
+
+v1.5.1: 2012-10-16
+===================
+- Fixed raycasting corner cases, expanded unit tests
+- added double precision 3D coordinate conversions (ticket #13)
+- Fixed compatibility with MSVC
+
+v1.5.0: 2012-08-28
+===================
+- dynamicEDT3D, a library for dynamically updatable distance maps by C. Sprunk, 
+	B. Lau, and W. Burgard is now available as part of the OctoMap distribution
+- added AbstractOccupancyOcTree interface class, moved binary file IO
+- delete functionality added to octrees and nodes
+- octovis can now delete nodes inside or outside of a selection box
+- operator== and copy constructor for octree nodes and octrees
+- key / coordinate conversion functions are now clearly named and documented.
+	genPos/genKey deprecated in favor of coordToKey, keyToCoord
+- added limited-depth search
+- deep-copy constructor for octrees and nodes, assignment op. is private
+- improved compatibility with MSVC (thx to J. Aguado)
+- internal QGLViewer version increased to 2.3.17
+- cleanup: functions removed /deprecated in favor or iterator-base node traversal
+- cleanup: private members renamed (tree root / node children)
+
+v1.4.3: 2012-10-07
+==================
+- Fixed raycasting corner cases, expanded unit tests
+- iterator_base derives public for boost::filter
+
+v1.4.2: 2012-04-24
+===================
+- extended graph2tree with more verbose logging / statistics
+- fixed conversion from color .ot to .bt in convert_octree
+- minor fixes in octovis with color rendering 
+- fixed octovis compilation with Qt 4.8 (Ubuntu 12.04)
+- experimental editing functionality in octovis to clear and fill volumes
+
+v1.4.1: 2012-03-12
+===================
+- added stack.yaml for release in ROS with catkin
+
+v1.4: 2012-02-22
+===================
+ - New generalized file IO for all kinds of OcTrees to .ot files. The updated
+ 	file format requires a conversion of your old bt and ot files with the 
+ 	"convert_octree" tool. bt files are read and written as before. 
+ 	To write the general .ot file format use tree.write(...) and read it with 
+ 	AbstractOcTree::read(...) as factory (dynamic_cast to the correct class 
+ 	afterwards).
+ - New ColorOcTree class to store color in addition to occupancy 
+	(e.g. from Kinect), with visualization in octovis
+ - New map collections of octrees (hierarchical octree maps, experimental)
+ - Support for Linux, Mac OSX, and Windows
+ - enhancements and fixes in changeDetection
+ - minor fixes and unit tests added
+
+v1.2: 2011-08-17
+===================
+ - divided code into a library (octomap) and visualization part (octvis) to 
+	remove dependencies on Qt / OpenGL from library. Both can be built 
+	independently or as a complete package.
+ - iterators for fast and flexible tree access (check doxygen of OcTreeBase::
+	 iterator) are the preferred way to traverse tree nodes now
+ - improved speed of map update / scan insertion. A further speedup is possible
+	when using the "lazy evaluation" flag for batch insertion
+ - unit tests based on CTest ("make test")
+ - CMake improvements: new targets "dist" (build package) and "uninstall",
+	dynamic and static libs are built. CMake package config to ease integration 
+	into other CMake-based systems (install octomap globally, or set the 
+	environment variable octomap_DIR to your OctoMap location
+ - occupancy and sensor parameters are now a property of the tree and not the
+	nodes. Use e.g. tree->isNodeOccupied(node) instead of node->isOccupied()
+ - cleanup of OcTree and OccupancyOcTree: the latter now holds most of the 
+	implementation to ease deriving own tree and node types. 
+        See OcTreeStamped for an example.
+ - debug output is now muted when not compiling as "Debug", ROS logging levels
+	are used when compiled in ROS
+ - experimental change detection in occupancy octrees 
+ - bugfixes and general compatibility improvements
+
+
+v1.0: 2011-03-15
+===================
+ - cleanup of insertScan methods
+ - key-based raycasting with pre-allocated KeyRay
+ - speedup and cleanup of math, inlining
+
+
+v0.8: 2010-11-16
+===================
+ - improved speed of map update / scan insertion 
+ - improved speed of map queries (isOccupied / castRay)
+ - key-based computations to improve numerical stability and efficiency 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <created>2016-08-28T22:17:50</created>
+    <modified>2016-08-28T22:17:50</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>X_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_geometries>
+    <geometry id="triangle">
+      <mesh>
+        <source id="positions">
+          <float_array id="data" count="9">0 0 1 0 1 0 1 0 0</float_array>
+          <technique_common>
+            <accessor source="#data" count="3" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="vertices"><input semantic="POSITION" source="#positions"/></vertices>
+        <triangles count="1">
+          <input semantic="VERTEX" source="#vertices" offset="0"/>
+          <p>0 1 2</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="scene"><node><instance_geometry url="#triangle"/></node></visual_scene>
+  </library_visual_scenes>
+  <scene><instance_visual_scene url="#scene"/></scene>
+</COLLADA>

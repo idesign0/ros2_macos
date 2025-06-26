@@ -1,0 +1,41 @@
+# This config uses industrial_ci (https://github.com/ros-industrial/industrial_ci.git).
+# For troubleshooting, see readme (https://github.com/ros-industrial/industrial_ci/blob/master/README.rst)
+
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  industrial_ci:
+    strategy:
+      matrix:
+        env:
+          - ROS_DISTRO: humble
+            ROS_REPO: main
+          - ROS_DISTRO: humble
+            ROS_REPO: testing
+          - ROS_DISTRO: rolling
+            ROS_REPO: main
+          - ROS_DISTRO: rolling
+            ROS_REPO: testing
+    env:
+      BASEDIR: ${{ github.workspace }}/.work
+
+    name: ${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: industrial_ci
+        uses: 'ros-industrial/industrial_ci@master'
+        env: ${{ matrix.env }}
+      - name: upload test artifacts (on failure)
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-results
+          path: ${{ env.BASEDIR }}/target_ws/**/test_results/**/*.xml

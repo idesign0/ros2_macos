@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>py_binding_tools</name>
+  <version>2.0.2</version>
+  <description>Python binding tools for C++</description>
+
+  <author email="rhaschke@techfak.uni-bielefeld.de">Robert Haschke</author>
+  <maintainer email="rhaschke@techfak.uni-bielefeld.de">Robert Haschke</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/py_binding_tools</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <depend>pybind11_vendor</depend>
+  <depend>geometry_msgs</depend>
+  <depend>rclcpp</depend>
+
+  <test_depend>std_msgs</test_depend>
+  <test_depend>rclpy</test_depend>
+  <test_depend>ament_cmake_pytest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

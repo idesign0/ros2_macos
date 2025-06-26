@@ -1,0 +1,9 @@
+solid
+facet normal -0.577350 -0.577350 -0.577350
+outer loop
+vertex 0.000000 0.000000 1.000000
+vertex 0.000000 1.000000 0.000000
+vertex 1.000000 0.000000 0.000000
+endloop
+endfacet
+endsolid

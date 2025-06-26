@@ -1,0 +1,32 @@
+<package format="2">
+	<name>moveit_task_constructor_visualization</name>
+	<version>0.1.3</version>
+	<description>Visualization tools for MoveIt Task Pipeline</description>
+
+	<license>BSD</license>
+	<author email="rhaschke@techfak.uni-bielefeld.de">Robert Haschke</author>
+	<maintainer email="rhaschke@techfak.uni-bielefeld.de">Robert Haschke</maintainer>
+	<maintainer email="me@v4hn.de">Michael Goerner</maintainer>
+
+	<buildtool_depend>ament_cmake</buildtool_depend>
+
+	<depend>fmt</depend>
+	<build_depend>qtbase5-dev</build_depend>
+	<depend>moveit_core</depend>
+	<depend>moveit_task_constructor_msgs</depend>
+	<depend>moveit_task_constructor_core</depend>
+	<depend>moveit_ros_visualization</depend>
+	<depend>rclcpp</depend>
+	<depend>rviz2</depend>
+
+	<test_depend>ament_cmake_gmock</test_depend>
+	<test_depend>ament_cmake_gtest</test_depend>
+	<test_depend>launch</test_depend>
+	<test_depend>launch_testing</test_depend>
+	<test_depend>launch_testing_ament_cmake</test_depend>
+	<test_depend>launch_testing_ros</test_depend>
+
+	<export>
+		<build_type>ament_cmake</build_type>
+     </export>
+</package>

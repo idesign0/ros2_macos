@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>geometric_shapes</name>
+  <version>2.3.3</version>
+  <description>This package contains generic definitions of geometric shapes and bodies.</description>
+
+  <author email="isucan@google.com">Ioan Sucan</author>
+  <author email="gjones@willowgarage.edu">Gil Jones</author>
+
+  <maintainer email="tyler@picknik.ai">Tyler Weaver</maintainer>
+
+  <license>BSD</license>
+  <url>http://ros.org/wiki/geometric_shapes</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+  <!-- Properly handle Eigen3 includes -->
+  <buildtool_depend>eigen3_cmake_module</buildtool_depend>
+  <build_depend>eigen</build_depend>
+  <!-- Export Eigen3 dependency to downstream packages
+       (required since we are using Eigen3 in public headers) -->
+  <buildtool_export_depend>eigen3_cmake_module</buildtool_export_depend>
+  <build_export_depend>eigen</build_export_depend>
+
+  <depend>rclcpp</depend>
+  <depend>eigen_stl_containers</depend>
+  <depend>console_bridge_vendor</depend>
+  <depend>liboctomap-dev</depend>
+  <depend>random_numbers</depend>
+  <depend>resource_retriever</depend>
+  <depend>shape_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
+
+  <build_depend>assimp-dev</build_depend>
+  <build_depend>eigen</build_depend>
+  <build_depend>libfcl-dev</build_depend>
+  <build_depend>libqhull</build_depend>
+  <build_depend>pkg-config</build_depend>
+  <build_depend>libboost-dev</build_depend>
+  <build_depend>libboost-filesystem-dev</build_depend>
+
+  <build_export_depend>libboost-dev</build_export_depend>
+
+  <exec_depend>assimp</exec_depend>
+  <exec_depend>libboost-filesystem</exec_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <exec_depend>libfcl</exec_depend>
+  <exec_depend>libqhull</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_cmake</test_depend>
+  <test_depend>ament_cmake_copyright</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

@@ -1,0 +1,98 @@
+# This config uses industrial_ci (https://github.com/ros-industrial/industrial_ci.git).
+# For troubleshooting, see readme (https://github.com/ros-industrial/industrial_ci/blob/master/README.rst)
+
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  default:
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - IMAGE: humble-source
+
+    env:
+      CLANG_TIDY_ARGS: -quiet -export-fixes ${{ github.workspace }}/.work/clang-tidy-fixes.yaml
+      DOCKER_IMAGE: moveit/moveit2:${{ matrix.env.IMAGE }}
+      UNDERLAY: ${{ endsWith(matrix.env.IMAGE, '-source') && '/root/ws_moveit/install' || ''}}
+      TARGET_CMAKE_ARGS: -DCMAKE_BUILD_TYPE=Release
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      BASEDIR: ${{ github.workspace }}/.work
+      CACHE_PREFIX: "${{ matrix.env.IMAGE }}${{ contains(matrix.env.TARGET_CMAKE_ARGS, '--coverage') && '-ccov' || '' }}"
+      # perform full clang-tidy check only on manual trigger (workflow_dispatch), PRs do check changed files, otherwise nothing
+      CLANG_TIDY_BASE_REF: ${{ github.event_name != 'workflow_dispatch' && (github.base_ref || github.ref) || '' }}
+      CC: ${{ matrix.env.CLANG_TIDY && 'clang' }}
+      CXX: ${{ matrix.env.CLANG_TIDY && 'clang++ -std=c++17' }}
+
+    name: "${{ matrix.env.IMAGE }}${{ matrix.env.NAME && ' • ' || ''}}${{ matrix.env.NAME }}${{ matrix.env.CLANG_TIDY && ' • clang-tidy' || '' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cache ccache
+        uses: rhaschke/cache@main
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ccache-${{ env.CACHE_PREFIX }}-${{ github.sha }}-${{ github.run_id }}
+          restore-keys: |
+            ccache-${{ env.CACHE_PREFIX }}-${{ github.sha }}
+            ccache-${{ env.CACHE_PREFIX }}
+        env:
+          GHA_CACHE_SAVE: always
+
+      - id: ici
+        name: Run industrial_ci
+        uses: rhaschke/industrial_ci@master
+        env: ${{ matrix.env }}
+
+      - name: Upload ici's target_ws/install folder
+        uses: rhaschke/upload-ici-workspace@main
+        if: success() && matrix.env.CLANG_TIDY
+        with:
+          subdir: target_ws/install
+
+      - name: Upload test artifacts (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure() && (steps.ici.outputs.run_target_test || steps.ici.outputs.target_test_results)
+        with:
+          name: test-results-${{ matrix.env.IMAGE }}${{ matrix.env.NAME && '-' || ''}}${{ matrix.env.NAME }}${{ matrix.env.CLANG_TIDY && '-clang-tidy' || '' }}
+          path: ${{ env.BASEDIR }}/target_ws/**/test_results/**/*.xml
+
+      - name: Upload clang-tidy fixes (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure() && steps.ici.outputs.clang_tidy_checks
+        with:
+          name: clang-tidy-fixes.yaml
+          path: ${{ env.BASEDIR }}/clang-tidy-fixes.yaml
+
+      - name: Show clang-tidy warnings
+        if: always() && matrix.env.CLANG_TIDY
+        uses: asarium/clang-tidy-action@v1
+        with:
+          fixesFile: ${{ env.BASEDIR }}/clang-tidy-fixes.yaml
+
+      - name: Generate codecov report
+        uses: rhaschke/lcov-action@main
+        if: contains(matrix.env.TARGET_CMAKE_ARGS, '--coverage') && steps.ici.outputs.target_test_results == '0'
+        with:
+          docker: $DOCKER_IMAGE
+          workdir: ${{ env.BASEDIR }}/target_ws
+          lcov_capture_args: --ignore-errors=source,gcov,mismatch,negative
+          ignore: '"*/target_ws/build/*" "*/target_ws/install/*" "*/test/*"'
+      - name: Upload codecov report
+        uses: codecov/codecov-action@v3
+        if: contains(matrix.env.TARGET_CMAKE_ARGS, '--coverage') && steps.ici.outputs.target_test_results == '0'
+        with:
+          files: ${{ env.BASEDIR }}/target_ws/coverage.info

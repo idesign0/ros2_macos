@@ -1,0 +1,11 @@
+# Local constraints to apply when following the target trajectory produced by the GlobalPlanner
+Constraints[] local_constraints
+---
+# Result of the local planning operation
+moveit_msgs/MoveItErrorCodes error_code
+
+# Error message with more detailed information about the local planning result
+string error_message
+---
+# Feedback about the currently running local planning operation
+string feedback

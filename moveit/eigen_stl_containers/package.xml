@@ -1,0 +1,22 @@
+<package format="2">
+  <name>eigen_stl_containers</name>
+  <version>1.1.0</version>
+
+  <description>This package provides a set of typedef's that allow
+  using Eigen datatypes in STL containers</description>
+  <author email="isucan@willowgarage.com">Ioan Sucan</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+  <license>BSD</license>
+
+  <url>http://eigen.tuxfamily.org/dox/TopicUnalignedArrayAssert.html</url>
+  <url type="bugtracker">https://github.com/ros/eigen_stl_containers/issues</url>
+  <url type="repository">https://github.com/ros/eigen_stl_containers</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <build_depend>eigen</build_depend>
+  <build_export_depend>eigen</build_export_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

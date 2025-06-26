@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>srdfdom</name>
+  <version>2.0.8</version>
+  <description>Parser for Semantic Robot Description Format (SRDF).</description>
+
+  <author email="isucan@willowgarage.com">Ioan Sucan</author>
+  <author email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</author>
+  <maintainer email="moveit_releasers@googlegroups.com">MoveIt Release Team</maintainer>
+
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/srdfdom</url>
+  <url type="bugtracker">https://github.com/ros-planning/srdfdom/issues</url>
+  <url type="repository">https://github.com/ros-planning/srdfdom</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <build_depend>libboost-dev</build_depend>
+  <build_depend>console_bridge_vendor</build_depend>
+  <build_depend>libconsole-bridge-dev</build_depend>
+  <build_depend>tinyxml2_vendor</build_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>urdfdom_headers</build_depend>
+
+  <exec_depend>console_bridge_vendor</exec_depend>
+  <exec_depend>libconsole-bridge-dev</exec_depend>
+  <exec_depend>tinyxml2_vendor</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>urdfdom_py</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_pytest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_cmake</test_depend>
+  <export>
+      <build_type>ament_cmake</build_type>
+  </export>
+</package>

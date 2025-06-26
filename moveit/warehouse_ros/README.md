@@ -1,0 +1,6 @@
+Abstract interface for persisting ROS message data.  Implementations are loaded using pluginlib.  Currently has one implementation, using MongoDB, warehouse_ros_mongo.  See http://www.ros.org/wiki/warehousewg for more.
+
+| Branch | CI Status |
+| ------ | --------- |
+| `ros2` | [![Formatting (pre-commit)](https://github.com/ros-planning/warehouse_ros/actions/workflows/format.yaml/badge.svg?branch=ros2)](https://github.com/ros-planning/warehouse_ros/actions/workflows/format.yaml?query=branch%3Aros2) [![Build and Test](https://github.com/ros-planning/warehouse_ros/actions/workflows/build_and_test.yaml/badge.svg?branch=ros2)](https://github.com/ros-planning/warehouse_ros/actions/workflows/build_and_test.yaml?query=branch%3Aros2) |
+| `kinetic-devel` | [![Formatting (pre-commit)](https://github.com/ros-planning/warehouse_ros/actions/workflows/format.yaml/badge.svg?branch=kinetic-devel)](https://github.com/ros-planning/warehouse_ros/actions/workflows/format.yaml?query=branch%3Akinetic-devel) [![Build and Test](https://github.com/ros-planning/warehouse_ros/actions/workflows/build_and_test.yaml/badge.svg?branch=kinetic-devel)](https://github.com/ros-planning/warehouse_ros/actions/workflows/build_and_test.yaml?query=branch%3Akinetic-devel) |

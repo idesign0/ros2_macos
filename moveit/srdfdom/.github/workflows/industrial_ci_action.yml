@@ -1,0 +1,58 @@
+# This config uses industrial_ci (https://github.com/ros-industrial/industrial_ci.git).
+# For troubleshooting, see readme (https://github.com/ros-industrial/industrial_ci/blob/master/README.rst)
+
+name: Build and Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - ros2
+
+jobs:
+  industrial_ci:
+    strategy:
+      matrix:
+        env:
+          - {
+            ROS_DISTRO: rolling, ROS_REPO: main, CCOV_UPLOAD: true,
+            CLANG_TIDY: pedantic,
+            CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS='--coverage' -DCMAKE_CXX_FLAGS='--coverage'",
+            AFTER_RUN_TARGET_TEST: './.ci.prepare_codecov',
+            ADDITIONAL_DEBS: 'lcov'
+          }
+          - {ROS_DISTRO: humble, ROS_REPO: main, CCOV_UPLOAD: false}
+          - {ROS_DISTRO: humble, ROS_REPO: testing, CCOV_UPLOAD: false}
+          - {ROS_DISTRO: iron, ROS_REPO: main, CCOV_UPLOAD: false}
+          - {ROS_DISTRO: iron, ROS_REPO: testing, CCOV_UPLOAD: false}
+          - {ROS_DISTRO: jazzy, ROS_REPO: main, CCOV_UPLOAD: false}
+          - {ROS_DISTRO: jazzy, ROS_REPO: testing, CCOV_UPLOAD: false}
+          - {ROS_DISTRO: rolling, ROS_REPO: main, CCOV_UPLOAD: false}
+          - {ROS_DISTRO: rolling, ROS_REPO: testing, CCOV_UPLOAD: false}
+    env:
+      CCACHE_DIR: /home/runner/.ccache
+      BASEDIR: .base
+      BEFORE_RUN_TARGET_TEST: "sudo apt-get -qq install -y locales; sudo locale-gen nl_NL.UTF-8"
+
+    name: ${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}${{ matrix.env.CCOV_UPLOAD && ' + ccov' || ''}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ github.sha }}
+          restore-keys: |
+            ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{ matrix.env }}
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-results
+          path: ${{ env.BASEDIR }}/target_ws/**/test_results/**/*.xml
+      - uses: codecov/codecov-action@v4
+        if: ${{ matrix.env.CCOV_UPLOAD }}
+        with:
+          files: ${{ env.BASEDIR }}/coverage.info

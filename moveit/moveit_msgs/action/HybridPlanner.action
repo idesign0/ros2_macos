@@ -1,0 +1,12 @@
+# Motion planning request to the hybrid planning architecture
+string planning_group
+moveit_msgs/MotionSequenceRequest motion_sequence
+---
+# Result of the hybrid planning
+moveit_msgs/MoveItErrorCodes error_code
+
+# Error message with more detailed information about the hybrid planning result
+string error_message
+---
+# Feedback about the hybrid planning
+string feedback

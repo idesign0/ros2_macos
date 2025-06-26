@@ -1,0 +1,5 @@
+repositories:
+  object_recognition_msgs:
+    type: git
+    url: https://github.com/wg-perception/object_recognition_msgs
+    version: ros2

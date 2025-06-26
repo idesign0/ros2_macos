@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:arg name="prefix" default=""/>
+
+    <xacro:macro name="robot" params="prefix">
+        <link name="${prefix}_link1">
+            <visual>
+                <geometry>
+                    <cylinder length="0.6" radius="0.2"/>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name="${prefix}_link2">
+            <visual>
+                <geometry>
+                    <box size="0.6 0.1 0.2"/>
+                </geometry>
+            </visual>
+        </link>
+
+        <joint name="${prefix}_joint" type="fixed">
+            <parent link="${prefix}_link1"/>
+            <child link="${prefix}_link2"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:robot prefix="$(arg prefix)"/>
+
+</robot>

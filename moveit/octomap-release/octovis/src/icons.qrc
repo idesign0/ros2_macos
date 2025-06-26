@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/media-playback-start.png</file>
+        <file>icons/media-seek-backward.png</file>
+        <file>icons/media-seek-forward.png</file>
+        <file>icons/media-skip-backward.png</file>
+        <file>icons/media-skip-forward.png</file>
+        <file>icons/application-exit.png</file>
+        <file>icons/configure.png</file>
+        <file>icons/document-open-folder.png</file>
+        <file>icons/document-open.png</file>
+        <file>icons/document-save.png</file>
+        <file>icons/edit-undo.png</file>
+        <file>icons/help-contents.png</file>
+        <file>icons/system-restart.png</file>
+        <file>icons/view-preview.png</file>
+        <file>icons/document-save-as.png</file>
+        <file>icons/go-bottom.png</file>
+        <file>icons/go-top.png</file>
+        <file>icons/view-refresh.png</file>
+        <file>icons/edit-clear-list.png</file>
+        <file>icons/list-add.png</file>
+        <file>icons/list-remove.png</file>
+    </qresource>
+</RCC>

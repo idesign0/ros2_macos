@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/add.png</file>
+        <file>icons/settings.png</file>
+        <file>icons/failed.png</file>
+        <file>icons/new-stage.png</file>
+        <file>icons/success.png</file>
+        <file>icons/tasks.png</file>
+        <file>icons/connectarrow.png</file>
+        <file>icons/downarrow.png</file>
+        <file>icons/generatearrow.png</file>
+        <file>icons/uparrow.png</file>
+        <file>icons/updownarrow.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,11 @@
+ros2_versions:
+  - galactic
+  - foxy
+  - eloquent
+  - dashing
+  - crystal
+  - bouncy
+  - ardent
+
+the_answer_to_life: 42
+package_name: launch_param_builder
