@@ -2,6 +2,11 @@
 
 MoveIt 2 can be built on macOS (Apple Silicon) with a few extra steps.
 
+![Final Output Screenshot](screenshots/moveit2_final.png)
+
+MoveIt 2 is a powerful motion planning framework for ROS 2 that enables robot manipulation, collision checking, and kinematics.  
+It provides tools and libraries to plan, execute, and visualize robot motions easily and efficiently, making it ideal for robotics research and development.
+
 ### ✅ Dependencies
 
 ```bash
