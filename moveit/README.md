@@ -76,6 +76,10 @@ Before running the tutorials on macOS, you must preload the MoveIt capabilities 
 ```bash
 export DYLD_INSERT_LIBRARIES=$HOME/humble-ros2/install/moveit_ros_move_group/lib/libmoveit_move_group_default_capabilities.dylib
 ```
+>⚠️ Note:
+>On macOS, use: DYLD_INSERT_LIBRARIES
+>On Linux, use: LD_PRELOAD
+
 #### 4. Launch MoveIt Tutorials
 ```bash
 ros2 launch moveit2_tutorials demo.launch.py
