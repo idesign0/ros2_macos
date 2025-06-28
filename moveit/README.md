@@ -53,3 +53,31 @@ colcon build --base-paths src/moveit/ --symlink-install \
   --executor parallel \
   --parallel-workers $(sysctl -n hw.ncpu)
 ```
+### 4. Test Moveit with MoveIt2_tutorials
+
+To test that your MoveIt installation works correctly, clone the [MoveIt2 Tutorials](https://github.com/moveit/moveit2_tutorials.git) repository:
+
+#### 1. Clone the Repo
+```bash
+cd ~/moveit_ws/src
+git clone https://github.com/moveit/moveit2_tutorials.git -b humble
+```
+
+#### 2. Build MoveIt2 Tutorials
+```bash
+cd ~/ros2_ws
+colcon build --packages-select moveit2_tutorials --symlink-install
+```
+
+#### 3. ⚠️ macOS-Specific: Preload Capability Library
+
+Before running the tutorials on macOS, you must preload the MoveIt capabilities plugin manually:
+
+```bash
+export DYLD_INSERT_LIBRARIES=$HOME/humble-ros2/install/moveit_ros_move_group/lib/libmoveit_move_group_default_capabilities.dylib
+```
+#### 4. Launch MoveIt Tutorials
+```bash
+ros2 launch moveit2_tutorials demo.launch.py
+```
+
