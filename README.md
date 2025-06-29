@@ -24,6 +24,7 @@ This repository provides a streamlined setup for running **ROS 2 Humble** and **
   - ros2
   - ros2_control
   - rviz
+  - moveit2
  
 - Gazebo Harmonic (installed via Homebrew)
 - macOS-specific fixes and configuration
