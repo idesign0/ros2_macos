@@ -22,7 +22,11 @@ colcon build --base-paths src/ros-perception/ --symlink-install \
   --executor parallel \
   --parallel-workers $(sysctl -n hw.ncpu)
 ```
-#### 2. Build OpenMP-dependent MoveIt packages with LLVM
+#### 2. Build OpenMP-dependent MoveIt packages with LLVM (SKIP this step!)
+> **Note:**  
+> Previously, building OpenMP-dependent MoveIt packages on macOS required installing LLVM and switching the compiler (`CC`/`CXX`) to LLVM Clang.  
+> Thanks to a new manual OpenMP flag workaround, this step is **no longer necessary**. All ROS packages can now be built using the default Apple Clang without switching compilers.  
+> The instructions below are kept only for legacy reference.
 Apple’s default Clang does not support OpenMP. For the following packages, install LLVM and set environment variables before building:
   - moveit_ros_perception
   - moveit_planners_ompl
