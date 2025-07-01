@@ -96,6 +96,7 @@ eval "$(register-python-argcomplete colcon)"
 
 # Qt5 paths installed via Homebrew
 export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$(brew --prefix qt@5)
+export benchmark_DIR="$(brew --prefix google-benchmark)/lib/cmake/benchmark"
 export PATH=$PATH:$(brew --prefix qt@5)/bin
 
 # Python 3.11 binary path
