@@ -17,6 +17,7 @@ pip install ruckig==0.8.4
 #### 1. Build required perception packages first:
 Build the required perception packages from ros-perception first:
 ```bash
+cd ~/ros2_humble
 colcon build --base-paths src/ros-perception/ --symlink-install \
   --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=Off \
   --executor parallel \
@@ -52,6 +53,7 @@ colcon build --packages-select moveit_ros_perception moveit_planners_ompl --syml
 
 #### 3. Build the rest of the MoveIt packages:
 ```bash
+cd ~/ros2_humble
 colcon build --base-paths src/moveit/ --symlink-install \
   --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=Off \
   --executor parallel \
@@ -63,7 +65,7 @@ To test that your MoveIt installation works correctly, clone the [MoveIt2 Tutori
 
 #### 1. Clone the Repo
 ```bash
-cd ~/moveit_ws/src
+cd ~/ros2_ws/src
 git clone https://github.com/moveit/moveit2_tutorials.git -b humble
 ```
 
