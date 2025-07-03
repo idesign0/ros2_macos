@@ -228,6 +228,11 @@ colcon build --symlink-install \
   --executor parallel \
   --parallel-workers $(sysctl -n hw.ncpu)
 ```
+source:
+```bash
+source ~/.zshrc
+```
+
 What does each option mean?
 - `--symlink-install`  
   Uses symlinks for installed files instead of copying — useful for faster iterative development.
@@ -309,3 +314,10 @@ This section will be constantly updated based on user feedback. Below are some o
     > Always double-check the exact library name reported in the error message, and use that in the brew info and brew install commands.
 
 ---
+
+## ✅ Test Your ROS 2 Installation
+
+After building and setting up your environment, verify your ROS 2 installation by running the basic talker and listener example.
+
+For detailed instructions and examples, please refer to the official ROS 2 Humble macOS development setup guide:  
+[ROS 2 Humble macOS Development Setup — Talker and Listener Example](https://docs.ros.org/en/humble/Installation/Alternatives/macOS-Development-Setup.html#id8)
