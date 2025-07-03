@@ -134,7 +134,7 @@ export OPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@3
 
 # Gazebo Harmonic environment variables
 export GZ_VERSION=harmonic
-# export GZ_SIM_SYSTEM_PLUGIN_PATH=/Users/dhruvpatel29/humble-ros2/install/gz_ros2_control/lib/
+# export GZ_SIM_SYSTEM_PLUGIN_PATH= ~/ros2_humble/install/gz_ros2_control/lib/
 
 # Source ROS 2 workspace setup script
 source ~/humble-ros2/install/setup.zsh
@@ -146,7 +146,7 @@ source ~/humble-ros2/install/setup.zsh
 eval "$(register-python-argcomplete colcon)"
 ```
 > - **Please uncomment these lines after:**
->   1. You have installed **Gazebo Harmonic** and verified it works correctly.
+>   1. You have installed **Gazebo Harmonic** and verified it works correctly, and you have successfully built all ROS 2 packages without errors.
 >   2. You have created and built your **separate overlay workspace** (`ros2_ws`).
 > 
 > This ensures that your environment is properly configured only once the related components are ready, avoiding errors during the initial setup.
@@ -198,7 +198,10 @@ If you encounter issues related to dynamic library loading, you may need to temp
 Please refer to Apple’s official documentation or the ROS 2 macOS setup guide for instructions on disabling and re-enabling SIP safely. [ROS 2 macOS Setup - Disable SIP](https://developer.apple.com/library/archive/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection.html)
 
 ---
+
 ## 🛠️ Installation Steps
+
+Follow these steps to install Gazebo Harmonic and build ROS 2 from source.
 
 ### 1. Install Gazebo Harmonic
 
@@ -209,18 +212,15 @@ brew tap osrf/simulation
 brew install gz-harmonic
 ```
 
-### 2. 🧩 Clone Patched ROS 2 Source (Custom for macOS)
+### 2. 🔨 Build
+```bash
+cd ~/ros2_humble
+```
+> ⚠️ **Note:**  
+> The build process might require several attempts to complete successfully,  
+> as you may encounter some common errors — mostly related to `CMAKE_PREFIX_PATH`.  
+> Please refer to the **Troubleshooting** section below for specific instructions based on the error type.
 
-```bash
-# Clone This Repository
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws/src
-git clone https://github.com/idesign0/ros2_macos.git .
-```
-### 3. 🔨 Build from Source
-```bash
-cd ~/ros2_ws
-```
 ```bash
 colcon build --symlink-install \
   --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=Off \
@@ -246,30 +246,66 @@ Disables building test packages. This is recommended because some tests (e.g., i
 
 - `--parallel-workers $(sysctl -n hw.ncpu)`  
   Sets the number of parallel jobs to your CPU core count (maximizing build speed).
+
 ---
-## 4. ⚙️ Setup Environment for ROS
 
-After building, source the ROS 2 setup file to overlay your workspace on your shell environment:
-
-```bash
-source ~/ros2_ws/install/setup.zsh
-```
-**Tip**: Add this line to your shell startup file (e.g., ~/.zshrc) to avoid running it every time you open a new terminal.
-
-## 5. ⚠️ Common Errors
+### 3. ⚠️ Troubleshooting
 Most of the source-related errors are fixed in the macOS-specific source code patches, but there are still some dependency errors which might interrupt a complete build.  
-Right now, I have no issues completing the build with more than 423 packages, but as mentioned earlier, it depends on which dependencies are missing on individual Macs.
+Right now, I have no issues completing the build with more than **499** packages, but as mentioned earlier, it depends on which dependencies are missing on individual Macs.
 
 This section will be constantly updated based on user feedback. Below are some of the most common errors I have faced so far:
 
 ### Errors:
-1. **ModuleNotFoundError: No module named 'some_library'**  
-   For this error, please refer back to the **Important Notes** section above where the installation of missing Python packages using pip is explained in detail.
-2. **Case sensitivity issues in Gazebo cmake target files** (e.g., `tinyxml2::tinyxml2` vs `TINYXML2::TINYXML2`)  
-   These errors occur due to capitalization mismatches in Homebrew-installed Gazebo cmake files.  
-   You will need to manually edit the respective cmake files (e.g., `gz-msgs10-targets.cmake`, `gz-gui8-targets.cmake`) to use the correct lowercase target names.
+1. **Case sensitivity issues in Gazebo cmake target files** (e.g., `tinyxml2::tinyxml2` vs `TINYXML2::TINYXML2`)  
+    These errors occur due to capitalization mismatches in Homebrew-installed Gazebo cmake files.  
+    You will need to manually edit the respective cmake files (e.g., `gz-msgs10-targets.cmake`, `gz-gui8-targets.cmake`) to use the correct lowercase target names.
+    
+    Specifically, replace occurrences of `TINYXML2::TINYXML2` with `tinyxml2::tinyxml2` (and similar uppercase target names) to lowercase versions.
+    
+    - `open /opt/homebrew/Cellar/gz-gui/8.4.0_6/lib/cmake/gz-gui8/gz-gui8-targets.cmake`
+    - `open /opt/homebrew/Cellar/gz-msgs10/10.3.2_4/lib/cmake/gz-msgs10/gz-msgs10-targets.cmake`
+    
 
-   - `open /opt/homebrew/Cellar/gz-gui/8.4.0_6/lib/cmake/gz-gui8/gz-gui8-targets.cmake`
-   - `open /opt/homebrew/Cellar/gz-msgs10/10.3.2_4/lib/cmake/gz-msgs10/gz-msgs10-targets.cmake`
+    > **Note:**  
+    > Open the file based on the location shown in your error output, as versions and paths may differ.
 
-   Specifically, replace occurrences of `TINYXML2::TINYXML2` with `tinyxml2::tinyxml2` (and similar uppercase target names) to lowercase versions.
+---
+
+2. **ModuleNotFoundError: No module named 'some_library'**
+   This error occurs when Python packages are missing during runtime. Simply install the missing python-package with:
+
+   ```bash
+   python3 -m pip install some_library
+   ```
+
+---
+
+3. **Missing `Config.cmake` Files**
+
+    Sometimes during the build you may encounter errors complaining about missing `SomeLibraryConfig.cmake` files.
+    
+    **How to check if Homebrew has the required library:**
+    
+    Use the following command to check info about the library (replace `some_library` with the actual name):
+    
+    ```bash
+    brew info some_library
+    ```
+    
+    If Homebrew shows that the library is not installed, install it with:
+
+   ```bash
+    brew install some_library
+    ```
+
+    If Homebrew shows the library is already installed, but CMake still can't find it, you need to add the library’s path to your environment:
+
+    ```bash
+    export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$(brew --prefix some_library)"
+    ```
+
+    Add this line to your shell config file (e.g., ~/.zshrc or ~/.bash_profile) to make it persistent.
+    > **Note:**  
+    > Always double-check the exact library name reported in the error message, and use that in the brew info and brew install commands.
+
+---
