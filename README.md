@@ -6,29 +6,29 @@ This repository provides a streamlined setup for running **ROS 2 Humble** and **
 
 ## ✅ What's Included
 
-- ROS 2 Humble (built from source) for ARM64, including core packages and important frameworks such as:
+This repository provides a full build of **ROS 2 Humble** from source for **ARM64 macOS**, including core packages and key frameworks such as:
 
-  - ament
-  - backward_ros
-  - eProsima
-  - gazebo-release
-  - gzsim (including ros2_gz_bridge, gz_ros2_control, and more)
-  - osrf
-  - ros-drivers (e.g., ackermann_msgs)
-  - ros-perception
-  - ros-planning (e.g., navigation_msgs)
-  - ros-teleop
-  - ros-tooling
-  - ros-visualization
-  - ros
-  - ros2
-  - ros2_control
-  - rviz
-  - moveit2
- 
-- Gazebo Harmonic (installed via Homebrew)
-- macOS-specific fixes and configuration
-- Clean install process and tested environment
+- **ament** build system  
+- **backward_ros** for stack tracing  
+- **eProsima** middleware components  
+- **gazebo-release** simulation packages  
+- **gzsim** components, including `ros2_gz_bridge`, `gz_ros2_control`, and more  
+- **osrf** organization packages  
+- **ros-drivers** (e.g., `ackermann_msgs`)  
+- **ros-perception** packages  
+- **ros-planning** (e.g., `navigation_msgs`)  
+- **ros-teleop** tools  
+- **ros-tooling** utilities  
+- **ros-visualization** tools  
+- Core **ros** and **ros2** packages  
+- **ros2_control** framework  
+- **rviz** visualization tool  
+- **moveit2** (with a dedicated README inside the `moveit` folder for testing and debugging)
+
+Additionally, this setup includes:  
+- **Gazebo Harmonic** installed via Homebrew  
+- macOS-specific fixes and configurations  
+- A clean, tested installation process and environment 
 
 ---
 
