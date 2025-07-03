@@ -32,7 +32,7 @@ Additionally, this setup includes:
 
 ---
 
-## 📦 Prerequisites
+## 📦 ROS 2 macOS Prerequisites
 
 This guide will walk you through:
 
@@ -41,80 +41,161 @@ This guide will walk you through:
 - Installing required build tools (`colcon`, `vcstool`, etc.)
 - Creating the ROS 2 workspace structure
 
-Before proceeding with this repository:
+### 1️⃣ Setup ROS 2 Workspace and Clone Repository
 
-👉 **Follow the official ROS 2 Humble macOS setup guide up to the "Build ROS 2 from Source" step:**
-
-📄 [ROS 2 Humble — macOS Development Setup (docs.ros.org)](https://docs.ros.org/en/humble/Installation/Alternatives/macOS-Development-Setup.html)
-> 🔧 Stop before the **"Get the ROS 2 code"** step — return here afterward to continue with this setup.
-
-> ⚠️ **Important Notes:**
-> 1) Install ***empy==3.3.4*** to avoid compatibility issues during the ROS 2 build.
-> 2) Unlink Homebrew’s Qt (which defaults to version 6). We need version 5 to avoid complications.
-> ```bash
-> brew unlink qt
-> ```
-> 3) Use Xcode 16.2 for Building ROS 2 Humble on macOS
->    To ensure a successful build, you **must use Xcode 16.2** specifically. Follow these steps to install and select Xcode 16.2:
->      1. Download Xcode 16.2 from the [Apple Developer website](https://xcodereleases.com).
->      2. Install Xcode 16.2, then select it as the active developer directory by running:
->         
->         ```bash
->         sudo xcode-select -s /Applications/Xcode_2.app/Contents/Developer
->         ```
->         ```bash
->         xcodebuild -version
->         ```
->         
-> 5) The steps above install most dependencies, but depending on your macOS setup, some Python packages might still be missing.  
-> If you see errors like:
-> 
-> ```plaintext
-> ModuleNotFoundError: No module named 'some_library'
-> ```
-> 
-> Simply install the missing package with:
-> 
-> ```bash
-> python3.11 -m pip install some_library
-> ```
-> 
-> If you discover any missing dependencies, please **email me** so I can update this guide accordingly! 🙂
-> You may need to repeat this step several times for different missing modules.
- 
----
-
-## ⚙️ Environment Setup
-
-To avoid exporting environment variables every time you open a terminal, add the following lines to your `~/.zshrc` file:
+First, create your ROS 2 workspace and clone this repository into the `src` folder:
 
 ```bash
-# Minimum required CMake version and C++ standard
+mkdir -p ~/ros2_humble/src
+cd ~/ros2_humble/src
+git clone https://github.com/idesign0/ros2_macOS.git .
+```
+
+### 2️⃣ Install Homebrew Packages  
+
+If you don’t already have Homebrew installed (needed to install more dependencies), follow the instructions at:  
+https://brew.sh/
+
+Optional: After installing, check your system health with:
+
+```bash
+brew doctor
+```
+
+and now, Go back to the root of your workspace and run the Homebrew packages installation script:
+
+```bash
+cd ~/ros2_humble
+./brew-packages/install_brew_packages.sh
+```
+This script installs essential tools and libraries needed for building ROS 2 Humble on macOS ARM64.
+
+You can verify or manually install additional required packages with this command (these should already be installed by the script, but it’s good to double-check):
+
+```bash
+brew install asio assimp bison bullet cmake console_bridge cppcheck \
+cunit eigen freetype graphviz opencv openssl orocos-kdl pcre poco \
+pyqt@5 python qt@5 sip spdlog osrf/simulation/tinyxml1 tinyxml2
+```
+
+### 3️⃣ Official ROS 2 macOS Prerequisites
+
+This section covers the essential setup steps to prepare your macOS environment for building ROS 2 Humble.
+
+#### 1️⃣ Install Xcode 16.2
+
+ROS 2 Humble requires **Xcode 16.2** for a successful build.
+
+- Download Xcode 16.2 from the [Apple Developer website](https://xcodereleases.com).  
+- Install Xcode 16.2.  
+- Set Xcode 16.2 as the active developer directory by running:
+
+```bash
+sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+xcodebuild -version
+```
+Expected Output:
+```
+Xcode 16.2
+Build version 16C5032a
+```
+
+#### 2️⃣ Setup Some Environment Variables
+
+To ensure ROS 2 and its dependencies work correctly on your macOS system, add the following environment variables and aliases to your shell configuration (`~/.zshrc` or `~/.bash_profile`):
+
+```bash
+# Minimum required CMake policy version and C++ standard
 export CMAKE_POLICY_VERSION_MINIMUM=3.5
 export CMAKE_CXX_STANDARD=17
-eval "$(register-python-argcomplete colcon)"
 
-# Qt5 paths installed via Homebrew
-export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$(brew --prefix qt@5)
+# Qt 5 paths (Homebrew)
+export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$(brew --prefix qt@5)"
+export PATH="$PATH:$(brew --prefix qt@5)/bin"
+
+# OMPL path (Homebrew)
+export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$(brew --prefix ompl)"
+
+# Google Benchmark path
 export benchmark_DIR="$(brew --prefix google-benchmark)/lib/cmake/benchmark"
-export PATH=$PATH:$(brew --prefix qt@5)/bin
 
-# Python 3.11 binary path
+# Generic Homebrew prefixes for CMake to find packages
+export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:/usr/local/opt:/opt/homebrew/opt"
+
+# Python 3.11 framework path
 export PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH"
 
-# OpenSSL path for Homebrew
+# Python pip aliases for convenience
+alias pip3.10="python3.10 -m pip"
+alias pip3.11="python3.11 -m pip"
+
+# OpenSSL root directory (Homebrew)
 export OPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@3
 
-# Gazebo version and plugin path (update the path as needed)
+# Gazebo Harmonic environment variables
 export GZ_VERSION=harmonic
-# For gz_ros2_control, uncomment after complete build success.
-# export GZ_SIM_SYSTEM_PLUGIN_PATH= ~/ros2_ws/install/gz_ros2_control/lib/
+# export GZ_SIM_SYSTEM_PLUGIN_PATH=/Users/dhruvpatel29/humble-ros2/install/gz_ros2_control/lib/
+
+# Source ROS 2 workspace setup script
+source ~/humble-ros2/install/setup.zsh
+
+# Source your overlay workspace setup script
+# source ~/ros2_ws/install/setup.zsh
+
+# Enable Python argcomplete for colcon
+eval "$(register-python-argcomplete colcon)"
 ```
-After adding these lines, reload your shell with:
+> - **Please uncomment these lines after:**
+>   1. You have installed **Gazebo Harmonic** and verified it works correctly.
+>   2. You have created and built your **separate overlay workspace** (`ros2_ws`).
+> 
+> This ensures that your environment is properly configured only once the related components are ready, avoiding errors during the initial setup.
+
+#### 3️⃣ Install Additional Python Packages
+
+Use `python3 -m pip` (instead of just `pip`) to avoid confusion between Python 2 and Python 3 installations.
+
+First, upgrade `pip`:
+
 ```bash
-source ~/.zshrc
+python3 -m pip install --upgrade pip
 ```
-This will ensure your environment variables are set automatically on each new terminal session.
+Then, install the required Python packages with the appropriate build flags and paths:
+```bash
+python3 -m pip install -U \
+  --config-settings="--global-option=build_ext" \
+  --config-settings="--global-option=-I$(brew --prefix graphviz)/include/" \
+  --config-settings="--global-option=-L$(brew --prefix graphviz)/lib/" \
+  argcomplete catkin_pkg colcon-common-extensions coverage \
+  cryptography empy==3.3.4 flake8 flake8-blind-except==0.1.1 flake8-builtins \
+  flake8-class-newline flake8-comprehensions flake8-deprecated \
+  flake8-docstrings flake8-import-order flake8-quotes \
+  importlib-metadata lark==1.1.1 lxml matplotlib mock mypy==0.931 netifaces \
+  nose pep8 psutil pydocstyle pydot pygraphviz pyparsing==2.4.7 \
+  pytest-mock rosdep rosdistro setuptools==59.6.0 vcstool typeguard
+```
+
+#### 4️⃣ Disable System Integrity Protection (SIP) if necessary
+
+macOS versions 10.11 and later have System Integrity Protection (SIP) enabled by default,  
+which restricts the use of environment variables like `DYLD_LIBRARY_PATH` that ROS 2 relies on to locate shared libraries during runtime.
+
+---
+
+##### Why SIP and ROS 2 don’t always work well together
+
+System Integrity Protection is a macOS security feature designed to prevent unauthorized modification of critical system files and processes—even by root users.
+
+ROS 2 depends on environment variables such as `DYLD_LIBRARY_PATH` to find its dynamic libraries at runtime. However, SIP **blocks these environment variables from being inherited by ROS 2 processes**, causing failures in loading necessary shared libraries.
+
+This results in ROS 2 nodes crashing or failing to launch properly.
+
+Because SIP restricts this dynamic linking behavior, temporarily disabling SIP is often necessary during ROS 2 development on macOS.
+
+---
+
+If you encounter issues related to dynamic library loading, you may need to temporarily **disable SIP**.  
+Please refer to Apple’s official documentation or the ROS 2 macOS setup guide for instructions on disabling and re-enabling SIP safely. [ROS 2 macOS Setup - Disable SIP](https://developer.apple.com/library/archive/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection.html)
 
 ---
 ## 🛠️ Installation Steps
