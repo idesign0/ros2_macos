@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(moveit_ros_perception)
 
-# Dhruvs Note: different comiler for perception packages
+# Dhruvs Note:
 # Manually tell CMake how to find OpenMP
 set(OpenMP_C_FLAGS "-Xclang -fopenmp")
 set(OpenMP_CXX_FLAGS "-Xclang -fopenmp")

@@ -1,0 +1,49 @@
+bt_server:
+  action_name: {
+    type: string,
+    default_value: "bt_execution",
+    read_only: true,
+    description: "The name the Action Server takes requests from",
+  }
+  tick_frequency: {
+    type: int,
+    default_value: 100,
+    read_only: true,
+    description: "Frequency in Hz to tick() the Behavior tree at",
+    validation: {
+      bounds<>: [1, 1000]
+    }
+  }
+  groot2_port: {
+    type: int,
+    default_value: 1667,
+    read_only: true,
+    description: "Server port value to publish Groot2 messages on",
+    validation: {
+      bounds<>: [1, 49151]
+    }
+  }
+  plugins: {
+    type: string_array,
+    default_value: [],
+    description: "List of 'package_name/subfolder' containing BehaviorTree plugins to load into the factory",
+    validation: {
+      unique<>: null,
+    }
+  }
+  ros_plugins_timeout: {
+    type: int,
+    default_value: 1000,
+    description: "Timeout (ms) used in BT::RosNodeParams",
+    validation: {
+      bounds<>: [1, 10000]
+    }
+  }
+  behavior_trees: {
+    type: string_array,
+    default_value: [],
+    description: "List of 'package_name/subfolder' containing SubTrees to load into the BehaviorTree factory",
+    validation: {
+      unique<>: null,
+    }
+  }

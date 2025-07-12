@@ -1,0 +1,51 @@
+name: Lint diagnostics
+on:
+  pull_request:
+  push:
+    branches:
+      - ros2-humble
+  schedule:
+    # Run every week at 20:00 on Sunday
+    - cron: "0 20 * * 0"
+
+jobs:
+  ament_lint:
+    name: Lint ${{ matrix.linter }}
+    strategy:
+      fail-fast: false
+      matrix:
+        linter: [
+            cppcheck,
+            cpplint,
+            flake8,
+            pep257,
+            uncrustify,
+            xmllint,
+          ]
+        include:
+          - distro: humble
+            os: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
+    env:
+      AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS: 1
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ros-tooling/setup-ros@master
+        with:
+          required-ros-distributions: ${{ matrix.distro }}
+      - uses: ros-tooling/action-ros-lint@master
+        with:
+          linter: ${{ matrix.linter }}
+          package-name: |
+            diagnostic_aggregator
+            diagnostic_common_diagnostics
+            diagnostic_remote_logging
+            diagnostic_updater
+            self_test
+
+  check_licenses:
+    name: Check licenses
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: boschresearch/ros_license_toolkit@2.0.2

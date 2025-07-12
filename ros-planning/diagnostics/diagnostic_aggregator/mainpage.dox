@@ -1,0 +1,65 @@
+/**
+\mainpage
+\htmlinclude manifest.html
+
+\b diagnostic_aggregator aggregates and performs basic analysis on the diagnostics of a robot. This package consists of the base node, or aggregator, and several analyzers to collect and process diagnostics data.
+
+\section codeapi Code API
+
+The Aggregator class loads "analyzers" which perform analysis on the incoming diagnostics data. Each analyzer is initialized according to the private parameters of the Aggregator. The aggregator will publish the diagnostic_msgs/DiagnosticArray message on the /diagnostics_agg topic at 1 Hz.
+
+\subsection analyzers Analyzers
+
+The Aggregator will create analyzers to store and process the diagnostic data. Each analyzer inherits from the pure virtual base class '''Analyzer'''. Analyzers should be in packages that depend directly on "pluginlib" and "diagnostic_aggregator".
+
+See Analyzer for more information on the base class.
+
+\subsubsection generic_analyzer GenericAnalyzer
+
+\b generic_analyzer holds the GenericAnalyzer class, which is the most basic of the Analyzer's. It is used by the diagnostic_aggregator/Aggregator to store, process and republish diagnostics data. The GenericAnalyzer is loaded by the pluginlib as a Analyzer plugin. It is the most basic of all Analyzer's.
+
+\subsubsection analyzer_group AnalyzerGroup
+
+\b analyzer_group holds the AnalyzerGroup class, which can hold a group of diagnostic analyzers. These "sub-analyzers" are loaded in the same way that the Aggregator loads analyzers.
+
+\section rosapi ROS API
+
+Nodes:
+- \b aggregator_node
+- \b analyzer_loader
+
+<hr>
+
+\subsection aggregator_node aggregator_node
+
+aggregator_node subscribes to "/diagnostics" and publishes an aggregated set of data to "/diagnostics_agg". The aggregator will load diagnostic analyzers (like the GenericAnalyzer above) as plugins. The analyzers are specified in the launch file as private parameters in the "~analyzers" namespace.
+
+\subsubsection topics ROS topics
+
+Subscribes to:
+- \b "/diagnostics": [diagnostics_msgs/DiagnosticArray]
+
+Publishes to:
+- \b "/diagnostics_agg": [diagnostics_msgs/DiagnosticArray]
+
+\subsubsection parameters ROS parameters
+
+Reads the following parameters from the parameter server
+
+- \b "~pub_rate" : \b double [optional] Rate that output diagnostics published
+- \b "~base_path" : \b double [optional] Prepended to all analyzed output
+- \b "~analyzers" : \b {} Configuration for loading analyzers
+- \b "~critical" : \b bool [optional] React immediately to a degradation in diagnostic state
+
+\subsection analyzer_loader analyzer_loader
+
+analyzer_loader loads diagnostic analyzers and verifies that they have initialized. It is used as a unit or regression test to verify that analyzer parameters work.
+
+\subsubsection parameters ROS parameters
+
+Reads the following parameters from the parameter server
+
+- \b "~analyzers" : \b {} Configuration for loading and testing analyzers
+
+
+*/

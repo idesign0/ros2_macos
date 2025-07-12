@@ -80,6 +80,11 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "iterator": "cpp",
+        "strstream": "cpp",
+        "cfenv": "cpp",
+        "csetjmp": "cpp",
+        "source_location": "cpp"
     }
 }

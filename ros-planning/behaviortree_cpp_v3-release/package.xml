@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>behaviortree_cpp_v3</name>
+  <version>3.8.7</version>
+  <description>
+  This package provides the Behavior Trees core library.
+  </description>
+
+  <maintainer email="davide.faconti@gmail.com">Davide Faconti</maintainer>
+
+  <license>MIT</license>
+
+  <author>Michele Colledanchise</author>
+  <author>Davide Faconti</author>
+
+  <build_depend>ros_environment</build_depend>
+
+  <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
+  <depend condition="$ROS_VERSION == 1">roslib</depend>
+
+  <buildtool_depend condition="$ROS_VERSION == 2">ament_cmake</buildtool_depend>
+  <depend condition="$ROS_VERSION == 2">rclcpp</depend>
+  <depend condition="$ROS_VERSION == 2">ament_index_cpp</depend>
+
+  <build_depend>libboost-coroutine-dev</build_depend>
+  <exec_depend>libboost-coroutine</exec_depend>
+  <depend>libzmq3-dev</depend>
+  <depend>libncurses-dev</depend>
+
+  <test_depend condition="$ROS_VERSION == 2">ament_cmake_gtest</test_depend>
+
+  <export>
+      <build_type condition="$ROS_VERSION == 1">catkin</build_type>
+      <build_type condition="$ROS_VERSION == 2">ament_cmake</build_type>
+  </export>
+
+</package>

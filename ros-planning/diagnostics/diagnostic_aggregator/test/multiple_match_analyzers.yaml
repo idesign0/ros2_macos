@@ -1,0 +1,10 @@
+/**:
+  my_path:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: Header1
+    expected: 'multi'
+    startswith: 'Something'
+  other_path:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: Header2
+    expected: 'multi'

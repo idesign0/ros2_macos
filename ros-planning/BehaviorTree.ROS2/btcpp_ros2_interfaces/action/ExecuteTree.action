@@ -1,0 +1,18 @@
+#### Request ####
+
+# Name of the tree to execute
+string target_tree
+# Optional, implementation-dependent, payload.
+string payload
+---
+#### Result ####
+
+# Status of the tree
+NodeStatus node_status
+# result payload or error message
+string return_message
+---
+#### Feedback ####
+
+#This can be customized by the user
+string message

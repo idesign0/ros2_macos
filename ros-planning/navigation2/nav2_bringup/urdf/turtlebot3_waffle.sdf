@@ -1,0 +1,260 @@
+<sdf version='1.11'>
+  <model name='turtlebot3_waffle'>
+    <link name='base_footprint'>
+      <inertial>
+        <pose>-0.0060564779596576851 -9.4450335416873335e-21 0.019264420510096272 0 0 0</pose>
+        <mass>1.4969096</mass>
+        <inertia>
+          <ixx>0.01330968881636598</ixx>
+          <ixy>-4.7576583000000001e-05</ixy>
+          <ixz>0.00091064575365546732</ixz>
+          <iyy>0.013913324787183729</iyy>
+          <iyz>-3.542229900000001e-06</iyz>
+          <izz>0.018379012970817749</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_footprint_fixed_joint_lump__base_link_collision'>
+        <pose>-0.064000000000000001 0 0.057000000000000002 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.26600000000000001 0.26600000000000001 0.094</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__camera_link_collision_1'>
+        <pose>0.067000000000000004 0 0.111 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.012 0.13200000000000001 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__caster_back_left_link_collision_2'>
+        <pose>-0.17699999999999999 0.06400079632671074 0.0050000003170681652 -1.5700000000000001 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.029999999999999999 0.0089999999999999993 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__caster_back_right_link_collision_3'>
+        <pose>-0.17699999999999999 -0.063999203673289262 0.0050000003170681652 -1.5700000000000001 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.029999999999999999 0.0089999999999999993 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__base_scan_collision_4'>
+        <pose>-0.049000000000000002 0 0.1255 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.0315</length>
+            <radius>0.055</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='base_footprint_fixed_joint_lump__base_link_visual'>
+        <pose>-0.064000000000000001 0 0.01 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://turtlebot3_description/meshes/bases/waffle_base.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.5 0.5 0.5 1</diffuse>
+          <ambient>0.5 0.5 0.5 1</ambient>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__camera_link_visual_1'>
+        <pose>0.064000000000000001 -0.065000000000000002 0.104 1.5700000000000001 -2.8518852298084891e-17 1.5700000000000001</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://turtlebot3_description/meshes/sensors/r200.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__base_scan_visual_2'>
+        <pose>-0.064000000000000001 0 0.13200000000000001 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://turtlebot3_description/meshes/lds.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.37500003 0.37500003 0.37500003 1</diffuse>
+          <ambient>0.37500003 0.37500003 0.37500003 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='wheel_left_joint' type='revolute'>
+      <pose relative_to='base_footprint'>0 0.14399999999999999 0.033000000000000002 -1.5700000000000001 0 0</pose>
+      <parent>base_footprint</parent>
+      <child>wheel_left_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel_left_link'>
+      <pose relative_to='wheel_left_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.02849894</mass>
+        <inertia>
+          <ixx>1.117558e-05</ixx>
+          <ixy>-4.2369783000000002e-11</ixy>
+          <ixz>-5.9381719000000002e-09</ixz>
+          <iyy>1.1192413e-05</iyy>
+          <iyz>-1.4400107e-11</iyz>
+          <izz>2.0712558000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_left_link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.017999999999999999</length>
+            <radius>0.033000000000000002</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_left_link_visual'>
+        <pose>0 0 0 1.5700000000000001 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://turtlebot3_description/meshes/wheels/left_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.37500003 0.37500003 0.37500003 1</diffuse>
+          <ambient>0.37500003 0.37500003 0.37500003 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='wheel_right_joint' type='revolute'>
+      <pose relative_to='base_footprint'>0 -0.14399999999999999 0.033000000000000002 -1.5700000000000001 0 0</pose>
+      <parent>base_footprint</parent>
+      <child>wheel_right_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel_right_link'>
+      <pose relative_to='wheel_right_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.02849894</mass>
+        <inertia>
+          <ixx>1.117558e-05</ixx>
+          <ixy>-4.2369783000000002e-11</ixy>
+          <ixz>-5.9381719000000002e-09</ixz>
+          <iyy>1.1192413e-05</iyy>
+          <iyz>-1.4400107e-11</iyz>
+          <izz>2.0712558000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_right_link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.017999999999999999</length>
+            <radius>0.033000000000000002</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_right_link_visual'>
+        <pose>0 0 0 1.5700000000000001 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://turtlebot3_description/meshes/wheels/right_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.37500003 0.37500003 0.37500003 1</diffuse>
+          <ambient>0.37500003 0.37500003 0.37500003 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <frame name='camera_depth_optical_joint' attached_to='camera_depth_frame'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='camera_depth_optical_frame' attached_to='camera_depth_optical_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='camera_depth_joint' attached_to='camera_link'>
+      <pose>0.0050000000000000001 0.028000000000000001 0.012999999999999999 -1.5700000000000001 -2.8518852298084891e-17 -1.5700000000000001</pose>
+    </frame>
+    <frame name='camera_depth_frame' attached_to='camera_depth_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='camera_rgb_optical_joint' attached_to='camera_rgb_frame'>
+      <pose>0 0 0 -1.5700000000000001 -2.8518852298084891e-17 -1.5700000000000001</pose>
+    </frame>
+    <frame name='camera_rgb_optical_frame' attached_to='camera_rgb_optical_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='camera_rgb_joint' attached_to='camera_link'>
+      <pose>0.0050000000000000001 0.017999999999999999 0.012999999999999999 0 0 0</pose>
+    </frame>
+    <frame name='camera_rgb_frame' attached_to='camera_rgb_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='camera_joint' attached_to='base_link'>
+      <pose>0.064000000000000001 -0.065000000000000002 0.094 0 0 0</pose>
+    </frame>
+    <frame name='camera_link' attached_to='camera_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='caster_back_left_joint' attached_to='base_link'>
+      <pose>-0.17699999999999999 0.064000000000000001 -0.0040000000000000001 -1.5700000000000001 0 0</pose>
+    </frame>
+    <frame name='caster_back_left_link' attached_to='caster_back_left_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='caster_back_right_joint' attached_to='base_link'>
+      <pose>-0.17699999999999999 -0.064000000000000001 -0.0040000000000000001 -1.5700000000000001 0 0</pose>
+    </frame>
+    <frame name='caster_back_right_link' attached_to='caster_back_right_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='imu_joint' attached_to='base_link'>
+      <pose>0 0 0.068000000000000005 0 0 0</pose>
+    </frame>
+    <frame name='imu_link' attached_to='imu_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='scan_joint' attached_to='base_link'>
+      <pose>-0.064000000000000001 0 0.122 0 0 0</pose>
+    </frame>
+    <frame name='base_scan' attached_to='scan_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='base_joint' attached_to='base_footprint'>
+      <pose>0 0 0.01 0 0 0</pose>
+    </frame>
+    <frame name='base_link' attached_to='base_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+  </model>
+</sdf>

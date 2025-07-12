@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(moveit_planners_ompl)
 
-# Dhruvs Note: different comiler for perception packages
+# Dhruvs Note:
 # Manually tell CMake how to find OpenMP
 set(OpenMP_C_FLAGS "-Xclang -fopenmp")
 set(OpenMP_CXX_FLAGS "-Xclang -fopenmp")
@@ -20,7 +20,7 @@ if(OpenMP_CXX_FOUND)
 else()
   message(FATAL_ERROR "OpenMP NOT found")
 endif()
-# Dhruvs Note: different comiler for perception packages
+# Dhruvs Note: end
 
 # Common cmake code applied to all moveit packages
 find_package(moveit_common REQUIRED)

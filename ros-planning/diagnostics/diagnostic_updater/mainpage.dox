@@ -1,0 +1,27 @@
+/**
+
+@mainpage diagnostic_updater
+
+@htmlinclude manifest.html
+
+\b \ref diagnostic_updater contains assorted C++ classes to assist in diagnostic
+publication. These libraries are commonly used by device drivers as part of the diagnostics toolchain. The main parts of diagnostic_updater are:
+
+ - \ref diagnostic_updater::DiagnosticStatusWrapper, a wrapper providing
+   convenience functions for working with \ref
+   diagnostics_msgs::DiagnosticStatus.
+
+ - \ref Updater, a class for managing periodic publishing of the \ref
+   diagnostic_updater::DiagnosticStatusWrapper output by a set of \ref
+   diagnostic_updater::DiagnosticTask.
+
+ - \ref diagnostic_updater::TopicDiagnostic and \ref
+   diagnostic_updater::HeaderlessTopicDiagnostic for calculating and
+   publishing statistics on timestamps and publication frequencies, and
+   their corresponding \ref diagnostic_updater::DiagnosedPublisher and \ref
+   diagnostic_updater::HeaderlessDiagnosedPublisher to update the
+   statistics automatically when publications are made to a topic.
+
+Example uses of these classes can be found in \ref src/example.cpp.
+ 
+ */                                     

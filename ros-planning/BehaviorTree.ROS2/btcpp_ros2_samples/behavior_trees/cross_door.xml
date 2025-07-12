@@ -1,0 +1,13 @@
+<root BTCPP_format="4">
+  <BehaviorTree ID="CrossDoor">
+    <Sequence>
+      <Fallback>
+        <Inverter>
+          <IsDoorClosed/>
+        </Inverter>
+        <SubTree ID="DoorClosed"/>
+      </Fallback>
+      <PassThroughDoor/>
+    </Sequence>
+  </BehaviorTree>
+</root>

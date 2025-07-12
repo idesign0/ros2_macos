@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>diagnostics</name>
+  <version>4.0.6</version>
+  <description>diagnostics</description>
+  <maintainer email="namniart@gmail.com">Austin Hendrix</maintainer>
+  <maintainer email="brice.rebsamen@gmail.com">Brice Rebsamen</maintainer>
+  <maintainer email="Christian.Henkel2@de.bosch.com">Christian Henkel</maintainer>
+  <maintainer email="ralph.lange@de.bosch.com">Ralph Lange</maintainer>
+
+  <license>BSD-3-Clause</license>
+
+  <url type="website">http://www.ros.org/wiki/diagnostics</url>
+
+  <author>Kevin Watts</author>
+  <author email="brice.rebsamen@gmail.com">Brice Rebsamen</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>diagnostic_aggregator</exec_depend>
+  <exec_depend>diagnostic_common_diagnostics</exec_depend>
+  <exec_depend>diagnostic_updater</exec_depend>
+  <exec_depend>self_test</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

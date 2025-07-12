@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding='utf-8'?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+
+  <name>geographic_msgs</name>
+  <version>1.0.6</version>
+  <description>
+     ROS messages for Geographic Information Systems.
+  </description>
+  <maintainer email="jack.oquin@gmail.com">Jack O'Quin</maintainer>
+  <maintainer email="stevenmacenski@gmail.com">Steve Macenski</maintainer>
+  <license>BSD</license>
+
+  <url>http://wiki.ros.org/geographic_msgs</url>
+  <url type="bugtracker">https://github.com/ros-geographic-info/geographic_info/issues</url>
+  <url type="repository">https://github.com/ros-geographic-info/geographic_info.git</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>rosidl_default_generators</build_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>unique_identifier_msgs</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <!--
+    Skip using ament_lint_auto because ament_lint_copyright does not support "BSD" license.
+    https://robotics.stackexchange.com/questions/109592/how-to-use-ament-lint-commons-ament-copyright-on-a-bsd-licensed-package-such
+    For now, the C++, CMake, and XML linters are enabled.
+   -->
+  <test_depend>ament_cmake_cppcheck</test_depend>
+  <test_depend>ament_cmake_cpplint</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_uncrustify</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
+
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

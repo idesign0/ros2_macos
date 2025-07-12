@@ -1,0 +1,28 @@
+/**
+\mainpage
+\htmlinclude manifest.html
+
+\b diagnostic_common_diagnostics contains a few common diagnostic nodes
+
+- cpu_monitor publishes diagnostic messages with the CPU usage of the system.
+- hd_monitor publishes diagnostic messages related to the available space on a given storage device.
+- ntp_monitor publishes diagnostic messages for how well the NTP time sync is working.
+- tf_monitor used to publish diagnostic messages reporting on the health of
+the TF tree. It is based on tfwtf. It is not ported to ROS2.
+
+
+\section codeapi Code API
+
+<!--
+Provide links to specific auto-generated API documentation within your
+package that is of particular interest to a reader. Doxygen will
+document pretty much every part of your code, so do your best here to
+point the reader to the actual API.
+
+If your codebase is fairly large or has different sets of APIs, you
+should use the doxygen 'group' tag to keep these APIs together. For
+example, the roscpp documentation has 'libros' group.
+-->
+
+
+*/

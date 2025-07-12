@@ -1,0 +1,11 @@
+<root BTCPP_format="4">
+  <BehaviorTree ID="DoorClosed">
+    <Fallback>
+      <OpenDoor/>
+      <RetryUntilSuccessful num_attempts="5">
+        <PickLock/>
+      </RetryUntilSuccessful>
+      <SmashDoor/>
+    </Fallback>
+  </BehaviorTree>
+</root>

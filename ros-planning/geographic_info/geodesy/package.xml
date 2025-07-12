@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>geodesy</name>
+  <version>1.0.6</version>
+  <description>
+    Python and C++ interfaces for manipulating geodetic coordinates.
+  </description>
+  <maintainer email="jack.oquin@gmail.com">Jack O'Quin</maintainer>
+  <maintainer email="stevenmacenski@gmail.com">Steve Macenski</maintainer>
+  <author>Jack O'Quin</author>
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/geodesy</url>
+  <url type="bugtracker">https://github.com/ros-geographic-info/geographic_info/issues</url>
+  <url type="repository">https://github.com/ros-geographic-info/geographic_info.git</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>angles</depend>
+  <depend>geographic_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>unique_identifier_msgs</depend>
+  <depend>python3-pyproj</depend>
+
+  <!-- these dependencies are only for testing -->
+  <!-- <test_depend>rosunit</test_depend> -->
+
+  <!-- documentation dependencies -->
+  <build_depend>python3-catkin-pkg</build_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <rosdoc config="rosdoc.yaml"/>
+  </export>
+
+</package>

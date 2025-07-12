@@ -1,0 +1,38 @@
+name: Test diagnostics
+on:
+  pull_request:
+  push:
+    branches:
+      - ros2-humble
+  schedule:
+    # Run every week at 20:00 on Sunday
+    - cron: "0 20 * * 0"
+
+jobs:
+  build_and_test:
+    name: ${{ matrix.package }} on ${{ matrix.distro }}
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [
+            diagnostic_aggregator,
+            diagnostic_common_diagnostics,
+            diagnostic_remote_logging,
+            diagnostic_updater,
+            self_test,
+          ]
+        include:
+          - distro: humble
+            os: 22.04
+    runs-on: ubuntu-latest
+    container: ubuntu:${{ matrix.os }}
+    steps:
+      - uses: ros-tooling/setup-ros@master
+        with:
+          required-ros-distributions: ${{ matrix.distro }}
+      - uses: ros-tooling/action-ros-ci@master
+        with:
+          target-ros2-distro: ${{ matrix.distro }}
+          package-name: ${{ matrix.package }}
+          # vcs-repo-file-url: |
+          #   https://raw.githubusercontent.com/ros2/ros2/master/ros2.repos

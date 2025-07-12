@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>bondpy</name>
+  <version>4.1.2</version>
+  <description>
+    Python implementation of bond, a mechanism for checking when
+    another process has terminated.
+  </description>
+
+  <maintainer email="geoff@openrobotics.org">Geoffrey Biggs</maintainer>
+
+  <license>BSD-3-Clause</license>
+
+  <url type="bugtracker">https://github.com/ros/bond_core/issues</url>
+  <url type="repository">https://github.com/ros/bond_core</url>
+
+  <author email="michael@openrobotics.org">Michael Carroll</author>
+  <author>Stuart Glaser</author>
+
+  <exec_depend>bond</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>smclib</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

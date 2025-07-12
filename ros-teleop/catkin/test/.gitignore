@@ -1,8 +1,0 @@
-debbuild
-pkgbuild
-tmp/*
-src/catkin_test/debian
-scratch
-SCRATCH
-PREFIX
-fullbuild

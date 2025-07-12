@@ -1,0 +1,14 @@
+kf_hungarian_node:
+  ros__parameters:
+    death_threshold: 3 # maximum mising frames before deleting an obstacle
+    global_frame: "camera_link" # none means camera frame is the global frame
+    # Kamlan filter related
+    top_down: False # whether use top-down (x, y) view or 3D (x, y, z)
+    measurement_noise_cov: [1., 1., 1.] # if it's use top-down view, set the 3rd number to 0
+    error_cov_post: [1., 1., 1., 10., 10., 10.] # if use top-down view, set the 3rd and 6th to 0
+    process_noise_cov: [2., 2., 0.5] # processNoiseCov, model as acceration noise, if use top-down view, the 3rd number should be 0
+    # obstacle filter
+    vel_filter: [0.1, 2.0] # minimum and maximum velocity to filter obstacles
+    height_filter: [-2.0, 2.0] # minimum and maximum height (z) to filter obstacles
+    cost_filter: 1.0 # filter Hungarian assignment with cost greater than threshold
+    

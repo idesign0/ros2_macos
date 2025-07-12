@@ -7,23 +7,23 @@ if [[ ! -f $INPUT_FILE ]]; then
   exit 1
 fi
 
-echo "Starting Homebrew install for packages from $INPUT_FILE..."
+MATCHED_COUNT=$(wc -l < "$INPUT_FILE")
+echo "🚀 Starting Homebrew install for $MATCHED_COUNT packages from $INPUT_FILE..."
+echo "💡 Press CTRL+C anytime to cancel."
+
+trap 'echo -e "\n❌ Installation interrupted. Exiting..."; exit 1' SIGINT
 
 while read -r line; do
-  # Extract package name and version (version is optional)
+  # Extract package name and optional version
   pkg=$(echo "$line" | awk '{print $1}')
   version=$(echo "$line" | awk '{print $2}')
-
-  # Check if package already installed
+  
   if brew list --versions "$pkg" > /dev/null 2>&1; then
-    echo "$pkg is already installed."
+    echo "✔️ $pkg is already installed."
   else
-    # Homebrew does not support installing specific versions by default
-    # Just install the latest available version
-    echo "Installing $pkg ..."
+    echo "⬇️ Installing $pkg ..."
     brew install "$pkg"
   fi
 done < "$INPUT_FILE"
 
-echo "All packages processed."
-
+echo "✅ All packages processed."
