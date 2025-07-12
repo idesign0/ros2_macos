@@ -70,12 +70,17 @@ git clone https://github.com/moveit/moveit2_tutorials.git -b humble
 ```
 
 #### 2. Build MoveIt2 Tutorials
+
+This build focuses on moveit2 and related packages only.
+
 ```bash
 cd ~/ros2_ws
 colcon build --packages-select moveit2_tutorials --symlink-install
 ```
-
-#### 3. ⚠️ macOS-Specific: Preload Capability Library
+```bash
+source ~/.zshrc
+```
+#### 3. ⚠️ macOS-Specific: Preload Capability Library (temp solution)
 
 Before running the tutorials on macOS, you must preload the MoveIt capabilities plugin manually:
 
