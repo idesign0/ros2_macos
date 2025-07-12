@@ -24,6 +24,8 @@ This repository provides a full build of **ROS 2 Humble** from source for **ARM6
 - **ros2_control** framework  
 - **rviz** visualization tool  
 - **moveit2** (with a dedicated README inside the `moveit` folder for testing and debugging)
+- **navi2** (with a dedicated README inside the `ros-planning/navigation2` folder for testing and debugging)
+- slam_toolbox ('ros-planning/')
 
 Additionally, this setup includes:  
 - **Gazebo Harmonic** installed via Homebrew  
