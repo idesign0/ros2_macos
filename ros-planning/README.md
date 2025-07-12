@@ -7,6 +7,8 @@ This setup demonstrates Navigation2 running smoothly on macOS with Apple Silicon
 
 With this, you can run full mapping, localization, and navigation pipelines on Apple’s latest hardware — opening up new opportunities for development and testing on macOS environments.
 
+[![The Test](https://github.com/idesign0/ros2_macOS/raw/main/ros-planning/nav2.png)](https://github.com/idesign0/ros2_macOS/raw/main/ros-planning/demo.mp4)
+
 ## Install Homebrew Packages  
 
 If you don’t already have Homebrew installed (needed to install more dependencies), follow the instructions at:  
