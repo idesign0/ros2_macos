@@ -28,7 +28,7 @@ cd ~/ros2_humble
 ```
 This script installs essential tools and libraries needed for building ROS 2 Humble on macOS ARM64.
 
-## Build the the Navigation packages:
+## Build the Navigation packages:
 
 This build focuses on nav2 and related packages only.
 
@@ -42,7 +42,7 @@ colcon build --base-paths src/ros-planning/ --symlink-install \
 ```bash
 source ~/.zshrc
 ```
-## Test Nav2 with TurtleBot4 Silulator
+## Test Nav2 with TurtleBot4 Simulator
 
 To get started with the TurtleBot4 simulation and Navigation2 (Nav2), refer to the official TurtleBot4 simulator demo:
 
@@ -53,7 +53,7 @@ You can also explore the original source repositories:
 - 🧩 [turtlebot4_simulator](https://github.com/turtlebot/turtlebot4_simulator)
 ---
 
-### 🚀 macOS Users: Use the Patched Version for Gazebo Harmonic
+## 🚀 macOS Users: Use the Patched Version for Gazebo Harmonic
 
 Since you're on **macOS** and likely using the **Gazebo Harmonic** release, it's highly recommended to use the modified TurtleBot4 packages here:
 
@@ -66,7 +66,7 @@ These packages include:
 
 ---
 
-### 🛠️ Having Issues?
+## 🛠️ Having Issues?
 
 If you encounter errors or unexpected behavior:
 
